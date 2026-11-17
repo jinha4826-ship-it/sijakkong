@@ -774,7 +774,7 @@ function renderClosetGroup(type,gridId){
         data.unlocked.push(key);
         data.equipped[type]=item.id;
         save();
-        msgEl.textContent=`콩 ${item.cost}개로 '${item.name}'을(를) 열어서 입혔어! 🎉`;
+        msgEl.textContent=`콩 ${item.cost}개로 '${item.name}'`+(hasJong(item.name)?'을':'를')+` 열어서 입혔어! 🎉`;
       }else{
         msgEl.textContent=`콩이 ${item.cost-data.beans}개 더 필요해! 5분 시작 1번 하면 금방 모여요 🌱`;
       }
