@@ -594,7 +594,7 @@ function saveBeanName(raw){
   if(!v){closetSay('이름을 한 글자 이상 적어줘! ✏️');return;}
   data.beanName=v;
   save();
-  closetSay('이름을 "'+v+'"'+josa(v,'으로','로')+' 바꿨어! ✨');
+  closetSay('이름을 "'+v+'"'+(hasJong(v)?'으로':'로')+' 바꿨어! ✨');
 }
 
 function wearOutfit(o,slot){
@@ -651,7 +651,7 @@ function renderOutfits(){
     over.onclick=ev=>{
       ev.stopPropagation();
       data.outfits[i]=Object.assign(currentOutfit(),{at:Date.now()});
-      save();closetSay('코디 '+(i+1)+'을(를) 지금 모습으로 덮어썼어! 💾');
+      save();closetSay('코디 '+(i+1)+'에 지금 모습을 덮어썼어! 💾');
     };
     const del=document.createElement('button');
     del.type='button';del.className='del';del.textContent='✕';
@@ -659,7 +659,7 @@ function renderOutfits(){
     del.onclick=ev=>{
       ev.stopPropagation();
       data.outfits.splice(i,1);
-      save();closetSay('코디 '+(i+1)+'을(를) 지웠어.');
+      save();closetSay('코디 '+(i+1)+' 삭제했어.');
     };
     btns.append(wear,over,del);
     card.append(info,btns);
@@ -677,7 +677,7 @@ function show(id){
   screens.forEach(s=>document.getElementById(s).classList.toggle('hidden',s!==id));
   const activeTab=id==='historyScreen'?'history':id==='closetScreen'?'closet':'home';
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===activeTab));
-  if(id==='closetScreen')document.getElementById('closetMsg').textContent='';
+  if(id==='closetScreen'){document.getElementById('closetMsg').textContent='';syncBeanName();}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -718,7 +718,7 @@ function setMascotMood(mood){
   const n=beanName();
   const moods={
     cheer:{emoji:'✨',message:josa(n,'이','가')+' 옆에서 응원하고 있어!'},
-    focus:{emoji:'🫧',message:n+'와 함께 5분만 집중해보자!'},
+    focus:{emoji:'🫧',message:josa(n,'과','와')+' 함께 5분만 집중해보자!'},
     sleep:{emoji:'🌙',message:'잠깐 쉬어도 괜찮아. 천천히 해보자.'},
     celebrate:{emoji:'🥳',message:'해냈다! 🫘 콩 1개를 모았어.'}
   };
