@@ -169,6 +169,27 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 .item-card.equipped .item-tag{color:#7a4ea3}
 .item-card.locked .item-tag{color:#9a6b3b;background:#fff3e3;padding:2px 7px;border-radius:10px}
 .closet-msg{font-size:11px;color:#7a4ea3;text-align:center;min-height:16px;margin-top:8px;font-weight:750}
+.rename-row{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:13px;position:relative;z-index:2}
+.rename-input{width:120px;border:1.5px solid #eadcf4;background:#fff;border-radius:16px;padding:8px 10px;font-size:12px;font-weight:850;color:#5c4572;text-align:center;outline:none}
+.rename-input::placeholder{color:#bcaec6;font-weight:750}
+.rename-input:focus{border-color:#c4a1df;box-shadow:0 0 0 3px #eadcf477}
+.rename-btn{background:#fff;color:#6d5480;border:1px solid #eadcf4;border-radius:16px;padding:8px 10px;font-size:11px;font-weight:850;white-space:nowrap}
+.rename-btn:active{transform:scale(.97)}
+.outfit-list{display:flex;flex-direction:column;gap:8px;margin-top:11px}
+.outfit-card{border:1.5px solid #efe3f3;background:#fffdfd;border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.outfit-card.active{border-color:#a77bc9;background:#faf2fd}
+.outfit-info{flex:1;min-width:0}
+.outfit-title{font-size:12px;font-weight:850;color:#5f4877;display:flex;align-items:center;gap:5px}
+.outfit-title .now{font-size:9px;font-weight:800;color:#7a4ea3;background:#f1e3fb;border-radius:8px;padding:2px 6px}
+.outfit-items{font-size:16px;letter-spacing:2px;margin-top:4px;line-height:1.2}
+.outfit-sub{font-size:10px;color:#a294ab;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.outfit-btns{display:flex;gap:5px;flex-shrink:0}
+.outfit-btns button{border-radius:11px;padding:7px 8px;font-size:10px;font-weight:800;background:#f3e8fa;color:#79618d}
+.outfit-btns button.del{background:#fbf1f3;color:#a5778a}
+.outfit-btns button:active{transform:scale(.96)}
+.outfit-empty{border:1.5px dashed #e8d9ef;border-radius:16px;padding:13px;text-align:center;font-size:11px;color:#a79aae;font-weight:750;background:#fdfbfe}
+.outfit-save-btn{width:100%;margin-top:10px;background:#f4ecfb;color:#6b5382;border:1px solid #e8d9f4;border-radius:18px;padding:11px;font-size:12px;font-weight:850}
+.outfit-save-btn:active{transform:scale(.985)}
 .footer{text-align:center;color:#b0a4b4;font-size:10px;padding:22px 0 8px}
 @media(min-width:520px){.app{padding-top:18px}.hero{padding-top:25px}}
 </style>
@@ -186,7 +207,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 <section id="homeScreen">
   <div class="hero">
     <div class="eyebrow">A LITTLE START IS ENOUGH</div>
-    <h1>해야 하는데 시작이 안 될 때,<br>콩이랑 딱 5분만 해보자!</h1>
+    <h1 id="homeGreeting">해야 하는데 시작이 안 될 때,<br>콩이랑 딱 5분만 해보자!</h1>
     <p>계획은 잠깐 내려놓고, 첫 행동 하나만 정해보자.</p>
     <div class="mascot" aria-label="웃고 있는 새싹 콩 캐릭터">
       <div class="bean">
@@ -202,7 +223,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
         <div class="arms"><i></i><i></i></div>
       </div>
     </div>
-    <button type="button" class="hero-dress-btn" id="openClosetHeroBtn">✨ 콩이 꾸미기 · 보유 <span id="beanCountHero">0</span>콩</button>
+    <button type="button" class="hero-dress-btn" id="openClosetHeroBtn">✨ <span id="beanNameHero">콩이</span> 꾸미기 · 보유 <span id="beanCountHero">0</span>콩</button>
   </div>
 
   <section class="panel">
@@ -233,7 +254,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
       </div>
     </div>
     <button class="primary" id="createBtn">✦ AI와 첫 행동 찾기</button>
-    <div class="tiny">완료할 때마다 🫘 콩 1개가 모여! 모은 콩으로 콩이를 꾸며봐.</div>
+    <div class="tiny" id="homeHint">완료할 때마다 🫘 콩 1개가 모여! 모은 콩으로 콩이를 꾸며봐.</div>
   </section>
 
   <section class="panel">
@@ -348,7 +369,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 </section>
 
 <section id="closetScreen" class="hidden">
-  <div class="screen-title"><button class="back" id="closetBack" aria-label="뒤로">‹</button><h2>콩이 꾸미기</h2></div>
+  <div class="screen-title"><button class="back" id="closetBack" aria-label="뒤로">‹</button><h2 id="closetHeading">콩이 꾸미기</h2></div>
   <div class="hero">
     <div class="eyebrow">BEAN CLOSET</div>
     <div class="mascot">
@@ -360,6 +381,10 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
     </div>
     <h1 id="closetTitle">나만의 콩이를 꾸며봐!</h1>
     <p>시작을 완료할 때마다 🫘 콩 1개가 쌓여.<br>지금 보유 중인 콩: <strong id="beanCountCloset">0</strong>개</p>
+    <div class="rename-row">
+      <input id="beanNameInput" class="rename-input" maxlength="10" placeholder="이름" aria-label="콩이 이름" autocomplete="off"/>
+      <button type="button" class="rename-btn" id="beanNameSave">✏️ 이름 저장</button>
+    </div>
     <div class="closet-msg" id="closetMsg"></div>
   </div>
 
@@ -380,6 +405,14 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
       <div class="closet-label">👜 손 · 친구 소품</div>
       <div class="closet-grid" id="accGrid"></div>
     </div>
+  </div>
+
+  <div class="panel">
+    <div class="section-title">💾 내 코디</div>
+    <div class="hint">지금 입힌 조합을 3개까지 저장해 두고 한 번에 갈아입어. 덮어쓰기와 삭제도 할 수 있어.</div>
+    <div class="outfit-list" id="outfitList"></div>
+    <button type="button" class="outfit-save-btn" id="outfitSaveBtn">＋ 지금 코디 저장</button>
+    <div class="closet-msg" id="outfitMsg"></div>
   </div>
 
   <div class="tabs">
@@ -418,7 +451,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
   </div>
 </section>
 
-<div class="footer">시작콩 v13 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
+<div class="footer">시작콩 v14 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
 </main>
 
 <script>
@@ -481,6 +514,10 @@ function normalizeData(raw){
   if(!d.equipped.glasses)d.equipped.glasses='none';
   if(!d.equipped.color)d.equipped.color='cream';
   if(!d.equipped.acc)d.equipped.acc='none';
+  if(typeof d.beanName!=='string'||!d.beanName.trim())d.beanName='콩이';
+  d.beanName=d.beanName.trim().replace(/\s+/g,' ').slice(0,10)||'콩이';
+  if(!Array.isArray(d.outfits))d.outfits=[];
+  d.outfits=d.outfits.filter(o=>o&&typeof o==='object').slice(0,3).map(o=>({hat:o.hat||'none',glasses:o.glasses||'none',color:o.color||'cream',acc:o.acc||'none',at:o.at||Date.now()}));
   return d;
 }
 
@@ -526,12 +563,117 @@ function weekCount(){
   return data.history.filter(h=>h.at>=weekAgo).length;
 }
 
+function hasJong(word){const ch=String(word||'').slice(-1);if(!ch)return false;const c=ch.charCodeAt(0);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28!==0;}
+function josa(word,withJong,withoutJong){return word+(hasJong(word)?withJong:withoutJong);}
+function beanName(){return (data&&typeof data.beanName==='string'&&data.beanName.trim())?data.beanName.trim():'콩이';}
+function findClosetItem(type,id){return (CLOSET[type]||[]).find(x=>x.id===id)||null;}
+function currentOutfit(){return {hat:data.equipped.hat||'none',glasses:data.equipped.glasses||'none',color:data.equipped.color||'cream',acc:data.equipped.acc||'none'};}
+function sameOutfit(a,b){return !!a&&!!b&&a.hat===b.hat&&a.glasses===b.glasses&&a.color===b.color&&a.acc===b.acc;}
+function closetSay(text,id){const el=document.getElementById(id||'closetMsg');if(el)el.textContent=text;}
+
+function syncBeanName(){
+  const n=beanName();
+  const setText=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setText('beanNameHero',n);
+  setText('closetHeading',n+' 꾸미기');
+  setText('closetTitle','나만의 '+josa(n,'을','를')+' 꾸며봐!');
+  const greeting=document.getElementById('homeGreeting');
+  if(greeting)greeting.innerHTML='해야 하는데 시작이 안 될 때,<br>'+josa(n,'이랑','랑')+' 딱 5분만 해보자!';
+  const hint=document.getElementById('homeHint');
+  if(hint)hint.textContent='완료할 때마다 🫘 콩 1개가 모여! 모은 콩으로 '+josa(n,'을','를')+' 꾸며봐.';
+  const emp=document.getElementById('aiEmpathyText');
+  if(emp&&/콩이[가] 딱 맞는/.test(emp.textContent))emp.textContent='잠깐만 기다려줘, '+josa(n,'이','가')+' 딱 맞는 첫 행동을 찾고 있어!';
+  const pill=document.getElementById('headerBeanBtn');
+  if(pill)pill.setAttribute('aria-label',n+' 꾸미기 열기');
+  const input=document.getElementById('beanNameInput');
+  if(input&&document.activeElement!==input)input.value=n;
+}
+
+function saveBeanName(raw){
+  let v=String(raw||'').trim().replace(/\s+/g,' ').slice(0,10);
+  if(!v){closetSay('이름을 한 글자 이상 적어줘! ✏️');return;}
+  data.beanName=v;
+  save();
+  closetSay('이름을 "'+v+'"'+josa(v,'으로','로')+' 바꿨어! ✨');
+}
+
+function wearOutfit(o,slot){
+  ['hat','glasses','color','acc'].forEach(type=>{
+    const item=findClosetItem(type,o[type]);
+    if(!item)return;
+    const key=type+':'+item.id;
+    if(item.cost>0&&!data.unlocked.includes(key))data.unlocked.push(key);
+    data.equipped[type]=item.id;
+  });
+  save();
+  closetSay('코디 '+(slot+1)+'로 갈아입었어! ✨');
+}
+
+function renderOutfits(){
+  const wrap=document.getElementById('outfitList');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  const cur=currentOutfit();
+  for(let i=0;i<3;i++){
+    const o=data.outfits[i];
+    if(!o){
+      const empty=document.createElement('div');
+      empty.className='outfit-empty';
+      empty.textContent='코디 '+(i+1)+' · 비어 있음';
+      wrap.appendChild(empty);
+      continue;
+    }
+    const hat=findClosetItem('hat',o.hat)||{emoji:'·',name:''};
+    const gl=findClosetItem('glasses',o.glasses)||{emoji:'·',name:''};
+    const co=findClosetItem('color',o.color)||{emoji:'·',name:''};
+    const ac=findClosetItem('acc',o.acc)||{emoji:'·',name:''};
+    const isNow=sameOutfit(o,cur);
+    const card=document.createElement('div');
+    card.className='outfit-card'+(isNow?' active':'');
+
+    const emojis=document.createElement('div');emojis.className='outfit-items';
+    emojis.textContent=[hat.emoji,gl.emoji,co.emoji,ac.emoji].join(' ');
+
+    const info=document.createElement('div');info.className='outfit-info';
+    const title=document.createElement('div');title.className='outfit-title';
+    title.textContent='코디 '+(i+1);
+    if(isNow){const now=document.createElement('span');now.className='now';now.textContent='착용 중';title.appendChild(now);}
+    const sub=document.createElement('div');sub.className='outfit-sub';
+    sub.textContent=[hat.name,gl.name,co.name,ac.name].filter(Boolean).join(' · ');
+    info.append(title,emojis,sub);
+
+    const btns=document.createElement('div');btns.className='outfit-btns';
+    const wear=document.createElement('button');
+    wear.type='button';wear.textContent=isNow?'입는 중':'입기';
+    wear.onclick=ev=>{ev.stopPropagation();wearOutfit(o,i);};
+    const over=document.createElement('button');
+    over.type='button';over.textContent='덮어쓰기';
+    over.onclick=ev=>{
+      ev.stopPropagation();
+      data.outfits[i]=Object.assign(currentOutfit(),{at:Date.now()});
+      save();closetSay('코디 '+(i+1)+'을(를) 지금 모습으로 덮어썼어! 💾');
+    };
+    const del=document.createElement('button');
+    del.type='button';del.className='del';del.textContent='✕';
+    del.setAttribute('aria-label','코디 '+(i+1)+' 삭제');
+    del.onclick=ev=>{
+      ev.stopPropagation();
+      data.outfits.splice(i,1);
+      save();closetSay('코디 '+(i+1)+'을(를) 지웠어.');
+    };
+    btns.append(wear,over,del);
+    card.append(info,btns);
+    card.onclick=()=>wearOutfit(o,i);
+    wrap.appendChild(card);
+  }
+}
+
 document.getElementById('today').textContent=new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'short'});
 const screens=['homeScreen','resumeScreen','timerScreen','closetScreen','historyScreen'];
 
 function show(id){
   if(id==='homeScreen'||id==='resumeScreen'||id==='closetScreen')setMascotMood('cheer');
-  if(id==='timerScreen'&&!paused)setMascotMood('cheer');
+  if(id==='timerScreen'&&!paused)setMascotMood('focus');
   screens.forEach(s=>document.getElementById(s).classList.toggle('hidden',s!==id));
   const activeTab=id==='historyScreen'?'history':id==='closetScreen'?'closet':'home';
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===activeTab));
@@ -573,10 +715,12 @@ document.querySelectorAll('#emotionChips .emo-chip').forEach(b=>{
 });
 
 function setMascotMood(mood){
+  const n=beanName();
   const moods={
-    cheer:{emoji:'💪',message:'콩이가 옆에서 응원하고 있어!'},
-    sleep:{emoji:'💤',message:'잠깐 쉬어도 괜찮아. 천천히 해보자.'},
-    celebrate:{emoji:'✨',message:'해냈다! 🫘 콩 1개를 모았어.'}
+    cheer:{emoji:'✨',message:josa(n,'이','가')+' 옆에서 응원하고 있어!'},
+    focus:{emoji:'🫧',message:n+'와 함께 5분만 집중해보자!'},
+    sleep:{emoji:'🌙',message:'잠깐 쉬어도 괜찮아. 천천히 해보자.'},
+    celebrate:{emoji:'🥳',message:'해냈다! 🫘 콩 1개를 모았어.'}
   };
   const m=moods[mood]||moods.cheer;
   document.querySelectorAll('.mascot').forEach(el=>{
@@ -691,6 +835,8 @@ function render(){
   renderClosetGroup('glasses','glassesGrid');
   renderClosetGroup('color','colorGrid');
   renderClosetGroup('acc','accGrid');
+  syncBeanName();
+  renderOutfits();
 
   const hist=document.getElementById('historyList');
   hist.innerHTML='';
@@ -943,7 +1089,7 @@ function stopTimer(){if(interval)clearInterval(interval);interval=null;}
 
 document.getElementById('pauseBtn').onclick=()=>{
   paused=!paused;
-  setMascotMood(paused?'sleep':'cheer');
+  setMascotMood(paused?'sleep':'focus');
   document.getElementById('pauseBtn').textContent=paused?'▶ 다시 이어하기':'Ⅱ 잠깐 멈춤';
   updateTimer();
 };
@@ -967,7 +1113,7 @@ document.getElementById('completeBtn').onclick=()=>{
 document.getElementById('plusFiveBtn').onclick=()=>{
   seconds=300;paused=false;timerRecorded=false;
   resetTimerButtons();
-  setMascotMood('cheer');
+  setMascotMood('focus');
   updateTimer();
   startTimer();
 };
@@ -991,6 +1137,22 @@ document.getElementById('exportBtn').onclick=()=>{
 document.getElementById('headerBeanBtn').onclick=()=>show('closetScreen');
 document.getElementById('openClosetHeroBtn').onclick=()=>show('closetScreen');
 document.getElementById('closetBack').onclick=()=>show('homeScreen');
+const beanNameInputEl=document.getElementById('beanNameInput');
+if(beanNameInputEl){
+  beanNameInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveBeanName(beanNameInputEl.value);}});
+}
+const beanNameSaveBtn=document.getElementById('beanNameSave');
+if(beanNameSaveBtn)beanNameSaveBtn.onclick=()=>saveBeanName(beanNameInputEl?beanNameInputEl.value:'');
+const outfitSaveBtn=document.getElementById('outfitSaveBtn');
+if(outfitSaveBtn)outfitSaveBtn.onclick=()=>{
+  const cur=currentOutfit();
+  const idx=data.outfits.findIndex(o=>sameOutfit(o,cur));
+  if(idx>=0){closetSay('지금 모습은 이미 코디 '+(idx+1)+'에 저장돼 있어! 😊','outfitMsg');return;}
+  if(data.outfits.length>=3){closetSay('코디 자리 3개가 다 찼어. 아래 코디의 덮어쓰기를 눌러줘!','outfitMsg');return;}
+  data.outfits.push(Object.assign(cur,{at:Date.now()}));
+  save();
+  closetSay('코디 '+data.outfits.length+'에 저장했어! 💾','outfitMsg');
+};
 document.getElementById('historyBack').onclick=()=>show('homeScreen');
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   const target=t.dataset.tab==='history'?'historyScreen':t.dataset.tab==='closet'?'closetScreen':'homeScreen';
