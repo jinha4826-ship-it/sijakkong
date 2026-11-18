@@ -279,6 +279,11 @@ body.ev-open{overflow:hidden}
 .ev-tag.data{color:#3f6b52;background:#f4fbf5;border-color:#d6ead9}
 .ev-body{font-size:11.5px;line-height:1.7;color:#7b6b88;margin-top:8px;word-break:keep-all}
 .ev-body b{color:#5f4877;font-weight:850}
+.ev-list{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.ev-list li{position:relative;padding-left:13px;font-size:11.5px;line-height:1.65;color:#7b6b88;word-break:keep-all}
+.ev-list li:before{content:"";position:absolute;left:2px;top:7px;width:4px;height:4px;border-radius:50%;background:#b58bd7}
+.ev-list li b{color:#5f4877;font-weight:850}
+.ev-card.privacy .ev-list li:before{background:#7cb894}
 .ev-src{font-size:9px;line-height:1.55;color:#a99bb2;margin-top:9px;padding-top:7px;border-top:1px dashed #f0e6f4;word-break:keep-all}
 .ev-src b{color:#8b7b96;font-weight:850}
 .ev-card.privacy{background:linear-gradient(160deg,#f6fcf8,#fbfbf6);border-color:#dcefe0}
@@ -660,7 +665,14 @@ body.ev-open{overflow:hidden}
       <div class="ev-card privacy">
         <div class="ev-card-top"><span class="ev-num">4</span><h3>프라이버시 설계 — 기록은 내 기기에만</h3></div>
         <div class="ev-tags"><span class="ev-tag data">localStorage 전용</span><span class="ev-tag data">서버 DB 미보관</span><span class="ev-tag data">최소 전송</span><span class="ev-tag data">회원가입 없음</span></div>
-        <div class="ev-body">일기·완료 기록·감정·꾸미기 아이템·콩은 모두 <b>이 브라우저의 localStorage</b>에만 저장되고, 앱 서버로 올라가지 않아요. AI 기능을 쓸 때는 지금 입력한 과제명, 고른 감정, 분류, 연속일, 시간대처럼 <b>한 줄을 만드는 데 필요한 값만</b> 전송합니다. 계정 정보도 광고 식별자도 보내지 않아요. 요청은 Cloudflare Worker를 거쳐 Gemini API로 전달되며, 시작콩은 <b>별도 서버 DB를 두지 않아</b> 전송한 값이 앱 쪽에 쌓이지 않습니다. AI가 연결되지 않으면 아무것도 보내지 않고 기기 기록만으로 문장을 만들어요. 브라우저 기록을 지우면 데이터도 함께 사라지고, 기록 탭의 <b>'기록 백업'</b>으로 언제든 내보낼 수 있어요.</div>
+        <div class="ev-body" style="margin-top:2px">
+          <ul class="ev-list">
+            <li><b>저장</b> — 일기·완료 기록·감정·꾸미기 아이템·콩은 모두 <b>이 브라우저의 localStorage</b>에만 있고, 앱 서버로 올라가지 않아요.</li>
+            <li><b>전송</b> — AI 기능을 쓸 때는 과제명·감정·분류·연속일·시간대처럼 <b>한 줄을 만드는 데 필요한 값만</b>. 계정 정보도 광고 식별자도 보내지 않아요.</li>
+            <li><b>보관</b> — 요청은 Cloudflare Worker를 거쳐 Gemini API로 전달되고, 시작콩은 <b>별도 서버 DB를 두지 않아</b> 전송한 값이 앱 쪽에 쌓이지 않습니다. AI가 연결되지 않으면 아무것도 보내지 않아요.</li>
+            <li><b>내보내기</b> — 브라우저 기록을 지우면 데이터도 함께 사라지고, 기록 탭의 <b>'기록 백업'</b>으로 언제든 JSON으로 꺼낼 수 있어요.</li>
+          </ul>
+        </div>
         <div class="ev-src"><b>저장 위치</b> 브라우저 localStorage(<code>startkong_v3</code>) · 서버 전송은 AI 요청의 과제·감정·분류·연속일·시간대 값으로 한정</div>
       </div>
 
@@ -1132,6 +1144,11 @@ function patTop(map){
   return {key:best,count:n};
 }
 function patPct(part,whole){return whole>0?Math.round(part/whole*100):0;}
+function historyCategory(h){
+  if(h&&h.category)return h.category;
+  const t=(data.tasks||[]).find(x=>x.title===h.title&&x.category);
+  return (t&&t.category)?t.category:'기타';
+}
 
 function renderPatterns(){
   const box=document.getElementById('patBody');
@@ -1159,17 +1176,17 @@ function renderPatterns(){
   }
 
   const emoMap={},catMap={},bucketMap={};
-  let timerN=0;
+  let timerN=0,emoN=0;
   list.forEach(h=>{
-    const e=historyEmotion(h)||'__none';
-    patCount(emoMap,e);
-    patCount(catMap,h.category||'기타');
+    const e=historyEmotion(h);
+    if(e){patCount(emoMap,e);emoN++;}
+    patCount(catMap,historyCategory(h));
     patCount(bucketMap,patBucket(new Date(h.at).getHours()));
     if(h.source==='timer')timerN++;
   });
   const total=list.length;
   const topEmo=patTop(emoMap),topCat=patTop(catMap),topBucket=patTop(bucketMap);
-  const emoMeta=topEmo.key==='__none'?STARTED_META:(emotionMeta(topEmo.key)||STARTED_META);
+  const emoMeta=emotionMeta(topEmo.key)||null;
   const rate=patPct(timerN,total);
 
   const grid=document.createElement('div');grid.className='pat-grid';
@@ -1177,10 +1194,19 @@ function renderPatterns(){
   const t1=document.createElement('div');t1.className='pat-tile';
   const k1=document.createElement('span');k1.className='pat-k';k1.textContent='가장 자주 막힌 감정';
   const v1=document.createElement('div');v1.className='pat-v';
-  const e1=document.createElement('span');e1.className='pat-emo';e1.textContent=emoMeta.emoji;
-  const n1=document.createElement('span');n1.textContent=emoMeta.label;
-  v1.append(e1,n1);
-  const s1=document.createElement('span');s1.className='pat-sub';s1.textContent=total+'번 중 '+topEmo.count+'번 · '+patPct(topEmo.count,total)+'%';
+  const e1=document.createElement('span');e1.className='pat-emo';
+  const n1=document.createElement('span');
+  if(emoMeta){
+    e1.textContent=emoMeta.emoji;
+    n1.textContent=emoMeta.label;
+    v1.append(e1,n1);
+  }else{
+    e1.textContent='🌱';
+    n1.textContent='아직 감정 기록이 없어';
+    v1.append(e1,n1);
+  }
+  const s1=document.createElement('span');s1.className='pat-sub';
+  s1.textContent=emoMeta?(emoN+'번 중 '+topEmo.count+'번 · '+patPct(topEmo.count,emoN)+'%'):('감정을 고르면 여기에 쌓여요');
   t1.append(k1,v1,s1);
 
   const t2=document.createElement('div');t2.className='pat-tile';
@@ -1226,12 +1252,22 @@ function renderPatterns(){
   box.appendChild(grid);
 
   const ins=document.createElement('div');ins.className='pat-insight';
-  const b1=document.createElement('b');b1.textContent=emoMeta.emoji+' '+emoMeta.label;
-  ins.append(b1);
-  ins.appendChild(document.createTextNode(' 느낌이 올 때 가장 자주 막혔고('+total+'번 중 '+topEmo.count+'번), '));
+  if(emoMeta){
+    const b1=document.createElement('b');b1.textContent=emoMeta.emoji+' '+emoMeta.label;
+    ins.append(b1);
+    ins.appendChild(document.createTextNode(' 느낌이 올 때 가장 자주 막혔고('+emoN+'번 중 '+topEmo.count+'번), '));
+  }else{
+    ins.appendChild(document.createTextNode('최근 30일 기록 '));
+    const b0=document.createElement('b');b0.textContent=total+'번';
+    ins.append(b0);
+    ins.appendChild(document.createTextNode(' 중 '));
+  }
   const b2=document.createElement('b');b2.textContent=topBucket.key;
   ins.append(b2);
-  ins.appendChild(document.createTextNode('에 가장 많이 시작했어. 시작한 5분 중 '));
+  ins.appendChild(document.createTextNode('에 가장 많이 시작했어. 가장 많이 막힌 건 '));
+  const b4=document.createElement('b');b4.textContent=topCat.key;
+  ins.append(b4);
+  ins.appendChild(document.createTextNode('('+topCat.count+'번)야. 시작한 5분 중 '));
   const b3=document.createElement('b');b3.textContent=rate+'%';
   ins.append(b3);
   ins.appendChild(document.createTextNode('는 타이머를 끝까지 채웠어.'));
