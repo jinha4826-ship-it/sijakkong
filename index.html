@@ -1399,7 +1399,7 @@ function coachObjectFor(cat){
 function localCoaching(ctx){
   const ap=COACH_APPROACH[coachEmotionKey(ctx.emotion)];
   const obj=coachObjectFor(ctx.category);
-  const line=(ap.lead+' '+obj).replace(/\s+/g,' ').trim();
+  const line=(ap.lead+', '+obj).replace(/\s+/g,' ').trim();
   let why=ap.why;
   if(ctx.streak>=3)why+=' 오늘로 '+ctx.streak+'일째 이어지는 중이라, 짧게 해도 흐름이 안 끊기는 게 제일 커.';
   else if(ctx.todayCount>=2)why+=' 오늘 '+ctx.todayCount+'번째 시작이니까, 새 일보다 방금 것의 다음 조각이 더 수월해.';
