@@ -234,6 +234,21 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 .cal-entry small{display:block;font-size:9.5px;color:#a294ab;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cal-empty{font-size:10.5px;color:#a294ab;margin-top:9px;line-height:1.6;font-weight:750}
 @media(max-width:400px){.cal-grid,.cal-heads{gap:5px}.cal-cell{min-height:48px;border-radius:12px;padding:4px 1px 3px}.cal-cell .cal-mood{font-size:13px}.cal-grid.week .cal-cell{min-height:70px}.cal-label{font-size:12px}.cal-nav-btns button{min-width:26px;height:26px}}
+.coach-card{margin-top:14px;border-radius:20px;background:linear-gradient(150deg,#f7edff,#fff3f7 65%,#fff9f0);border:1.5px solid #e6d2f4;padding:14px 14px 13px;text-align:left;box-shadow:0 8px 20px #c9a9e01f}
+.coach-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.coach-badge{font-size:10px;font-weight:900;color:#6f4a92;background:#fff;border:1px solid #e2cdf2;border-radius:12px;padding:4px 9px}
+.coach-badge.local{color:#4f6f43;background:#f7fbf2;border-color:#d5e8c6}
+.coach-kicker{font-size:9.5px;font-weight:850;color:#a795b6;letter-spacing:.2px;white-space:nowrap}
+.coach-line{font-size:15px;font-weight:900;line-height:1.5;letter-spacing:-.5px;color:#553f6b;margin-top:9px;min-height:22px;word-break:keep-all}
+.coach-why{font-size:11px;line-height:1.62;color:#8b7a99;margin-top:7px;font-weight:700;word-break:keep-all}
+.coach-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:10px}
+.coach-note{font-size:9px;line-height:1.5;color:#b1a3bb;font-weight:700;flex:1;min-width:0}
+.coach-refresh{background:#fff;border:1px solid #e6d8f0;color:#7a5f92;border-radius:14px;padding:5px 9px;font-size:10px;font-weight:850;flex-shrink:0}
+.coach-refresh:active{transform:scale(.97)}
+.coach-skel .coach-line{color:#a89bb4;font-weight:850}
+.coach-skel .coach-line:after{content:'';display:inline-block;width:6px;height:6px;margin-left:5px;border-radius:50%;background:#c9a9e0;animation:coachPulse 1s infinite}
+@keyframes coachPulse{0%,100%{opacity:.25}50%{opacity:1}}
+@media(max-width:400px){.coach-line{font-size:14px}.coach-why{font-size:10.5px}.coach-note{font-size:8.6px}}
 .footer{text-align:center;color:#b0a4b4;font-size:10px;padding:22px 0 8px}
 @media(min-width:520px){.app{padding-top:18px}.hero{padding-top:25px}}
 </style>
@@ -324,7 +339,8 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
       <div style="font-size:11.5px;line-height:1.65;color:#7d6e89;margin-top:10px">
         <p style="margin:0 0 6px"><strong>1. 행동 활성화(Behavioral Activation)</strong><br>미루기는 게으름이 아니라 착수 순간의 정서적 회피 때문이에요. 가장 낮은 행동부터 시작해 회피 고리를 끊는 임상 기법이에요.</p>
         <p style="margin:0 0 6px"><strong>2. 구현 의도(Implementation Intentions)</strong><br>막연한 계획보다 구체적 첫 행동 1개를 정할 때 실제 착수율이 크게 높아진다는 점이 642건의 메타분석(Gollwitzer 등)으로 입증됐어요.</p>
-        <p style="margin:0"><strong>3. 즉각적 정적 강화</strong><br>완료 직후 모이는 🫘 콩 1개가 뇌의 보상 회로를 가볍게 자극해 다음 시작을 돕습니다.</p>
+        <p style="margin:0 0 6px"><strong>3. 즉각적 정적 강화</strong><br>완료 직후 모이는 🫘 콩 1개가 뇌의 보상 회로를 가볍게 자극해 다음 시작을 돕습니다.</p>
+        <p style="margin:0"><strong>4. 완료 직후의 '다음 한 걸음'</strong><br>5분을 마치면 그날의 감정·과제·연속 기록을 AI가 읽고 '다음 5분 1줄'을 제안합니다. 멈추지 않고 이어지는 경험이 다시 시작하는 힘을 만듭니다.</p>
       </div>
     </details>
   </section>
@@ -393,6 +409,18 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
         <div class="timer-inner">
           <div class="time" id="timeDisplay">05:00</div>
           <div class="timer-caption" id="timerCaption">완료가 목표가 아니야. 시작하는 게 목표야.</div>
+        </div>
+      </div>
+      <div class="coach-card hidden" id="coachCard" aria-live="polite">
+        <div class="coach-top">
+          <span class="coach-badge" id="coachBadge">✨ AI 다음 스텝</span>
+          <span class="coach-kicker">다음 5분은 이렇게</span>
+        </div>
+        <div class="coach-line" id="coachLine"></div>
+        <div class="coach-why" id="coachWhy"></div>
+        <div class="coach-foot">
+          <span class="coach-note" id="coachNote"></span>
+          <button type="button" class="coach-refresh" id="coachRefresh">↻ 다른 제안</button>
         </div>
       </div>
       <div class="timer-actions" id="timerActions">
@@ -518,7 +546,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
   </div>
 </section>
 
-<div class="footer">시작콩 v14 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
+<div class="footer">시작콩 v16 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
 </main>
 
 <script>
@@ -1304,11 +1332,157 @@ function playChime(){
 }
 
 function resetTimerButtons(){
+  coachSeq++;
+  const cc=document.getElementById('coachCard');
+  if(cc)cc.classList.add('hidden');
   document.getElementById('timerActions').classList.remove('hidden');
   document.getElementById('timerDoneActions').classList.add('hidden');
   document.getElementById('pauseBtn').textContent='Ⅱ 잠깐 멈춤';
   document.getElementById('completeBtn').textContent='해냈어! ✓ (+🫘1)';
 }
+
+/* ── 완료 직후: AI '다음 5분' 1줄 코칭 ── */
+const COACH_ENDPOINT='https://maeum-bingsan-ai.cba4826.workers.dev';
+const COACH_TIMEOUT=7000;
+let coachSeq=0,coachAction='',coachLine='',coachSource='';
+
+function coachContext(t){
+  const hour=new Date().getHours();
+  const timeOfDay=hour<6?'새벽':hour<11?'아침':hour<15?'점심 무렵':hour<19?'오후':'밤';
+  const todayCount=data.history.filter(h=>dayKey(h.at)===dayKey(Date.now())).length;
+  return {
+    task:String((t&&t.title)||'').slice(0,60),
+    step:String((t&&t.lastStep)||'').slice(0,60),
+    emotion:String((t&&t.emotion)||'').slice(0,40),
+    category:String((t&&t.category)||'기타').slice(0,20),
+    streak:calcStreak(),
+    todayCount,
+    beans:data.beans,
+    timeOfDay
+  };
+}
+
+function coachEmotionKey(v){
+  if(/막막|커 보여|어디서/.test(v))return 'lost';
+  if(/완벽/.test(v))return 'perfect';
+  if(/피곤|귀찮|에너지/.test(v))return 'tired';
+  if(/걱정|불안|실패/.test(v))return 'worry';
+  if(/지루|재미/.test(v))return 'bored';
+  return 'plain';
+}
+const COACH_APPROACH={
+  lost:{lead:'더 쪼개서',why:'막막함은 덩어리가 클 때 가장 커져. 방금 넘긴 5분 뒤에는 덩어리를 반으로 줄이는 쪽이 제일 가벼워.'},
+  perfect:{lead:'대충 해도 되니까',why:'완벽 기준을 잠깐 내려두면 손이 풀려. 지금 목표는 결과물이 아니라 이어지는 리듬이야.'},
+  tired:{lead:'몸만 움직여서',why:'기운이 없을 때는 머리 쓰는 일보다 몸이 먼저 움직이는 쪽이 다시 시작하기 쉬워.'},
+  worry:{lead:'결과 확인 없이',why:'걱정은 결과를 미리 볼 때 커져. 다음 5분은 확인 없이 손만 대는 쪽으로 가자.'},
+  bored:{lead:'3분만 세고',why:'지루함에는 짧은 제한 시간이 잘 먹혀. 작은 게임처럼 끊어서 가자.'},
+  plain:{lead:'이어서',why:'방금 첫 5분을 넘겼으니 지금이 가장 이어가기 쉬운 순간이야.'}
+};
+const COACH_OBJECT={
+  '공부':'같은 페이지 다음 문단 한 줄만 더 읽어보기',
+  '업무':'방금 연 파일에 다음 항목 1줄만 적어보기',
+  '집안일':'방금 치운 그 자리 옆 한 칸만 더 정리하기',
+  '운동':'방금 한 동작 하나만 천천히 한 번 더 하기',
+  '자기관리':'지금 자리에서 1분만 더 그대로 있어보기',
+  '기타':'방금 손댄 그 부분에 한 줄만 더 붙여보기'
+};
+function coachObjectFor(cat){
+  if(COACH_OBJECT[cat])return COACH_OBJECT[cat];
+  if(/공부|시험|인강|문제|자격증/.test(cat))return COACH_OBJECT['공부'];
+  if(/업무|회사|일$/.test(cat))return COACH_OBJECT['업무'];
+  if(/집안|청소|요리|빨래/.test(cat))return COACH_OBJECT['집안일'];
+  if(/운동|헬스|산책/.test(cat))return COACH_OBJECT['운동'];
+  return COACH_OBJECT['자기관리'];
+}
+
+/* AI 연결 실패 시: 기기에 쌓인 감정·과제·연속 기록만으로 만드는 다음 1줄 */
+function localCoaching(ctx){
+  const ap=COACH_APPROACH[coachEmotionKey(ctx.emotion)];
+  const obj=coachObjectFor(ctx.category);
+  const line=(ap.lead+' '+obj).replace(/\s+/g,' ').trim();
+  let why=ap.why;
+  if(ctx.streak>=3)why+=' 오늘로 '+ctx.streak+'일째 이어지는 중이라, 짧게 해도 흐름이 안 끊기는 게 제일 커.';
+  else if(ctx.todayCount>=2)why+=' 오늘 '+ctx.todayCount+'번째 시작이니까, 새 일보다 방금 것의 다음 조각이 더 수월해.';
+  else why+=' 첫 5분을 넘긴 지금이 가장 수월한 지점이야.';
+  return {line:line.slice(0,70),why:why.slice(0,150),action:obj.slice(0,60),source:'local'};
+}
+
+function paintCoaching(c){
+  const card=document.getElementById('coachCard');
+  if(!card)return;
+  card.classList.remove('coach-skel');
+  card.classList.remove('hidden');
+  const badge=document.getElementById('coachBadge');
+  const isAI=c.source==='ai';
+  badge.textContent=isAI?'✨ AI 다음 스텝':'🌱 맥락 맞춤 다음 스텝';
+  badge.classList.toggle('local',!isAI);
+  document.getElementById('coachLine').textContent=c.line;
+  document.getElementById('coachWhy').textContent=c.why||'';
+  document.getElementById('coachNote').textContent=isAI
+    ?'완료 기록·감정·연속일을 Gemini가 방금 읽고 만든 제안이야.'
+    :'기기에 쌓인 내 기록(감정·과제·연속일)으로 만든 제안이야. AI가 연결되면 표현이 더 새로워져.';
+  coachLine=c.line;coachAction=c.action||c.line;coachSource=c.source;
+  const last=data.history[data.history.length-1];
+  if(last&&!last.coach){
+    last.coach=c.line;last.coachSource=c.source;
+    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+  }
+}
+
+async function fetchCoaching(t){
+  const ctx=coachContext(t);
+  const seq=++coachSeq;
+  const ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  const to=setTimeout(()=>{if(ctrl)ctrl.abort();},COACH_TIMEOUT);
+  try{
+    const res=await fetch(COACH_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(Object.assign({mode:'coach',lang:'ko',round:coachSeq},ctx)),
+      signal:ctrl?ctrl.signal:undefined
+    });
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const out=await res.json();
+    if(seq!==coachSeq)return;
+    const line=(out&&typeof out.line==='string')?out.line.trim():'';
+    if(!line||out.fallback)throw new Error('no_ai_line');
+    paintCoaching({
+      line:line.slice(0,90),
+      why:String(out.why||'').slice(0,160),
+      action:String(out.action||line).slice(0,70),
+      source:'ai'
+    });
+  }catch(e){
+    if(seq!==coachSeq)return;
+    paintCoaching(localCoaching(ctx));
+  }finally{clearTimeout(to);}
+}
+
+function showCoaching(){
+  const card=document.getElementById('coachCard');
+  if(!card)return;
+  card.classList.remove('hidden');
+  card.classList.add('coach-skel');
+  const badge=document.getElementById('coachBadge');
+  badge.textContent='✨ AI 다음 스텝';badge.classList.remove('local');
+  document.getElementById('coachLine').textContent='지금 흐름에 맞는 다음 한 걸음을 고르는 중';
+  document.getElementById('coachWhy').textContent='';
+  document.getElementById('coachNote').textContent='';
+  coachAction='';coachLine='';coachSource='';
+  const t=data.tasks.find(x=>x.id===currentId);
+  fetchCoaching(t||{title:'',lastStep:'',emotion:'',category:'기타'});
+}
+
+function enterDoneState(){
+  stopTimer();
+  setMascotMood('celebrate');
+  document.getElementById('timerActions').classList.add('hidden');
+  document.getElementById('timerDoneActions').classList.remove('hidden');
+  showCoaching();
+}
+
+const coachRefreshBtn=document.getElementById('coachRefresh');
+if(coachRefreshBtn)coachRefreshBtn.onclick=()=>showCoaching();
 
 document.getElementById('toTimerBtn').onclick=()=>{
   const step=document.getElementById('stepInput').value.trim();
@@ -1337,12 +1511,9 @@ function startTimer(){
       seconds--;
       updateTimer();
       if(seconds===0){
-        stopTimer();
         playChime();
-        setMascotMood('celebrate');
         recordRestart(true);
-        document.getElementById('timerActions').classList.add('hidden');
-        document.getElementById('timerDoneActions').classList.remove('hidden');
+        enterDoneState();
       }
     }
   },1000);
@@ -1369,11 +1540,20 @@ function recordRestart(fromTimer=false){
 }
 
 document.getElementById('completeBtn').onclick=()=>{
-  recordRestart(false);stopTimer();setMascotMood('celebrate');
-  show('homeScreen');setMascotMood('celebrate');
+  recordRestart(false);
+  seconds=0;
+  enterDoneState();
+  updateTimer();
+  document.getElementById('timerCaption').textContent='시작 성공! 🫘 콩 1개 받았어 🌷';
 };
 
 document.getElementById('plusFiveBtn').onclick=()=>{
+  const t=data.tasks.find(x=>x.id===currentId);
+  if(t&&coachAction){
+    t.lastStep=coachAction.slice(0,90);t.updated=Date.now();
+    document.getElementById('currentStep').textContent=t.lastStep;
+    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+  }
   seconds=300;paused=false;timerRecorded=false;
   resetTimerButtons();
   setMascotMood('focus');
@@ -1427,7 +1607,7 @@ window.addEventListener('pagehide',()=>{saveDraft();if(currentId)saveSession(act
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='visible'&&activeScreen==='timerScreen'&&!paused&&deadline){
     seconds=Math.max(0,Math.ceil((deadline-Date.now())/1000));updateTimer();
-    if(seconds===0){stopTimer();playChime();setMascotMood('celebrate');recordRestart(true);document.getElementById('timerActions').classList.add('hidden');document.getElementById('timerDoneActions').classList.remove('hidden');}
+    if(seconds===0){playChime();recordRestart(true);enterDoneState();}
   }
 });
 renderCategories();restoreDraft();render();
@@ -1442,7 +1622,7 @@ renderCategories();restoreDraft();render();
       paused=!!s.paused;deadline=s.deadline||null;
       if(!paused&&deadline)seconds=Math.max(0,Math.ceil((deadline-Date.now())/1000));
       timerRecorded=false;updateTimer();show('timerScreen');
-      if(seconds===0){stopTimer();document.getElementById('timerActions').classList.add('hidden');document.getElementById('timerDoneActions').classList.remove('hidden');}
+      if(seconds===0){enterDoneState();}
       else if(!paused)startTimer();
     }else if(s.screen==='resumeScreen'){
       openResume(t.id);if(s.step)document.getElementById('stepInput').value=s.step;
