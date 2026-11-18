@@ -190,6 +190,50 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 .outfit-empty{border:1.5px dashed #e8d9ef;border-radius:16px;padding:13px;text-align:center;font-size:11px;color:#a79aae;font-weight:750;background:#fdfbfe}
 .outfit-save-btn{width:100%;margin-top:10px;background:#f4ecfb;color:#6b5382;border:1px solid #e8d9f4;border-radius:18px;padding:11px;font-size:12px;font-weight:850}
 .outfit-save-btn:active{transform:scale(.985)}
+.cal-seg{display:inline-flex;background:#f4ecfa;border-radius:16px;padding:3px;gap:2px}
+.cal-seg button{border-radius:13px;padding:6px 12px;font-size:11px;font-weight:850;color:#8e7c9b;background:transparent}
+.cal-seg button.on{background:#fff;color:#5f4877;box-shadow:0 2px 6px #cdb7e033}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px}
+.cal-label{font-size:13px;font-weight:900;letter-spacing:-.4px;color:#5f4877}
+.cal-nav-btns{display:flex;gap:5px;flex-shrink:0}
+.cal-nav-btns button{min-width:28px;height:28px;border-radius:50%;background:#f8f2fc;color:#7a6490;font-size:14px;font-weight:800;display:grid;place-items:center;padding:0 6px}
+.cal-nav-btns button.today{border-radius:14px;font-size:10px;font-weight:850;padding:0 9px}
+.cal-nav-btns button:active{transform:scale(.94)}
+.cal-summary{font-size:10.5px;color:#9a8ba4;margin-top:6px;font-weight:750;min-height:15px}
+.cal-heads{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:11px}
+.cal-heads span{text-align:center;font-size:10px;font-weight:850;color:#a293ac}
+.cal-heads span.weekend{color:#c08fa6}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:5px}
+.cal-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:52px;border-radius:14px;background:#faf7fc;border:1.5px solid transparent;padding:5px 2px 4px;transition:transform .15s,box-shadow .15s}
+.cal-cell .cal-day{font-size:11px;font-weight:850;color:#6d5a7c;line-height:1.1}
+.cal-cell .cal-mood{font-size:14px;line-height:1.15;min-height:16px}
+.cal-cell .cal-count{font-size:8.5px;font-weight:850;color:#847490;line-height:1.1;min-height:10px}
+.cal-cell.out{opacity:.4}
+.cal-cell.today .cal-day{color:#7a4ea3;text-decoration:underline;text-underline-offset:2px}
+.cal-cell.selected{border-color:#b58bd7;box-shadow:0 3px 10px #c9a9e04d;transform:translateY(-1px)}
+.cal-grid.week{gap:7px}
+.cal-grid.week .cal-cell{min-height:76px;border-radius:16px}
+.cal-grid.week .cal-day{font-size:12px}
+.cal-grid.week .cal-mood{font-size:21px}
+.cal-grid.week .cal-count{font-size:9px}
+.cal-legend{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:12px}
+.cal-legend span{font-size:9.5px;font-weight:750;color:#94859e;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.cal-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;font-style:normal}
+.cal-detail{margin-top:13px;border-radius:18px;background:#fcf9fe;border:1px solid #f0e5f6;padding:13px}
+.cal-detail-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cal-detail-head strong{font-size:12.5px;font-weight:900;color:#5f4877}
+.cal-detail-head span{font-size:9.5px;font-weight:850;color:#7a4ea3;background:#f1e3fb;border-radius:10px;padding:3px 8px;white-space:nowrap}
+.cal-tally{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.cal-tally span{font-size:10px;font-weight:800;border-radius:11px;padding:3px 8px;background:#fff;border:1px solid #eee0f6;color:#6d5a7c}
+.cal-entries{margin-top:8px}
+.cal-entry{display:flex;align-items:flex-start;gap:7px;padding:7px 0;border-bottom:1px dashed #f0e6f5}
+.cal-entry:last-child{border-bottom:0;padding-bottom:0}
+.cal-entry .dot{font-size:13px;line-height:1.35}
+.cal-entry .txt{flex:1;min-width:0}
+.cal-entry strong{display:block;font-size:11.5px;font-weight:800;color:#5c4a6d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-entry small{display:block;font-size:9.5px;color:#a294ab;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-empty{font-size:10.5px;color:#a294ab;margin-top:9px;line-height:1.6;font-weight:750}
+@media(max-width:400px){.cal-grid,.cal-heads{gap:5px}.cal-cell{min-height:48px;border-radius:12px;padding:4px 1px 3px}.cal-cell .cal-mood{font-size:13px}.cal-grid.week .cal-cell{min-height:70px}.cal-label{font-size:12px}.cal-nav-btns button{min-width:26px;height:26px}}
 .footer{text-align:center;color:#b0a4b4;font-size:10px;padding:22px 0 8px}
 @media(min-width:520px){.app{padding-top:18px}.hero{padding-top:25px}}
 </style>
@@ -439,6 +483,29 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
   </div>
   <div class="panel">
     <div class="section-title">
+      <span>🌙 달성 무드 캘린더</span>
+      <div class="cal-seg">
+        <button type="button" id="calWeekBtn">주간</button>
+        <button type="button" id="calMonthBtn" class="on">월간</button>
+      </div>
+    </div>
+    <div class="hint">완료한 날은 그날의 대표 감정 색으로 물들어. 날짜를 누르면 뭘 해냈는지 볼 수 있어.</div>
+    <div class="cal-nav">
+      <div class="cal-label" id="calLabel"></div>
+      <div class="cal-nav-btns">
+        <button type="button" id="calPrev" aria-label="이전 기간">‹</button>
+        <button type="button" id="calToday" class="today">오늘</button>
+        <button type="button" id="calNext" aria-label="다음 기간">›</button>
+      </div>
+    </div>
+    <div class="cal-summary" id="calSummary"></div>
+    <div class="cal-heads" id="calHeads"></div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend" id="calLegend"></div>
+    <div class="cal-detail" id="calDetail"></div>
+  </div>
+  <div class="panel">
+    <div class="section-title">
       <span>최근 기록</span>
       <button type="button" class="soft" id="exportBtn">기록 백업</button>
     </div>
@@ -501,6 +568,7 @@ const CLOSET={
 
 let data=load(),currentId=null,seconds=300,interval=null,paused=false,category='공부',suggestionSeed=0,timerRecorded=false;
 let selectedEmotion='',aiCache={};
+let activeScreen='homeScreen';
 
 function normalizeData(raw){
   const d=raw||{tasks:[],history:[]};
@@ -672,14 +740,208 @@ document.getElementById('today').textContent=new Date().toLocaleDateString('ko-K
 const screens=['homeScreen','resumeScreen','timerScreen','closetScreen','historyScreen'];
 
 function show(id){
+  activeScreen=id;
   if(id==='homeScreen'||id==='resumeScreen'||id==='closetScreen')setMascotMood('cheer');
   if(id==='timerScreen'&&!paused)setMascotMood('focus');
   screens.forEach(s=>document.getElementById(s).classList.toggle('hidden',s!==id));
   const activeTab=id==='historyScreen'?'history':id==='closetScreen'?'closet':'home';
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===activeTab));
   if(id==='closetScreen'){document.getElementById('closetMsg').textContent='';syncBeanName();}
+  if(id==='historyScreen')renderCalendar();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+/* ── 달성 무드 캘린더 (주간 · 월간) ── */
+const EMOTIONS=[
+  {value:'막막하고 커 보여',emoji:'😵',label:'막막함',color:'#b9a3e3',soft:'#ece2fa',deep:'#ddc9f6',ink:'#5b4374'},
+  {value:'완벽하게 해야 할 것 같아',emoji:'😣',label:'완벽 부담',color:'#8fb8e8',soft:'#e3eefb',deep:'#cfe1f8',ink:'#39557a'},
+  {value:'너무 피곤하고 귀찮아',emoji:'🥱',label:'피곤함',color:'#cdb69a',soft:'#f7ecdb',deep:'#efdcc2',ink:'#6d5943'},
+  {value:'잘 안 될까 봐 걱정돼',emoji:'😰',label:'걱정',color:'#7fc7bd',soft:'#ddf3ef',deep:'#c6eae2',ink:'#2f625b'},
+  {value:'그냥 재미없고 지루해',emoji:'😑',label:'지루함',color:'#e5bd72',soft:'#fdf1d6',deep:'#fbe3b0',ink:'#7a5a1d'}
+];
+const STARTED_META={emoji:'🌱',label:'감정 없이 완료',color:'#a8d77e',soft:'#edf6e2',deep:'#dcefca',ink:'#4d6b36'};
+const WEEK_LABELS=['월','화','수','목','금','토','일'];
+let calMode='month',calAnchor=new Date(),calSelected=dayKey(Date.now());
+
+function emotionMeta(value){return EMOTIONS.find(e=>e.value===value)||null;}
+function historyEmotion(h){
+  if(h&&h.emotion&&emotionMeta(h.emotion))return h.emotion;
+  const t=data.tasks.find(x=>x.title===h.title&&x.emotion&&emotionMeta(x.emotion));
+  return t?t.emotion:'';
+}
+function historyByDay(){
+  const map={};
+  data.history.forEach(h=>{const k=dayKey(h.at);if(!map[k])map[k]=[];map[k].push(h);});
+  return map;
+}
+function dayMood(entries){
+  if(!entries||!entries.length)return null;
+  const counts={},lastAt={};
+  entries.forEach(h=>{const e=historyEmotion(h)||'__none';counts[e]=(counts[e]||0)+1;lastAt[e]=Math.max(lastAt[e]||0,h.at||0);});
+  let best='',bestN=0;
+  Object.keys(counts).forEach(k=>{
+    if(counts[k]>bestN||(counts[k]===bestN&&lastAt[k]>(lastAt[best]||0))){best=k;bestN=counts[k];}
+  });
+  const meta=best==='__none'?null:emotionMeta(best);
+  return Object.assign({value:meta?best:'',count:bestN},meta||STARTED_META);
+}
+function dateOnly(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function shiftDays(d,n){const x=dateOnly(d);x.setDate(x.getDate()+n);return x;}
+function startOfWeek(d){const x=dateOnly(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x;}
+function keyToDate(k){const p=String(k).split('-');return new Date(Number(p[0]),Number(p[1])-1,Number(p[2]));}
+
+function renderCalendar(){
+  const grid=document.getElementById('calGrid');
+  if(!grid)return;
+  const label=document.getElementById('calLabel'),headsEl=document.getElementById('calHeads'),summaryEl=document.getElementById('calSummary');
+  const byDay=historyByDay(),todayKey=dayKey(Date.now());
+  const weekBtn=document.getElementById('calWeekBtn'),monthBtn=document.getElementById('calMonthBtn');
+  if(weekBtn)weekBtn.classList.toggle('on',calMode==='week');
+  if(monthBtn)monthBtn.classList.toggle('on',calMode==='month');
+  if(headsEl&&!headsEl.childElementCount){
+    WEEK_LABELS.forEach((w,i)=>{const s=document.createElement('span');s.textContent=w;if(i>=5)s.className='weekend';headsEl.appendChild(s);});
+  }
+  grid.textContent='';
+  grid.classList.toggle('week',calMode==='week');
+  const y=calAnchor.getFullYear(),m=calAnchor.getMonth();
+  const days=[];
+  if(calMode==='month'){
+    const first=new Date(y,m,1);
+    const lead=(first.getDay()+6)%7;
+    const start=shiftDays(first,-lead);
+    const last=new Date(y,m+1,0);
+    const cells=Math.ceil((lead+last.getDate())/7)*7;
+    for(let i=0;i<cells;i++)days.push(shiftDays(start,i));
+    if(label)label.textContent=y+'년 '+(m+1)+'월';
+  }else{
+    const start=startOfWeek(calAnchor);
+    for(let i=0;i<7;i++)days.push(shiftDays(start,i));
+    const end=shiftDays(start,6);
+    if(label){
+      const tail=(end.getFullYear()!==start.getFullYear()?end.getFullYear()+'년 ':'')+(end.getMonth()+1)+'월 '+end.getDate()+'일';
+      label.textContent=start.getFullYear()+'년 '+(start.getMonth()+1)+'월 '+start.getDate()+'일 ~ '+tail;
+    }
+  }
+  let startedDays=0,totalCount=0;
+  days.forEach(d=>{const e=byDay[dayKey(d.getTime())];if(e&&e.length){startedDays++;totalCount+=e.length;}});
+  if(summaryEl){
+    if(totalCount){
+      summaryEl.textContent=(calMode==='month'?'이 달 ':'이 주 ')+startedDays+'일 시작 · 모두 '+totalCount+'번 해냈어';
+    }else{
+      summaryEl.textContent=(calMode==='month'?'이 달은 ':'이 주는 ')+'아직 기록이 없어';
+    }
+  }
+  days.forEach(d=>{
+    const key=dayKey(d.getTime());
+    const entries=byDay[key]||[];
+    const mood=dayMood(entries);
+    const cell=document.createElement('button');
+    cell.type='button';
+    cell.className='cal-cell';
+    if(calMode==='month'&&d.getMonth()!==m)cell.classList.add('out');
+    if(key===todayKey)cell.classList.add('today');
+    if(key===calSelected)cell.classList.add('selected');
+    if(entries.length){cell.style.background=entries.length>=3?(mood.deep||mood.soft):mood.soft;if(key===calSelected)cell.style.borderColor=mood.color;}
+    const num=document.createElement('span');num.className='cal-day';num.textContent=d.getDate();
+    const moodEl=document.createElement('span');moodEl.className='cal-mood';moodEl.textContent=entries.length?mood.emoji:'';
+    const cnt=document.createElement('span');cnt.className='cal-count';
+    cnt.textContent=entries.length?(calMode==='week'?entries.length+'번':String(entries.length)):'';
+    cell.append(num,moodEl,cnt);
+    cell.setAttribute('aria-label',(d.getMonth()+1)+'월 '+d.getDate()+'일'+(entries.length?', '+entries.length+'번 완료 '+mood.label:'')+(key===todayKey?', 오늘':''));
+    cell.onclick=()=>{calSelected=key;renderCalendar();};
+    grid.appendChild(cell);
+  });
+  renderCalLegend();
+  renderCalDetail();
+}
+
+function renderCalLegend(){
+  const box=document.getElementById('calLegend');
+  if(!box)return;
+  box.textContent='';
+  EMOTIONS.forEach(e=>{
+    const s=document.createElement('span');
+    const i=document.createElement('i');i.style.background=e.color;
+    s.append(i,document.createTextNode(e.emoji+' '+e.label));
+    box.appendChild(s);
+  });
+  const s=document.createElement('span');
+  const i=document.createElement('i');i.style.background=STARTED_META.color;
+  s.append(i,document.createTextNode('🌱 감정 없이 완료'));
+  box.appendChild(s);
+}
+
+function renderCalDetail(){
+  const box=document.getElementById('calDetail');
+  if(!box)return;
+  box.textContent='';
+  const d=keyToDate(calSelected);
+  const entries=data.history.filter(h=>dayKey(h.at)===calSelected).sort((a,b)=>a.at-b.at);
+  const head=document.createElement('div');head.className='cal-detail-head';
+  const strong=document.createElement('strong');
+  strong.textContent=(d.getMonth()+1)+'월 '+d.getDate()+'일 ('+WEEK_LABELS[(d.getDay()+6)%7]+')'+(calSelected===dayKey(Date.now())?' · 오늘':'');
+  head.appendChild(strong);
+  if(entries.length){const pill=document.createElement('span');pill.textContent=entries.length+'번의 시작';head.appendChild(pill);}
+  box.appendChild(head);
+  if(!entries.length){
+    const empty=document.createElement('div');empty.className='cal-empty';
+    empty.textContent='이 날은 아직 기록이 없어. 5분짜리 작은 시작 하나면 충분해 🌱';
+    box.appendChild(empty);
+    return;
+  }
+  const counts={};const order=[];
+  entries.forEach(h=>{const e=historyEmotion(h)||'__none';if(!counts[e]){counts[e]=0;order.push(e);}counts[e]++;});
+  const tally=document.createElement('div');tally.className='cal-tally';
+  order.forEach(k=>{
+    const meta=k==='__none'?STARTED_META:emotionMeta(k);
+    if(!meta)return;
+    const chip=document.createElement('span');
+    chip.textContent=meta.emoji+' '+meta.label+' '+counts[k];
+    chip.style.background=meta.soft;chip.style.borderColor=meta.color;chip.style.color=meta.ink;
+    tally.appendChild(chip);
+  });
+  box.appendChild(tally);
+  const list=document.createElement('div');list.className='cal-entries';
+  entries.slice().reverse().slice(0,10).forEach(h=>{
+    const e=historyEmotion(h);
+    const meta=e?emotionMeta(e)||STARTED_META:STARTED_META;
+    const row=document.createElement('div');row.className='cal-entry';
+    const dot=document.createElement('span');dot.className='dot';dot.textContent=meta.emoji;
+    const txt=document.createElement('div');txt.className='txt';
+    const title=document.createElement('strong');title.textContent=h.title||'작은 시작';
+    const small=document.createElement('small');
+    const time=new Date(h.at).toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'});
+    small.textContent=time+(h.step?' · '+h.step:'')+(h.source==='timer'?' · 5분 타이머':'');
+    txt.append(title,small);
+    row.append(dot,txt);
+    list.appendChild(row);
+  });
+  box.appendChild(list);
+  if(entries.length>10){
+    const more=document.createElement('div');more.className='cal-empty';
+    more.textContent='외 '+(entries.length-10)+'건 더 있어.';
+    box.appendChild(more);
+  }
+}
+
+const calPrevBtn=document.getElementById('calPrev');
+if(calPrevBtn)calPrevBtn.onclick=()=>{
+  if(calMode==='month')calAnchor=new Date(calAnchor.getFullYear(),calAnchor.getMonth()-1,1);
+  else calAnchor=shiftDays(calAnchor,-7);
+  renderCalendar();
+};
+const calNextBtn=document.getElementById('calNext');
+if(calNextBtn)calNextBtn.onclick=()=>{
+  if(calMode==='month')calAnchor=new Date(calAnchor.getFullYear(),calAnchor.getMonth()+1,1);
+  else calAnchor=shiftDays(calAnchor,7);
+  renderCalendar();
+};
+const calTodayBtn=document.getElementById('calToday');
+if(calTodayBtn)calTodayBtn.onclick=()=>{calAnchor=new Date();calSelected=dayKey(Date.now());renderCalendar();};
+const calWeekBtn=document.getElementById('calWeekBtn');
+if(calWeekBtn)calWeekBtn.onclick=()=>{calMode='week';calAnchor=keyToDate(calSelected);renderCalendar();};
+const calMonthBtn=document.getElementById('calMonthBtn');
+if(calMonthBtn)calMonthBtn.onclick=()=>{calMode='month';calAnchor=keyToDate(calSelected);renderCalendar();};
 
 function renderCategories(){
   const wrap=document.getElementById('categoryChips');
@@ -831,6 +1093,7 @@ function render(){
   if(ws)ws.textContent=`이번 주 ${weekDaysDone}일 시작했어`;
   if(wd)wd.innerHTML=dotsHtml;
 
+  renderCalendar();
   renderClosetGroup('hat','hatGrid');
   renderClosetGroup('glasses','glassesGrid');
   renderClosetGroup('color','colorGrid');
@@ -1097,7 +1360,7 @@ document.getElementById('pauseBtn').onclick=()=>{
 function recordRestart(fromTimer=false){
   const t=data.tasks.find(x=>x.id===currentId);if(!t)return;
   if(!timerRecorded){
-    data.history.push({title:t.title,step:t.lastStep,at:Date.now(),source:fromTimer?'timer':'manual'});
+    data.history.push({title:t.title,step:t.lastStep,at:Date.now(),source:fromTimer?'timer':'manual',emotion:t.emotion||'',category:t.category||''});
     data.beans+=1;
     t.updated=Date.now();
     timerRecorded=true;
