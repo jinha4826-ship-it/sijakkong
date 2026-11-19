@@ -1999,5 +1999,32 @@ window.MaeumMalAttachment={getPreview:function(){return imageData}};
 })();
 </script>
 
+
+<script id="maeummal-attachment-result-preview">
+(function(){
+ function showReference(){
+  var view=document.getElementById('view-result'),meta=document.getElementById('resMeta');
+  if(!view||!meta)return;
+  var data=window.MaeumMalAttachment&&window.MaeumMalAttachment.getPreview();
+  var existing=document.getElementById('mmResultReference');
+  if(!data){if(existing)existing.remove();return}
+  if(!existing){existing=document.createElement('section');existing.id='mmResultReference';existing.style.cssText='margin:10px 0 14px;padding:12px;border:1px solid #eee5ed;border-radius:16px;background:#fffefa';
+   var title=document.createElement('div');title.textContent='📎 첨부한 상황 캡처';title.style.cssText='font-size:11px;font-weight:800;color:#80688f;margin-bottom:8px';
+   var img=document.createElement('img');img.id='mmResultReferenceImage';img.alt='첨부한 상황 캡처';img.style.cssText='display:block;width:100%;max-height:230px;object-fit:contain;border-radius:10px;background:#f6f2f7';
+   var note=document.createElement('p');note.textContent='참고용 이미지예요. 이미지 속 문자는 자동 분석되지 않아요.';note.style.cssText='font-size:10px;color:#9a8da2;margin:7px 0 0';
+   existing.append(title,img,note);meta.insertAdjacentElement('afterend',existing);
+  }
+  var image=document.getElementById('mmResultReferenceImage');if(image)image.src=data;
+ }
+ function start(){
+  var result=document.getElementById('view-result');if(!result)return;
+  new MutationObserver(showReference).observe(result,{attributes:true,attributeFilter:['class']});
+  var back=document.getElementById('btnBackTalk');if(back)back.addEventListener('click',function(){setTimeout(showReference,0)});
+  showReference();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
+
 </body>
 </html>
