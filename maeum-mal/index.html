@@ -1899,6 +1899,34 @@ function init(){
      insight.append(el('b','','아직 뚜렷한 반복은 없어요'),el('strong','','감정이 반복되거나 서로 다른 상황에서 나타나는지 조금 더 기록해 보세요.'));
      grid.append(insight);
     }
+    if(contexts.emotion&&contexts.count>=2&&contexts.places.length>=2){
+     var feedbackWrap=el('div','pattern-item');feedbackWrap.style.gridColumn='1/-1';
+     feedbackWrap.append(el('b','','이 관찰이 나와 맞나요?'),el('strong','','기록을 바탕으로 한 제안이에요. 맞지 않으면 편하게 아니라고 해주세요.'));
+     var feedbackActions=el('div','feedback-actions');
+     [['맞아요','yes'],['아니에요','no']].forEach(function(choice){
+      var fb=el('button','',choice[0]);fb.type='button';
+      fb.onclick=function(){
+       try{localStorage.setItem('maeummal.pattern-feedback.v1',JSON.stringify({value:choice[1],text:contexts.places.join(' · ')+' 상황에서 '+contexts.emotion+' 감정이 반복됨',at:new Date().toISOString()}))}catch(e){}
+       feedbackWrap.querySelectorAll('button').forEach(function(b){b.disabled=true;b.style.opacity='.55'});
+       fb.style.opacity='1';fb.textContent=choice[0]+' · 반영했어요';
+      };
+      feedbackActions.append(fb);
+     });
+     feedbackWrap.append(feedbackActions);grid.append(feedbackWrap);
+    }
+    var ownWrap=el('div','pattern-item');ownWrap.style.gridColumn='1/-1';
+    ownWrap.append(el('b','','내가 발견한 패턴'));
+    var ownInput=document.createElement('textarea');ownInput.className='field';ownInput.rows=2;ownInput.placeholder='예) 나는 내 사정을 묻지 않고 결정할 때 서운함을 느낀다.';
+    ownInput.style.minHeight='65px';
+    var savedOwn=null;try{savedOwn=localStorage.getItem('maeummal.own-pattern.v1')}catch(e){}
+    if(savedOwn)ownInput.value=savedOwn;
+    var ownSave=el('button','attach-trigger','내 패턴 저장하기');ownSave.type='button';ownSave.style.marginTop='8px';
+    var ownStatus=el('p','attach-caption','내가 직접 적은 패턴은 이 기기에만 저장돼요.');
+    ownSave.onclick=function(){
+     var value=ownInput.value.trim();if(!value){ownStatus.textContent='먼저 발견한 패턴을 적어 주세요.';return}
+     try{localStorage.setItem('maeummal.own-pattern.v1',value);ownStatus.textContent='내가 발견한 패턴을 이 기기에 저장했어요.'}catch(e){ownStatus.textContent='저장하지 못했어요. 기기 저장 공간을 확인해 주세요.'}
+    };
+    ownWrap.append(ownInput,ownSave,ownStatus);grid.append(ownWrap);
     var relCounts={};usable.forEach(function(r){if(r.relation)relCounts[r.relation]=(relCounts[r.relation]||0)+1});
     var topRel=Object.keys(relCounts).sort(function(a,b){return relCounts[b]-relCounts[a]})[0];
     if(topRel){var relItem=el('div','pattern-item');relItem.append(el('b','','기록이 가장 많은 관계'),el('strong','',topRel+' · '+relCounts[topRel]+'회'));grid.append(relItem)}
