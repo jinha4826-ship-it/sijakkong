@@ -1905,5 +1905,99 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="maeummal-relationship-attachment-style">
+.rel-style-wrap{margin-top:13px}
+.rel-style-wrap label,.attach-label{display:block;font-size:11px;font-weight:850;color:#8a79a0;margin:0 2px 8px}
+.rel-style-wrap select{width:100%;border:1px solid #e9dfeb;background:#fffdfa;border-radius:13px;padding:12px 13px;font-size:13px;outline:none}
+.rel-style-note{font-size:10.5px;color:#a090a8;line-height:1.55;margin:7px 2px 0}
+.attach-card{margin-top:14px;padding:13px;border:1px dashed #ddcfe5;border-radius:16px;background:#fdfafd}
+.attach-trigger{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:44px;border-radius:12px;background:#f3edf7;color:#705a85;font-size:12px;font-weight:850}
+.attach-preview{display:none;margin-top:10px;position:relative}
+.attach-preview.on{display:block}
+.attach-preview img{display:block;width:100%;max-height:260px;object-fit:contain;border-radius:12px;background:#f4f0f5;border:1px solid #eee5ed}
+.attach-remove{margin-top:7px;font-size:11px;font-weight:800;color:#a47780;padding:7px 3px}
+.attach-caption{font-size:10px;color:#9d90a5;line-height:1.55;margin:7px 1px 0}
+</style>
+<script id="maeummal-relationship-attachment">
+(function(){
+'use strict';
+var profiles={
+ friend:{value:'casual',options:[['casual','편한 반말'],['warm','다정한 반말'],['polite','조금 예의를 갖춘 존댓말']]},
+ lover:{value:'warm',options:[['warm','다정한 반말'],['casual','담백한 반말'],['polite','부드러운 존댓말']]},
+ family:{value:'casual',options:[['casual','편한 반말'],['polite','조심스러운 존댓말'],['firm','단호한 반말']]},
+ work:{value:'polite',options:[['polite','정중한 존댓말'],['brief','간결한 존댓말'],['warm','부드러운 존댓말']]},
+ social:{value:'polite',options:[['polite','부드러운 존댓말'],['casual','편한 반말'],['formal','격식 있는 존댓말']]}
+};
+var selectedStyle='casual', imageData='';
+function $(id){return document.getElementById(id)}
+function isPolite(v){return ['polite','brief','formal'].indexOf(v)>=0}
+function renderStyles(){
+ var rel=window.MMApp&&window.MMApp.state?window.MMApp.state.relation:'friend';
+ var profile=profiles[rel]||profiles.friend,sel=$('mmRelStyle');
+ if(!sel)return;
+ var exists=profile.options.some(function(x){return x[0]===selectedStyle});
+ if(!exists)selectedStyle=profile.value;
+ sel.innerHTML='';
+ profile.options.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];sel.appendChild(o)});
+ sel.value=selectedStyle;
+ if(window.MMApp&&window.MMApp.state)window.MMApp.state.polite=isPolite(selectedStyle);
+ syncTone();
+}
+function syncTone(){
+ var st=window.MMApp&&window.MMApp.state;if(!st)return;
+ document.querySelectorAll('#toneSeg button').forEach(function(b){
+  var on=(b.getAttribute('data-v')==='1')===st.polite;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');
+ });
+}
+function install(){
+ var rel=$('relChips'),tone=$('toneSeg'),card=$('card1');
+ if(card&&!$('mmRelStyleWrap')){
+  var wrap=document.createElement('div');wrap.className='rel-style-wrap';wrap.id='mmRelStyleWrap';
+  var label=document.createElement('label');label.htmlFor='mmRelStyle';label.textContent='이 관계에 어울리는 말투';
+  var sel=document.createElement('select');sel.id='mmRelStyle';sel.setAttribute('aria-label','관계별 말투 선택');
+  var note=document.createElement('p');note.className='rel-style-note';note.textContent='상대와 평소 대화하는 분위기에 맞춰 골라 주세요. 언제든 직접 바꿀 수 있어요.';
+  wrap.append(label,sel,note);
+  var toneLabel=tone&&tone.previousElementSibling;
+  if(toneLabel)toneLabel.insertAdjacentElement('afterend',wrap);else card.appendChild(wrap);
+  sel.addEventListener('change',function(){selectedStyle=sel.value;if(window.MMApp&&window.MMApp.state)window.MMApp.state.polite=isPolite(selectedStyle);syncTone()});
+  if(rel)rel.addEventListener('click',function(){setTimeout(renderStyles,0)});
+  if(tone)tone.addEventListener('click',function(){setTimeout(function(){var st=window.MMApp&&window.MMApp.state;if(!st)return;selectedStyle=st.polite?'polite':'casual';if(profiles[st.relation]){var allowed=profiles[st.relation].options.some(function(x){return x[0]===selectedStyle});if(!allowed)selectedStyle=profiles[st.relation].value}renderStyles()},0)});
+  renderStyles();
+ }
+ var input=$('txt'),card3=$('card3');
+ if(card3&&!$('mmAttachCard')){
+  var box=document.createElement('div');box.className='attach-card';box.id='mmAttachCard';
+  var label=document.createElement('label');label.className='attach-label';label.textContent='대화 상황 캡처 첨부';
+  var pick=document.createElement('button');pick.type='button';pick.className='attach-trigger';pick.textContent='📎 캡처 이미지 선택';
+  var file=document.createElement('input');file.type='file';file.accept='image/*';file.id='mmAttachFile';file.hidden=true;
+  var preview=document.createElement('div');preview.className='attach-preview';preview.id='mmAttachPreview';
+  var img=document.createElement('img');img.alt='첨부한 대화 상황 미리보기';
+  var remove=document.createElement('button');remove.type='button';remove.className='attach-remove';remove.textContent='첨부 이미지 삭제';
+  var caption=document.createElement('p');caption.className='attach-caption';caption.textContent='이미지는 이 화면에서 참고용으로만 표시돼요. 현재 문장 생성기는 이미지 속 글자를 자동으로 읽지 않으니, 중요한 내용은 위 입력창에도 적어 주세요. 이미지는 서버로 전송되지 않아요.';
+  pick.addEventListener('click',function(){file.click()});
+  file.addEventListener('change',function(){
+   var f=file.files&&file.files[0];if(!f)return;
+   if(!/^image\//.test(f.type)){alert('이미지 파일을 선택해 주세요.');file.value='';return}
+   if(f.size>12*1024*1024){alert('12MB 이하의 이미지를 선택해 주세요.');file.value='';return}
+   var reader=new FileReader();reader.onload=function(){
+    var im=new Image();im.onload=function(){
+     var scale=Math.min(1,1400/Math.max(im.width,im.height)),canvas=document.createElement('canvas');
+     canvas.width=Math.max(1,Math.round(im.width*scale));canvas.height=Math.max(1,Math.round(im.height*scale));
+     var ctx=canvas.getContext('2d');ctx.drawImage(im,0,0,canvas.width,canvas.height);
+     imageData=canvas.toDataURL('image/jpeg',0.78);img.src=imageData;preview.classList.add('on');
+    };im.src=reader.result;
+   };reader.readAsDataURL(f);
+  });
+  remove.addEventListener('click',function(){imageData='';file.value='';img.removeAttribute('src');preview.classList.remove('on')});
+  preview.append(img,remove);box.append(label,pick,file,preview,caption);input.insertAdjacentElement('afterend',box);
+ }
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+window.addEventListener('load',install);
+window.MaeumMalAttachment={getPreview:function(){return imageData}};
+})();
+</script>
+
 </body>
 </html>
