@@ -1170,6 +1170,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     window.scrollTo(0, 0);
   }
 
+  function pushView(v) {
+    try { history.pushState({ v: v }, ''); } catch (e) {}
+  }
+
+  function backOr(elseView) {
+    if (history.state && history.state.v) history.back();
+    else { showView(elseView); }
+  }
+
   function showView(id) {
     var views = document.querySelectorAll('.view');
     for (var i = 0; i < views.length; i++) views[i].classList.toggle('on', views[i].id === id);
@@ -1234,7 +1243,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
   function renderTone() {
     var btns = document.querySelectorAll('#toneSeg button');
     for (var i = 0; i < btns.length; i++) {
-      btns[i].classList.toggle('on', (btns[i].getAttribute('data-v') === '1') === state.polite);
+      var on = (btns[i].getAttribute('data-v') === '1') === state.polite;
+      btns[i].classList.toggle('on', on);
+      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
   }
 
@@ -1310,6 +1321,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     state.talkView = 'result';
     renderResult();
     showView('view-result');
+    pushView('result');
     window.scrollTo(0, 0);
   }
 
@@ -1483,6 +1495,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     state.thoughtResult = { fact: f, matter: m, want: w, emotion: state.thought.emotion };
     renderThoughtSummary();
     showView('view-thought-result');
+    pushView('thought-result');
     window.scrollTo(0, 0);
   }
 
@@ -1726,7 +1739,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     });
     $('btnBackTalk').addEventListener('click', function () {
       state.talkView = 'input';
-      switchTab('talk');
+      backOr('view-talk');
     });
     $('btnAgain').addEventListener('click', function () {
       $('txt').value = '';
@@ -1742,8 +1755,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     $('btnThought').addEventListener('click', doThought);
     $('btnToTalk').addEventListener('click', toTalk);
     $('btnSaveThought').addEventListener('click', saveThought);
-    $('btnBackThought').addEventListener('click', function () { switchTab('thought'); });
-    $('btnEditThought').addEventListener('click', function () { switchTab('thought'); });
+    $('btnBackThought').addEventListener('click', function () { backOr('view-thought'); });
+    $('btnEditThought').addEventListener('click', function () { backOr('view-thought'); });
+
+    window.addEventListener('popstate', function () {
+      if ($('view-result').classList.contains('on')) {
+        state.talkView = 'input';
+        if (state.fromThought && state.thoughtResult) {
+          switchTab('thought');
+          showView('view-thought-result');
+        } else {
+          switchTab('talk');
+        }
+      } else if ($('view-thought-result').classList.contains('on')) {
+        switchTab('thought');
+      }
+    });
 
     ['tFact', 'tMatter', 'tWant'].forEach(function (id) {
       $(id).addEventListener('input', function () {
