@@ -1865,10 +1865,44 @@ function init(){
   [['all','모든 관계'],['친구','친구'],['연인','연인'],['가족','가족'],['직장·동료','직장·동료'],['지인','지인'],['thought','생각 정리']].forEach(function(x){var o=el('option','',x[1]);o.value=x[0];sel.append(o)});wrap.append(sel);list.before(wrap);
   var panel=el('section','pattern-panel');panel.id='mmPatterns';panel.append(el('h3','','내 기록에서 발견한 마음'),el('p','','저장한 기록의 반복 경향을 요약해요. 심리 진단이 아닌 기록 요약이에요.'));
   var grid=el('div','pattern-grid');panel.append(grid);var stats=document.getElementById('stats');if(stats)stats.after(panel);
-  function update(){var rs=records(),cards=list.querySelectorAll('.rec'),v=sel.value;cards.forEach(function(card,i){var r=rs[i];if(r)card.style.display=(v==='all'||(v==='thought'?r.type==='thought':r.relation===v))?'':'none'});
-   var em={},want={},rel={};rs.forEach(function(r){if(r.emotion)em[r.emotion]=(em[r.emotion]||0)+1;if(r.want)want[r.want]=(want[r.want]||0)+1;if(r.relation)rel[r.relation]=(rel[r.relation]||0)+1});
-   function top(o){var k='',n=0;Object.keys(o).forEach(function(z){if(o[z]>n){k=z;n=o[z]}});return n>1?k+' · '+n+'회':'기록이 더 쌓이면 보여드릴게요'}
-   grid.innerHTML='';[['자주 나타난 감정',top(em)],['반복해서 적은 바람',top(want)],['기록이 많은 관계',top(rel)],['분석한 기록',rs.length+'개']].forEach(function(x){var d=el('div','pattern-item');d.append(el('b','',x[0]),el('strong','',x[1]));grid.append(d)});
+  function update(){
+   var rs=records(),cards=list.querySelectorAll('.rec'),v=sel.value;
+   cards.forEach(function(card,i){var r=rs[i];if(r)card.style.display=(v==='all'||(v==='thought'?r.type==='thought':r.relation===v))?'':'none'});
+   var usable=rs.filter(function(r){return r.emotion||r.situation||r.relation||r.matter||r.want});
+   var emotionGroups={},contexts={};
+   usable.forEach(function(r){
+    if(!r.emotion)return;
+    if(!emotionGroups[r.emotion])emotionGroups[r.emotion]={count:0,context:{}};
+    var g=emotionGroups[r.emotion];g.count++;
+    var c=r.situation||r.relation||(r.type==='thought'?'생각 정리':'상황 미분류');
+    g.context[c]=true;
+   });
+   Object.keys(emotionGroups).forEach(function(k){
+    if(!contexts.count||emotionGroups[k].count>contexts.count)contexts={emotion:k,count:emotionGroups[k].count,places:Object.keys(emotionGroups[k].context)};
+   });
+   grid.innerHTML='';
+   var intro=el('p','','기록에서 반복된 감정과 상황을 찾아요. 기록이 적을 때는 결론을 내리지 않아요.');
+   intro.style.cssText='grid-column:1/-1;margin:0 0 2px;font-size:10.5px;color:#988ba0;line-height:1.6';
+   grid.append(intro);
+   if(usable.length<3){
+    var waiting=el('div','pattern-item');waiting.style.gridColumn='1/-1';
+    waiting.append(el('b','','아직은 패턴을 판단하기 어려워요'),el('strong','','서로 다른 날의 기록을 3개 이상 모으면 반복되는 감정을 살펴볼게요.'));
+    grid.append(waiting);
+   }else{
+    var count=el('div','pattern-item');count.append(el('b','','살펴본 기록'),el('strong','',usable.length+'개'));grid.append(count);
+    if(contexts.emotion&&contexts.count>=2&&contexts.places.length>=2){
+     var insight=el('div','pattern-item');insight.style.gridColumn='1/-1';
+     insight.append(el('b','','반복해서 나타난 감정'),el('strong','',contexts.places.join(' · ')+' 상황에서 ‘'+contexts.emotion+'’ 감정이 '+contexts.count+'회 기록됐어요.'));
+     grid.append(insight);
+    }else{
+     var insight=el('div','pattern-item');insight.style.gridColumn='1/-1';
+     insight.append(el('b','','아직 뚜렷한 반복은 없어요'),el('strong','','감정이 반복되거나 서로 다른 상황에서 나타나는지 조금 더 기록해 보세요.'));
+     grid.append(insight);
+    }
+    var relCounts={};usable.forEach(function(r){if(r.relation)relCounts[r.relation]=(relCounts[r.relation]||0)+1});
+    var topRel=Object.keys(relCounts).sort(function(a,b){return relCounts[b]-relCounts[a]})[0];
+    if(topRel){var relItem=el('div','pattern-item');relItem.append(el('b','','기록이 가장 많은 관계'),el('strong','',topRel+' · '+relCounts[topRel]+'회'));grid.append(relItem)}
+   }
   }
   sel.onchange=update;new MutationObserver(update).observe(list,{childList:true,subtree:true});update();
  }
