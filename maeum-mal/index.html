@@ -1877,5 +1877,33 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<script id="maeummal-relation-tone-fix">
+(function(){
+ function syncRelationTone(){
+  var box=document.getElementById('relChips');
+  if(!box||box.dataset.toneSync==='1')return;
+  box.dataset.toneSync='1';
+  box.addEventListener('click',function(){
+   window.setTimeout(function(){
+    var app=window.MMApp;
+    if(!app||!app.state)return;
+    var r=app.state.relation;
+    app.state.polite=(r==='work'||r==='social');
+    var buttons=document.querySelectorAll('#toneSeg button');
+    buttons.forEach(function(b){
+     var selected=(b.getAttribute('data-v')==='1')===app.state.polite;
+     b.classList.toggle('on',selected);
+     b.setAttribute('aria-pressed',selected?'true':'false');
+    });
+   },0);
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',syncRelationTone);
+ else syncRelationTone();
+ window.addEventListener('load',syncRelationTone);
+})();
+</script>
+
 </body>
 </html>
