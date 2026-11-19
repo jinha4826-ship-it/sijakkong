@@ -2026,5 +2026,50 @@ window.MaeumMalAttachment={getPreview:function(){return imageData}};
 })();
 </script>
 
+
+<script id="maeummal-neutral-tone-adjustment">
+(function(){
+'use strict';
+var profiles={
+ friend:{value:'casual',options:[['casual','편한 반말'],['warm','차분한 반말'],['polite','조금 예의를 갖춘 존댓말']]},
+ lover:{value:'warm',options:[['warm','차분하고 다정한 반말'],['casual','담백한 반말'],['polite','부드러운 존댓말']]},
+ family:{value:'casual',options:[['casual','편한 반말'],['polite','조심스러운 존댓말'],['firm','단호한 반말']]},
+ work:{value:'polite',options:[['polite','정중한 존댓말'],['brief','간결한 존댓말'],['warm','차분한 존댓말']]},
+ social:{value:'polite',options:[['polite','부드러운 존댓말'],['casual','편한 반말'],['formal','격식 있는 존댓말']]}
+};
+function updateOptions(){
+ var sel=document.getElementById('mmRelStyle');if(!sel)return;
+ var state=window.MMApp&&window.MMApp.state;if(!state)return;
+ var p=profiles[state.relation]||profiles.friend,current=sel.value;
+ sel.innerHTML='';
+ p.options.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];sel.appendChild(o)});
+ var found=p.options.some(function(x){return x[0]===current});
+ sel.value=found?current:p.value;
+}
+function calmGeneratedText(){
+ var root=document.getElementById('resCards');if(!root)return;
+ root.querySelectorAll('.tone .say').forEach(function(node){
+  node.textContent=node.textContent
+   .replace(/대신 다음엔 제가 먼저 연락드릴게요\./g,'이번에는 어렵다는 점을 이해해 주셨으면 해요.')
+   .replace(/대신 다음엔 내가 먼저 연락할게\./g,'이번에는 어렵다는 점을 이해해 줬으면 해.')
+   .replace(/대신 다음엔 제가 조금 더 보탤게요\./g,'이번에는 각자 부담할 수 있는 범위에서 정했으면 해요.')
+   .replace(/대신 다음엔 내가 조금 더 보탤게\./g,'이번에는 각자 부담할 수 있는 범위에서 정했으면 해.')
+   .replace(/그것만으로도 고마워요\./g,'가능한지 편하게 말씀해 주세요.')
+   .replace(/그것만으로도 고마워\./g,'가능한지 편하게 말해줘.')
+   .replace(/관계를 끊자는 게 아니라, 서로 편하게 지내고 싶어서요\./g,'내가 불편했던 부분을 알아주셨으면 해서요.')
+   .replace(/관계를 끊자는 게 아니라, 서로 편하게 지내고 싶어서\./g,'내가 불편했던 부분을 알아줬으면 해서.');
+ });
+}
+function init(){
+ var rel=document.getElementById('relChips');
+ if(rel&&!rel.dataset.neutralTone){rel.dataset.neutralTone='1';rel.addEventListener('click',function(){setTimeout(updateOptions,0)})}
+ var result=document.getElementById('resCards');
+ if(result&&!result.dataset.calmTone){result.dataset.calmTone='1';new MutationObserver(calmGeneratedText).observe(result,{childList:true,subtree:true});calmGeneratedText()}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+window.addEventListener('load',init);
+})();
+</script>
+
 </body>
 </html>
