@@ -1814,5 +1814,68 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
 })();
 
 </script>
+
+<style id="maeummal-v2-style">
+.entry-choice{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0 14px}
+.entry-choice button{background:#fffefa;border:1px solid #eadfed;border-radius:17px;padding:13px 12px;text-align:left;min-height:94px;box-shadow:0 5px 14px #59466b0a}
+.entry-choice b{display:block;font-size:13px;color:#5f4779;margin:0 0 5px}
+.entry-choice span{display:block;font-size:10.5px;line-height:1.55;color:#97899f}
+.entry-choice .entry-icon{font-size:19px;margin-bottom:6px}
+.feedback-box,.pattern-panel{background:#fff;border:1px solid #eee5ed;border-radius:18px;padding:14px;margin:13px 0}
+.feedback-box h3,.pattern-panel h3{font-size:13px;margin:0 0 5px;color:#5c4b6c}
+.feedback-box p,.pattern-panel p{font-size:10.5px;color:#988ba0;margin:0 0 10px;line-height:1.6}
+.feedback-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.feedback-actions button{background:#faf6fb;border:1px solid #eadfed;border-radius:12px;padding:9px 5px;font-size:10.5px;font-weight:800;color:#725d83;min-height:43px}
+.feedback-note{font-size:10px;color:#6e8a72;margin-top:9px}
+.log-filter{display:flex;align-items:center;gap:8px;margin:12px 0 6px}
+.log-filter label{font-size:11px;color:#887895;font-weight:800}
+.log-filter select{flex:1;border:1px solid #e9dfeb;background:#fffefa;border-radius:12px;padding:10px;font-size:12px}
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pattern-item{background:#faf7fb;border-radius:12px;padding:10px}
+.pattern-item b{display:block;font-size:10px;color:#a18eaa;margin-bottom:4px}
+.pattern-item strong{font-size:12px;color:#574767;line-height:1.5;display:block}
+@media(max-width:360px){.entry-choice{grid-template-columns:1fr}}
+</style>
+<script id="maeummal-v2-enhancements">
+(function(){
+'use strict';var KEY='maeummal.v1';
+function el(t,c,s){var n=document.createElement(t);if(c)n.className=c;if(s)n.textContent=s;return n}
+function records(){try{var x=JSON.parse(localStorage.getItem(KEY)||'{}');return Array.isArray(x.records)?x.records:[]}catch(e){return[]}}
+function init(){
+ var hero=document.querySelector('#view-talk .hero');
+ if(hero&&!document.getElementById('entryChoice')){
+  var c=el('div','entry-choice');c.id='entryChoice';
+  var a=el('button');a.type='button';a.innerHTML='<span class="entry-icon">💬</span><b>상대에게 할 말 다듬기</b><span>내 마음을 그대로 담아 전해요.</span>';a.onclick=function(){document.getElementById('card1').scrollIntoView({behavior:'smooth'})};
+  var b=el('button');b.type='button';b.innerHTML='<span class="entry-icon">💗</span><b>내 마음부터 정리하기</b><span>사실과 감정, 원하는 것을 살펴봐요.</span>';b.onclick=function(){window.MMApp&&window.MMApp.switchTab('thought')};
+  c.append(a,b);hero.insertAdjacentElement('afterend',c);
+ }
+ var tagline=document.querySelector('.brand .bt p');if(tagline)tagline.textContent='내 마음을 잃지 않고, 전하는 방법';
+ var desc=document.querySelector('#view-talk .hero p');if(desc)desc.textContent='감정을 지우거나 억누르지 않고, 나에게 맞는 표현을 함께 찾아요.';
+ var result=document.getElementById('resCards');
+ if(result&&!document.getElementById('mmFeedback')){
+  var fb=el('section','feedback-box');fb.id='mmFeedback';fb.append(el('h3','','이 표현에 내 마음이 담겼나요?'),el('p','','가장 가까운 느낌을 골라 주세요. 의견은 이 기기에만 저장돼요.'));
+  var acts=el('div','feedback-actions'),note=el('div','feedback-note','');
+  [['잘 담겼어','good'],['감정이 약해졌어','weak'],['더 단호했으면 해','firm']].forEach(function(x){var q=el('button','',x[0]);q.type='button';q.onclick=function(){try{var k='maeummal.feedback.v1',v=JSON.parse(localStorage.getItem(k)||'{}');v[x[1]]=(v[x[1]]||0)+1;localStorage.setItem(k,JSON.stringify(v))}catch(e){}note.textContent='의견을 이 기기에 기록했어요.'};acts.append(q)});
+  fb.append(acts,note);result.insertAdjacentElement('afterend',fb);
+ }
+ var list=document.getElementById('recList');
+ if(list&&!document.getElementById('mmLogFilter')){
+  var wrap=el('div','log-filter');wrap.id='mmLogFilter';wrap.append(el('label','','관계별로 보기'));
+  var sel=el('select');sel.setAttribute('aria-label','관계별 기록 필터');
+  [['all','모든 관계'],['친구','친구'],['연인','연인'],['가족','가족'],['직장·동료','직장·동료'],['지인','지인'],['thought','생각 정리']].forEach(function(x){var o=el('option','',x[1]);o.value=x[0];sel.append(o)});wrap.append(sel);list.before(wrap);
+  var panel=el('section','pattern-panel');panel.id='mmPatterns';panel.append(el('h3','','내 기록에서 발견한 마음'),el('p','','저장한 기록의 반복 경향을 요약해요. 심리 진단이 아닌 기록 요약이에요.'));
+  var grid=el('div','pattern-grid');panel.append(grid);var stats=document.getElementById('stats');if(stats)stats.after(panel);
+  function update(){var rs=records(),cards=list.querySelectorAll('.rec'),v=sel.value;cards.forEach(function(card,i){var r=rs[i];if(r)card.style.display=(v==='all'||(v==='thought'?r.type==='thought':r.relation===v))?'':'none'});
+   var em={},want={},rel={};rs.forEach(function(r){if(r.emotion)em[r.emotion]=(em[r.emotion]||0)+1;if(r.want)want[r.want]=(want[r.want]||0)+1;if(r.relation)rel[r.relation]=(rel[r.relation]||0)+1});
+   function top(o){var k='',n=0;Object.keys(o).forEach(function(z){if(o[z]>n){k=z;n=o[z]}});return n>1?k+' · '+n+'회':'기록이 더 쌓이면 보여드릴게요'}
+   grid.innerHTML='';[['자주 나타난 감정',top(em)],['반복해서 적은 바람',top(want)],['기록이 많은 관계',top(rel)],['분석한 기록',rs.length+'개']].forEach(function(x){var d=el('div','pattern-item');d.append(el('b','',x[0]),el('strong','',x[1]));grid.append(d)});
+  }
+  sel.onchange=update;new MutationObserver(update).observe(list,{childList:true,subtree:true});update();
+ }
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();window.addEventListener('load',init);
+})();
+</script>
+
 </body>
 </html>
