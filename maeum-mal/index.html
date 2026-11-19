@@ -1974,7 +1974,38 @@ function install(){
   var preview=document.createElement('div');preview.className='attach-preview';preview.id='mmAttachPreview';
   var img=document.createElement('img');img.alt='첨부한 대화 상황 미리보기';
   var remove=document.createElement('button');remove.type='button';remove.className='attach-remove';remove.textContent='첨부 이미지 삭제';
-  var caption=document.createElement('p');caption.className='attach-caption';caption.textContent='이미지는 이 화면에서 참고용으로만 표시돼요. 현재 문장 생성기는 이미지 속 글자를 자동으로 읽지 않으니, 중요한 내용은 위 입력창에도 적어 주세요. 이미지는 서버로 전송되지 않아요.';
+  var caption=document.createElement('p');caption.className='attach-caption';caption.textContent='캡처 이미지는 브라우저 안에서만 처리해요. OCR에 필요한 프로그램과 언어 데이터는 내려받지만, 이미지 자체는 외부 서버로 전송하지 않아요.';
+  var ocrButton=document.createElement('button');ocrButton.type='button';ocrButton.className='attach-trigger';ocrButton.style.marginTop='9px';ocrButton.textContent='🔎 캡처 속 글자 읽기';
+  var ocrStatus=document.createElement('p');ocrStatus.className='attach-caption';ocrStatus.setAttribute('aria-live','polite');
+  var ocrText=document.createElement('textarea');ocrText.className='field';ocrText.rows=5;ocrText.placeholder='읽어 온 대화가 여기에 표시돼요. 잘못 읽힌 글자는 직접 수정해 주세요.';ocrText.style.display='none';ocrText.style.marginTop='8px';
+  var useText=document.createElement('button');useText.type='button';useText.className='attach-trigger';useText.textContent='읽은 대화를 마음말 입력창에 넣기';useText.style.display='none';useText.style.marginTop='8px';
+  var ocrBusy=false;
+  ocrButton.addEventListener('click',async function(){
+   if(!imageData||ocrBusy)return;
+   if(!window.Tesseract){
+    ocrStatus.textContent='기기에서 글자를 읽는 도구를 불러오는 중이에요.';
+    try{await new Promise(function(resolve,reject){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
+    catch(e){ocrStatus.textContent='글자 읽기 도구를 불러오지 못했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.';return}
+   }
+   ocrBusy=true;ocrButton.disabled=true;ocrButton.textContent='글자를 읽고 있어요…';
+   var worker;
+   try{
+    worker=await Tesseract.createWorker('kor+eng',1,{logger:function(m){if(m.status==='recognizing text')ocrStatus.textContent='캡처를 읽고 있어요… '+Math.round((m.progress||0)*100)+'%'}});
+    var result=await worker.recognize(imageData);
+    ocrText.value=(result.data&&result.data.text||'').trim();
+    ocrText.style.display='block';useText.style.display='block';
+    ocrStatus.textContent=ocrText.value?'읽기가 끝났어요. 대화 내용을 확인하고 필요한 부분을 고쳐 주세요.':'글자를 찾지 못했어요. 이미지가 선명한지 확인해 주세요.';
+   }catch(e){ocrStatus.textContent='글자를 읽는 중 문제가 생겼어요. 더 선명한 캡처로 다시 시도해 주세요.'}
+   finally{if(worker)try{await worker.terminate()}catch(e){} ocrBusy=false;ocrButton.disabled=false;ocrButton.textContent='🔎 다시 글자 읽기'}
+  });
+  useText.addEventListener('click',function(){
+   var current=input.value.trim(),extracted=ocrText.value.trim();
+   if(!extracted){ocrStatus.textContent='먼저 캡처 속 글자를 읽어 주세요.';return}
+   input.value=current?current+'\\n\\n[대화 캡처에서 읽은 내용]\\n'+extracted:extracted;
+   input.dispatchEvent(new Event('input',{bubbles:true}));
+   input.scrollIntoView({behavior:'smooth',block:'center'});
+   ocrStatus.textContent='입력창에 넣었어요. 내용을 확인한 뒤 마음말 만들기를 눌러 주세요.';
+  });
   pick.addEventListener('click',function(){file.click()});
   file.addEventListener('change',function(){
    var f=file.files&&file.files[0];if(!f)return;
@@ -1990,7 +2021,7 @@ function install(){
    };reader.readAsDataURL(f);
   });
   remove.addEventListener('click',function(){imageData='';file.value='';img.removeAttribute('src');preview.classList.remove('on')});
-  preview.append(img,remove);box.append(label,pick,file,preview,caption);input.insertAdjacentElement('afterend',box);
+  preview.append(img,remove);box.append(label,pick,file,preview,caption,ocrButton,ocrStatus,ocrText,useText);input.insertAdjacentElement('afterend',box);
  }
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
