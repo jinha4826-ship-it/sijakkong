@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf7f3">
+<meta name="description" content="콩이 마음 시리즈 — 생각주차장 · 마음의 빙산 · 마음말 · 시작콩. 마음이 복잡한 날, 하나씩 꺼내 쓰는 네 개의 작은 도구.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="콩이 마음 시리즈">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<meta property="og:type" content="website">
+<meta property="og:title" content="콩이 마음 시리즈 🌱">
+<meta property="og:description" content="머리가 꽉 찼을 때, 마음이 흔들릴 때. 생각주차장 · 마음의 빙산 · 마음말 · 시작콩 — 네 개의 작은 도구가 하나의 여정으로 이어져요.">
+<meta property="og:url" content="https://jinha4826-ship-it.github.io/sijakkong/kongi/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="콩이 마음 시리즈 🌱">
+<meta name="twitter:description" content="생각주차장 · 마음의 빙산 · 마음말 · 시작콩 — 마음이 복잡한 날 하나씩 꺼내 쓰는 네 개의 작은 도구.">
+<title>콩이 마음 시리즈 🌱 · 생각주차장 · 마음의 빙산 · 마음말 · 시작콩</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23fbf7f3'/%3E%3Ctext x='50' y='74' font-size='62' text-anchor='middle'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23fbf7f3'/%3E%3Ctext x='50' y='74' font-size='62' text-anchor='middle'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#fbf7f3;
+  --paper:#fffefa;
+  --ink:#40364a;
+  --ink2:#5d5268;
+  --muted:#94899b;
+  --line:#eee5ed;
+  --shadow:0 10px 30px rgba(89,70,107,.07);
+  --shadow-s:0 4px 14px rgba(89,70,107,.05);
+  --mint:#3fbe9c; --mint-d:#1f8f72; --mint-l:#e5f7f1;
+  --ice:#5f9bcf; --ice-d:#3d7aa8; --ice-l:#eaf3fb;
+  --lav:#8871a4; --lav-d:#6a4f8b; --lav-l:#f0e9f7;
+  --sprout:#6fae54; --sprout-d:#4d8a35; --sprout-l:#ecf6e4;
+  --warn:#d9724f; --warn-l:#fdf1ec;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);line-height:1.55;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+  background-image:radial-gradient(ellipse at 88% -2%,#f4ecfa 0,transparent 34%),
+                   radial-gradient(ellipse at 6% 12%,#eaf7f0 0,transparent 30%);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:480px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 18px calc(30px + env(safe-area-inset-bottom))}
+
+/* ── hero ── */
+.hero{position:relative;overflow:hidden;border-radius:26px;border:1px solid var(--line);
+  background:linear-gradient(158deg,#ffffff 0%,#f6fbf7 46%,#f7f2fb 100%);
+  box-shadow:var(--shadow);padding:22px 20px 18px}
+.hero:after{content:"";position:absolute;right:-34px;top:-34px;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle,#e6f6ee 0,#f6f0fb 62%,transparent 72%);pointer-events:none}
+.eyebrow{font-size:10px;font-weight:850;letter-spacing:2.2px;color:var(--lav);text-transform:uppercase}
+.hero h1{margin:8px 0 7px;font-size:27px;line-height:1.25;letter-spacing:-1.2px;font-weight:900}
+.hero h1 .bean{display:inline-block;transform:translateY(1px)}
+.hero p{margin:0;font-size:12.5px;line-height:1.75;color:var(--ink2);word-break:keep-all}
+.hero .note{display:flex;align-items:flex-start;gap:7px;margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);
+  font-size:11px;line-height:1.65;color:var(--muted);word-break:keep-all}
+.hero .note b{color:#6b5f78;font-weight:850}
+
+/* ── bean face ── */
+.beans{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.bean-face{width:52px;height:52px;border-radius:50% 50% 46% 46%;background:linear-gradient(160deg,#f4f0e2,#e7e0cc);
+  position:relative;box-shadow:inset 0 -3px 6px rgba(90,80,60,.10),0 6px 14px rgba(90,80,60,.10);flex:0 0 52px}
+.bean-face:before{content:"";position:absolute;left:14px;top:22px;width:6px;height:7px;border-radius:50%;background:#5a5142;
+  box-shadow:17px 0 0 #5a5142}
+.bean-face:after{content:"";position:absolute;left:22px;top:34px;width:9px;height:5px;border-radius:0 0 10px 10px;
+  border-bottom:2px solid #5a5142}
+.bean-leaf{position:absolute;left:16px;top:-9px;width:20px;height:14px;border-radius:50% 50% 50% 4px;background:var(--sprout);
+  transform:rotate(-16deg);box-shadow:0 2px 4px rgba(77,138,53,.25)}
+.bean-speech{font-size:11.5px;font-weight:800;color:#7c6a8e;background:#fff;border:1px solid var(--line);
+  border-radius:14px 14px 14px 4px;padding:8px 11px;box-shadow:var(--shadow-s);line-height:1.5}
+
+/* ── section title ── */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:26px 2px 11px}
+.sec-head h2{margin:0;font-size:14.5px;font-weight:900;letter-spacing:-.5px}
+.sec-head span{font-size:10.5px;font-weight:750;color:var(--muted)}
+
+/* ── journey ── */
+.journey{position:relative;display:flex;flex-direction:column;gap:11px}
+.journey:before{content:"";position:absolute;left:15px;top:34px;bottom:34px;width:2px;
+  background:repeating-linear-gradient(180deg,#e5dcf0 0 5px,transparent 5px 10px);z-index:0}
+.step-card{position:relative;display:flex;gap:13px;align-items:stretch;z-index:1}
+.step-no{flex:0 0 32px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  font-size:11.5px;font-weight:900;background:#fff;border:1.5px solid var(--line);color:#a99bb5;margin-top:14px;
+  font-family:Helvetica,Arial,sans-serif;letter-spacing:-.3px}
+.step-card .body{flex:1;min-width:0;display:block;border-radius:20px;border:1px solid var(--line);background:var(--paper);
+  box-shadow:var(--shadow-s);padding:15px 15px 14px;transition:transform .16s ease,box-shadow .16s ease}
+.step-card .body:active{transform:scale(.985)}
+.step-top{display:flex;align-items:center;gap:10px}
+.icon{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;font-size:19px;flex:0 0 38px}
+.step-title{min-width:0}
+.step-title b{display:block;font-size:15.5px;font-weight:900;letter-spacing:-.6px;line-height:1.3}
+.step-title small{display:block;font-size:10.5px;font-weight:750;color:var(--muted);margin-top:1px}
+.step-when{margin:10px 0 0;font-size:12px;font-weight:800;line-height:1.55;letter-spacing:-.2px;word-break:keep-all}
+.step-desc{margin:4px 0 0;font-size:11.5px;line-height:1.7;color:#7d7188;word-break:keep-all}
+.step-go{display:inline-flex;align-items:center;gap:4px;margin-top:11px;font-size:11.5px;font-weight:900;
+  padding:7px 12px;border-radius:11px;letter-spacing:-.2px}
+.step-go i{font-style:normal;font-size:10px;opacity:.7}
+
+/* card colors */
+.c1 .icon{background:var(--mint-l)} .c1 .step-go{background:var(--mint-l);color:var(--mint-d)}
+.c2 .icon{background:var(--ice-l)} .c2 .step-go{background:var(--ice-l);color:var(--ice-d)}
+.c3 .icon{background:var(--lav-l)} .c3 .step-go{background:var(--lav-l);color:var(--lav-d)}
+.c4 .icon{background:var(--sprout-l)} .c4 .step-go{background:var(--sprout-l);color:var(--sprout-d)}
+.c1 .step-no{border-color:#bfe8da;color:var(--mint-d)}
+.c2 .step-no{border-color:#c6dcf1;color:var(--ice-d)}
+.c3 .step-no{border-color:#d9c9e9;color:var(--lav-d)}
+.c4 .step-no{border-color:#cde5bf;color:var(--sprout-d)}
+
+.free-note{margin:13px 2px 0;font-size:11px;line-height:1.7;color:var(--muted);word-break:keep-all}
+.free-note b{color:#6b5f78;font-weight:850}
+
+/* ── safety ── */
+.safety{border-radius:22px;border:1px solid #f2dfd5;background:linear-gradient(165deg,#fffdfb,#fdf3ee);
+  padding:17px 16px 15px;box-shadow:var(--shadow-s)}
+.safety h3{margin:0 0 6px;font-size:14px;font-weight:900;letter-spacing:-.4px;color:#a4583a}
+.safety .lead{margin:0 0 12px;font-size:11.5px;line-height:1.7;color:#8f7266;word-break:keep-all}
+.tel-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tel{display:flex;flex-direction:column;gap:1px;background:#fff;border:1px solid #f3e2d9;border-radius:14px;
+  padding:11px 12px;min-height:58px;justify-content:center}
+.tel b{font-size:15px;font-weight:900;letter-spacing:-.4px;color:#b25a38;font-family:Helvetica,Arial,sans-serif}
+.tel span{font-size:10.5px;line-height:1.45;color:#96796d;font-weight:700}
+.tel:active{background:#fdf6f2}
+.safety .after{margin:11px 0 0;font-size:10.5px;line-height:1.65;color:#a08a7f;word-break:keep-all}
+
+/* ── disclaimer / footer ── */
+.disclaimer{margin:14px 0 0;display:flex;gap:8px;align-items:flex-start;background:#f9f7f0;border:1px solid #efeade;
+  border-radius:16px;padding:12px 13px;font-size:10.8px;line-height:1.7;color:#8b8779;word-break:keep-all}
+.disclaimer b{color:#6f6b5e;font-weight:850}
+footer{margin:22px 0 0;text-align:center;font-size:10px;line-height:1.8;color:#b0a6ba}
+footer .dots{letter-spacing:1px}
+@media (min-width:520px){
+  .wrap{padding-top:34px}
+  .hero h1{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="beans">
+      <div class="bean-face" aria-hidden="true"><i class="bean-leaf"></i></div>
+      <p class="bean-speech">마음이 복잡한 날,<br>하나씩 꺼내 쓰면 돼요</p>
+    </div>
+    <div class="eyebrow">KONGI MIND SERIES</div>
+    <h1><span class="bean">🌱</span> 콩이 마음 시리즈</h1>
+    <p>생각이 꽉 찼을 때 비우고, 왜 흔들리는지 보고, 그 마음을 내 언어로 꺼내 말하고, 딱 5분만 움직이는 — 네 개의 작은 도구예요.</p>
+    <div class="note"><span aria-hidden="true">🔒</span><span><b>로그인도, 서버도 없어요.</b> 모든 기록은 내 기기 안에만 저장되고, 언제든 지울 수 있어요.</span></div>
+  </header>
+
+  <div class="sec-head">
+    <h2>어디서 시작할까요?</h2>
+    <span>순서대로 쓰지 않아도 괜찮아요</span>
+  </div>
+
+  <section class="journey" aria-label="콩이 마음 시리즈 네 개의 앱">
+
+    <article class="step-card c1">
+      <span class="step-no" aria-hidden="true">01</span>
+      <a class="body" href="https://jinha4826-ship-it.github.io/brain-parking/">
+        <div class="step-top">
+          <span class="icon" aria-hidden="true">🫧</span>
+          <span class="step-title">
+            <b>생각주차장</b>
+            <small>머리가 꽉 찼을 때</small>
+          </span>
+        </div>
+        <p class="step-when">일단 다 꺼내 놓고, 지금 할 딱 1개만 고르기</p>
+        <p class="step-desc">떠오르는 생각을 던져놓고 ‘지금 / 나중에 / 흘려보낼 걱정’으로 나눠요. 머릿속 과부하를 먼저 내려놓는 입구예요.</p>
+        <span class="step-go">열기 <i>↗</i></span>
+      </a>
+    </article>
+
+    <article class="step-card c2">
+      <span class="step-no" aria-hidden="true">02</span>
+      <a class="body" href="https://jinha4826-ship-it.github.io/maeum-bingsan/">
+        <div class="step-top">
+          <span class="icon" aria-hidden="true">🧊</span>
+          <span class="step-title">
+            <b>마음의 빙산</b>
+            <small>내가 왜 흔들리는지 볼 때</small>
+          </span>
+        </div>
+        <p class="step-when">같은 일에 또 흔들린다면, 물 위가 아니라 아래를 보기</p>
+        <p class="step-desc">감정과 반응을 기록하면 반복되는 패턴과 방어기제가 보여요. 3일쯤 쌓이면 내가 유독 약한 지점이 드러나요.</p>
+        <span class="step-go">열기 <i>↗</i></span>
+      </a>
+    </article>
+
+    <article class="step-card c3">
+      <span class="step-no" aria-hidden="true">03</span>
+      <a class="body" href="https://jinha4826-ship-it.github.io/sijakkong/maeum-mal/">
+        <div class="step-top">
+          <span class="icon" aria-hidden="true">💬</span>
+          <span class="step-title">
+            <b>마음말</b>
+            <small>그 마음을 꺼내 말할 때</small>
+          </span>
+        </div>
+        <p class="step-when">급할 땐 초안으로, 천천히는 내 말로 연습하기</p>
+        <p class="step-desc">사실과 해석을 나누고 감정·욕구를 찾아 내 문장으로 말하는 연습을 해요. 나중엔 앱 없이도 혼자 말할 수 있게.</p>
+        <span class="step-go">열기 <i>↗</i></span>
+      </a>
+    </article>
+
+    <article class="step-card c4">
+      <span class="step-no" aria-hidden="true">04</span>
+      <a class="body" href="https://jinha4826-ship-it.github.io/sijakkong/">
+        <div class="step-top">
+          <span class="icon" aria-hidden="true">🌱</span>
+          <span class="step-title">
+            <b>시작콩</b>
+            <small>딱 5분만 움직여 볼 때</small>
+          </span>
+        </div>
+        <p class="step-when">생각만 하다 하루가 갈 때, 몸부터 5분</p>
+        <p class="step-desc">하기 싫은 일을 5분만 시작하게 도와주는 타이머예요. 시작만 하면 나머지는 생각보다 쉽게 굴러가요.</p>
+        <span class="step-go">열기 <i>↗</i></span>
+      </a>
+    </article>
+
+  </section>
+
+  <p class="free-note">네 앱은 <b>서로 기록을 넘겨받지 않아요.</b> 각자 내 기기 안에만 저장되고, 필요한 앱을 골라 쓰면 돼요. 전부 무료이고 광고도 없어요.</p>
+
+  <div class="sec-head">
+    <h2>🆘 위기·안전 안내</h2>
+    <span>24시간 연결</span>
+  </div>
+
+  <section class="safety" aria-label="위기 안전 안내">
+    <h3>혼자 감당하기 어려운 날엔</h3>
+    <p class="lead">죽고 싶거나 스스로를 해치고 싶은 마음이 들 때, 또는 더는 버틸 수 없다고 느껴질 때는 망설이지 말고 전화해도 괜찮아요. 24시간 누군가 받아 줘요.</p>
+    <div class="tel-grid">
+      <a class="tel" href="tel:109"><b>109</b><span>자살예방 상담전화<br>24시간</span></a>
+      <a class="tel" href="tel:15770199"><b>1577-0199</b><span>정신건강 상담전화<br>24시간</span></a>
+      <a class="tel" href="tel:119"><b>119</b><span>응급 구조·구급<br>지금 위험하다면</span></a>
+      <a class="tel" href="tel:112"><b>112</b><span>경찰<br>급박한 상황</span></a>
+    </div>
+    <p class="after">이 앱들은 기록과 연습을 도와주는 도구예요. 전문 의료·상담을 대신하지 않아요. 힘든 마음이 계속된다면 꼭 전문가와 이야기해 보세요.</p>
+  </section>
+
+  <p class="disclaimer"><span aria-hidden="true">🔒</span><span><b>기록은 기기 안에만.</b> 네 앱 모두 로그인 없이 이 기기(브라우저 저장 공간)에만 기록을 남기고, 외부 서버로 보내지 않아요. 앱을 지우거나 기록을 지우면 완전히 사라져요.</span></p>
+
+  <footer>
+    <div class="dots">🫧 · 🧊 · 💬 · 🌱</div>
+    콩이 마음 시리즈<br>
+    생각주차장 · 마음의 빙산 · 마음말 · 시작콩
+  </footer>
+
+</div>
+</body>
+</html>

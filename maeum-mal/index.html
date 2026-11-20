@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="마음말">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="마음말">
-<meta name="app-version" content="2026-11-20-v3">
+<meta name="app-version" content="2026-11-20-v4">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" type="image/png" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -338,6 +338,30 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 .backup-status{font-size:10.5px;color:#8a7b96;line-height:1.6;margin:9px 0 0;word-break:keep-all}
 .backup-status:empty{display:none}
 .draft-note{display:flex;align-items:center;gap:8px;background:#f4f0fa;border:1px solid #e6dbf1;border-radius:13px;padding:9px 11px;margin:8px 0 6px;font-size:10.5px;line-height:1.55;color:#725d84}
+/* ---------- 위기 안전 안내·콩이 마음 시리즈 ---------- */
+.safety-box{margin-top:16px;border-radius:18px;border:1px solid #f2dfd5;background:linear-gradient(165deg,#fffdfb,#fdf3ee);padding:14px 13px 12px;box-shadow:0 4px 14px #59466b0a}
+.safety-box h3{margin:0 0 5px;font-size:12.5px;font-weight:900;letter-spacing:-.4px;color:#a4583a}
+.safety-box .lead{margin:0 0 10px;font-size:10.5px;line-height:1.65;color:#8f7266;word-break:keep-all}
+.tel-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.safety-box .tel{display:flex;flex-direction:column;gap:1px;background:#fff;border:1px solid #f3e2d9;border-radius:12px;padding:9px 10px;min-height:50px;justify-content:center;text-decoration:none}
+.safety-box .tel b{font-size:14px;font-weight:900;letter-spacing:-.4px;color:#b25a38;font-family:Helvetica,Arial,sans-serif}
+.safety-box .tel span{font-size:9.5px;line-height:1.4;color:#96796d;font-weight:700}
+.safety-box .tel:active{background:#fdf6f2}
+.safety-box .fine{margin:9px 0 0;font-size:9.8px;line-height:1.6;color:#a08a7f;word-break:keep-all}
+.series-card{display:flex;align-items:center;gap:10px;margin-top:8px;background:#fffefa;border:1px solid var(--line);border-radius:16px;padding:11px 12px;box-shadow:var(--shadow);text-decoration:none}
+.series-card:active{background:#f8f4fa}
+.series-card .ico{width:32px;height:32px;border-radius:11px;background:#ecf6e4;display:grid;place-items:center;font-size:16px;flex:0 0 32px}
+.series-card .txt{flex:1;min-width:0}
+.series-card .txt b{display:block;font-size:12px;font-weight:900;letter-spacing:-.4px;color:#4a3d55}
+.series-card .txt small{display:block;font-size:9.5px;font-weight:700;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.series-card .go{font-size:10px;font-weight:850;color:var(--lavdeep);background:var(--lavp);border-radius:9px;padding:5px 8px;flex:0 0 auto}
+.safety-inline{margin:2px 0 12px;border-radius:14px;border:1px solid #f2dfd5;background:#fffdfb;padding:11px 11px 10px}
+.safety-inline>b{display:block;font-size:11px;font-weight:900;color:#a4583a;margin-bottom:7px;letter-spacing:-.3px}
+.safety-inline .tel-grid{gap:6px}
+.safety-inline .tel{display:flex;flex-direction:column;justify-content:center;gap:1px;background:#fff;border:1px solid #f3e2d9;border-radius:11px;padding:8px 9px;min-height:46px;text-decoration:none;text-align:left;font-size:11px}
+.safety-inline .tel b{font-size:12.5px;font-weight:900;color:#b25a38;font-family:Helvetica,Arial,sans-serif;letter-spacing:-.3px}
+.safety-inline .tel span{font-size:9px;font-weight:700;color:#96796d;line-height:1.35}
+.safety-inline .series-mini{display:block;margin-top:8px;font-size:10px;font-weight:850;color:var(--lavdeep);text-decoration:none;text-align:center;background:var(--lavp);border-radius:10px;padding:8px}
 .draft-note span{flex:1;min-width:0}
 .draft-note button{margin-left:auto;font-size:10px;font-weight:850;color:#8a6fa3;background:#fff;border:1px solid #e2d5ee;border-radius:9px;padding:6px 9px;min-height:32px;white-space:nowrap;flex:0 0 auto}
 .sheet .more{width:100%;background:#f6f2f9;color:#6d5789;margin-bottom:8px;font-size:12px}
@@ -674,6 +698,25 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       </div>
 
       <div class="reclist" id="recList"></div>
+
+      <section class="safety-box" aria-label="위기 안전 안내">
+        <h3>🆘 혼자 감당하기 어려운 날엔</h3>
+        <p class="lead">죽고 싶거나 스스로를 해치고 싶은 마음이 들 때, 더는 버틸 수 없다고 느껴질 때는 망설이지 말고 전화해도 괜찮아요. 24시간 누군가 받아 줘요.</p>
+        <div class="tel-grid">
+          <a class="tel" href="tel:109"><b>109</b><span>자살예방 상담전화 · 24시간</span></a>
+          <a class="tel" href="tel:15770199"><b>1577-0199</b><span>정신건강 상담전화 · 24시간</span></a>
+          <a class="tel" href="tel:119"><b>119</b><span>응급 구조·구급</span></a>
+          <a class="tel" href="tel:112"><b>112</b><span>경찰 · 급박한 상황</span></a>
+        </div>
+        <p class="fine">마음말은 마음을 꺼내 말하는 연습을 돕는 도구예요. 전문 의료·상담을 대신하지 않아요.</p>
+      </section>
+
+      <a class="series-card" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">
+        <span class="ico" aria-hidden="true">🌱</span>
+        <span class="txt"><b>콩이 마음 시리즈</b><small>생각주차장 · 마음의 빙산 · 마음말 · 시작콩</small></span>
+        <span class="go">전체 보기 ↗</span>
+      </a>
+
       <button class="primary ghost small" id="btnClearAll" style="margin-top:14px">기록 모두 지우기</button>
     </section>
   </main>
@@ -685,6 +728,16 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
     <h3 id="mTitle">기록을 모두 지울까요?</h3>
     <p id="mBody">이 기기에 저장된 연습 기록이 전부 사라져요. 되돌릴 수 없어요.</p>
     <button type="button" class="more hide" id="mMore">개인정보처리방침 보기</button>
+    <div class="safety-inline hide" id="mSafety">
+      <b>🆘 많이 힘든 날엔 바로 전화해도 괜찮아요</b>
+      <div class="tel-grid">
+        <a class="tel" href="tel:109"><b>109</b><span>자살예방 · 24시간</span></a>
+        <a class="tel" href="tel:15770199"><b>1577-0199</b><span>정신건강 · 24시간</span></a>
+        <a class="tel" href="tel:119"><b>119</b><span>응급</span></a>
+        <a class="tel" href="tel:112"><b>112</b><span>경찰</span></a>
+      </div>
+      <a class="series-mini" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">🌱 콩이 마음 시리즈 전체 보기 ↗</a>
+    </div>
     <div class="row2">
       <button class="no" id="mNo">취소</button>
       <button class="yes" id="mYes">지우기</button>
@@ -1830,6 +1883,7 @@ var MM = (function () {
       mb.removeAttribute('data-href');
     }
     modalAction = action || null;
+    $('mSafety').classList.add('hide');
     $('modal').classList.add('on');
     $('modal').setAttribute('aria-hidden', 'false');
     navPush();
@@ -3417,8 +3471,9 @@ var MM = (function () {
 
     $('btnAbout').addEventListener('click', function () {
       openModal('마음말은 이렇게 써요',
-        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요.\n\n🔐 개인정보\n① 저장하는 것 — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 회고\n② 저장 위치 — 이 기기 브라우저 저장 공간(localStorage)에만. 계정도 서버도 없어요.\n③ 외부 전송 — 없어요. 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구를 내려받아요. 이미지는 보내지 않아요.\n④ 지우는 법 — 기록 카드의 삭제 / 기록 모두 지우기 / 앱 삭제',
+        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요.\n\n🔐 개인정보\n① 저장하는 것 — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 회고\n② 저장 위치 — 이 기기 브라우저 저장 공간(localStorage)에만. 계정도 서버도 없어요.\n③ 외부 전송 — 없어요. 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구를 내려받아요. 이미지는 보내지 않아요.\n④ 지우는 법 — 기록 카드의 삭제 / 기록 모두 지우기 / 앱 삭제\n\n🆘 마음말은 전문 의료·상담을 대신하지 않아요. 많이 힘든 날엔 아래 번호로 바로 전화해도 괜찮아요.',
         '알겠어요', null, true, { label: '🔐 개인정보처리방침 보기', href: './privacy.html' });
+      $('mSafety').classList.remove('hide');
     });
 
     resetTrain(true);
