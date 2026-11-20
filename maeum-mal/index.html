@@ -7,6 +7,12 @@
 <meta name="description" content="마음말 — 급할 땐 초안을, 천천히는 내 말로 말하는 연습을. 사실과 해석을 나누고 감정과 욕구를 찾아 내 문장으로 말하는 훈련.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="마음말">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="마음말">
+<meta name="app-version" content="2026-11-20-v3">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <title>마음말 · 내 언어로 마음을 꺼내는 연습</title>
 <style>
 :root{
@@ -30,7 +36,8 @@ button,input,textarea,select{font:inherit;color:inherit}
 button{border:0;background:none;cursor:pointer;-webkit-appearance:none;appearance:none}
 .app{
   max-width:520px;min-height:100vh;min-height:100dvh;margin:0 auto;
-  padding:env(safe-area-inset-top) 16px calc(40px + env(safe-area-inset-bottom));
+  padding:env(safe-area-inset-top) 16px calc(40px + env(safe-area-inset-bottom) + var(--kb-pad,0px));
+  overflow-x:hidden
   background:radial-gradient(ellipse at 92% 4%,#f3ecfa 0,transparent 32%),
              linear-gradient(180deg,#fcf9f6,#faf6f2 70%,#fbf7f4);
 }
@@ -315,7 +322,45 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 .retro-q .qopts button{text-align:left;font-size:11.5px;font-weight:750;padding:10px 12px;border-radius:11px;background:#f7f3fa;border:1px solid #ece1ef;color:#7a668b;min-height:42px}
 .retro-q .qopts button.on{background:#ece4f5;border-color:#c9b2dd;color:#5f4483;font-weight:850}
 .retro-memo{width:100%;min-height:64px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.6;background:#fffdfa;outline:none;resize:vertical}
-@media (max-width:360px){.tab{font-size:10px}.home-hero h2{font-size:23px}}
+/* ---------- v3: 개인정보 안내·백업·임시저장 ---------- */
+.privacy-more{margin:8px 0 6px;background:#fbf8fd;border:1px solid #ece4f2;border-radius:16px;padding:1px 13px 9px}
+.privacy-more summary{list-style:none;cursor:pointer;padding:11px 0 5px;font-size:11.5px;font-weight:850;color:#7c6793;display:flex;align-items:center;gap:6px;min-height:36px}
+.privacy-more summary::-webkit-details-marker{display:none}
+.privacy-more summary::after{content:'자세히';margin-left:auto;font-size:9.5px;font-weight:850;color:#8a75a0;background:#fff;border:1px solid #e6dbf1;border-radius:8px;padding:3px 7px}
+.privacy-more[open] summary::after{content:'접기'}
+.privacy-more ul{margin:2px 0 0;padding-left:15px}
+.privacy-more li{font-size:11px;line-height:1.7;color:#82748e;margin-bottom:7px;word-break:keep-all}
+.privacy-more li b{color:#5f4e70;font-weight:850}
+.policy-link{display:inline-block;font-size:11px;font-weight:850;color:#7c6793;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#d9c8e6;padding:5px 2px 4px}
+.panel.backup{padding:13px 14px}
+.panel.backup>p{margin:0 0 9px}
+.panel.backup .row2{margin-top:0}
+.backup-status{font-size:10.5px;color:#8a7b96;line-height:1.6;margin:9px 0 0;word-break:keep-all}
+.backup-status:empty{display:none}
+.draft-note{display:flex;align-items:center;gap:8px;background:#f4f0fa;border:1px solid #e6dbf1;border-radius:13px;padding:9px 11px;margin:8px 0 6px;font-size:10.5px;line-height:1.55;color:#725d84}
+.draft-note span{flex:1;min-width:0}
+.draft-note button{margin-left:auto;font-size:10px;font-weight:850;color:#8a6fa3;background:#fff;border:1px solid #e2d5ee;border-radius:9px;padding:6px 9px;min-height:32px;white-space:nowrap;flex:0 0 auto}
+.sheet .more{width:100%;background:#f6f2f9;color:#6d5789;margin-bottom:8px;font-size:12px}
+@media (max-width:390px){
+  .app{padding-left:13px;padding-right:13px}
+  .hero h2{font-size:23px}
+  .home-hero h2{font-size:24px}
+  .card{padding:14px;border-radius:20px}
+  .rec .acts button{padding:7px 9px}
+  .sheet{padding:17px;border-radius:20px}
+  .summary-head b{font-size:26px}
+}
+@media (max-width:360px){
+  .tab{font-size:10px}
+  .home-hero h2{font-size:23px}
+  .app{padding-left:11px;padding-right:11px}
+  .stats{flex-direction:column}
+  .stat b{font-size:17px}
+  .pattern-grid{grid-template-columns:1fr}
+  .chip.emo{width:calc(50% - 4px)}
+  .sheet{max-width:100%;padding:16px}
+  .draft-note{font-size:10px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -375,6 +420,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       </div>
 
       <div id="qForm">
+        <div class="draft-note hide" id="draftNoteQ"><span>작성 중이던 초안을 이어서 쓰고 있어요. 입력할 때마다 자동으로 임시저장돼요.</span><button type="button" id="draftClearQ">새로 쓰기</button></div>
         <div class="card">
           <div class="field-label" style="margin-top:0">상대</div>
           <div class="chips" id="qRel"></div>
@@ -434,6 +480,8 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
         <h2>내 문장으로 말하는 연습</h2>
         <p>사실과 해석을 나누고, 감정과 욕구를 찾아, 내 말로 한 문장을 써요. 예시는 막힐 때만 열어요.</p>
       </div>
+
+      <div class="draft-note hide" id="draftNoteT"><span>작성 중이던 연습을 이어서 하고 있어요. 입력할 때마다 자동으로 임시저장돼요.</span><button type="button" id="draftClearT">새로 시작</button></div>
 
       <div class="prog">
         <div class="prog-bar"><i id="progFill"></i></div>
@@ -578,6 +626,28 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
         <div><b>모든 기록은 이 기기에만 저장돼요.</b><br>서버로 보내지 않고, 앱을 지우면 함께 사라져요.</div>
       </div>
 
+      <details class="privacy-more" id="privacyMore">
+        <summary>🔐 내 정보는 이렇게 보관돼요</summary>
+        <ul>
+          <li><b>저장하는 것</b> — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 남긴 회고</li>
+          <li><b>저장 위치</b> — 이 기기 브라우저의 저장 공간(localStorage)에만. 계정도, 서버도 없어요.</li>
+          <li><b>외부 전송</b> — 없어요. 대화 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구와 언어 데이터를 내려받아요. 캡처 이미지는 어디로도 보내지 않아요.</li>
+          <li><b>지우는 법</b> — 기록 카드의 <b>삭제</b>, 아래의 <b>기록 모두 지우기</b>, 또는 앱을 삭제하면 바로 사라져요.</li>
+        </ul>
+        <a class="policy-link" href="./privacy.html" target="_blank" rel="noopener">개인정보처리방침 전문 보기 →</a>
+      </details>
+
+      <section class="panel backup">
+        <h3>백업과 복구 <small>JSON 파일</small></h3>
+        <p>기록을 파일로 내려받아 두면 기기를 바꾸거나 앱을 지워도 되살릴 수 있어요. 파일은 내 기기(또는 내가 고른 저장 위치)에만 남아요.</p>
+        <div class="row2">
+          <button type="button" class="primary small" id="btnExport">📤 내보내기</button>
+          <button type="button" class="primary ghost small" id="btnImport">📥 가져오기</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json,.json,text/plain" hidden>
+        <p class="backup-status" id="backupStatus" aria-live="polite"></p>
+      </section>
+
       <div class="summary" id="summary"></div>
       <div class="stats" id="stats"></div>
 
@@ -614,6 +684,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <h3 id="mTitle">기록을 모두 지울까요?</h3>
     <p id="mBody">이 기기에 저장된 연습 기록이 전부 사라져요. 되돌릴 수 없어요.</p>
+    <button type="button" class="more hide" id="mMore">개인정보처리방침 보기</button>
     <div class="row2">
       <button class="no" id="mNo">취소</button>
       <button class="yes" id="mYes">지우기</button>
@@ -629,6 +700,16 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       <button class="no" id="rCancel" style="flex:1">나중에</button>
       <button class="yes neutral" id="rSave" style="flex:1">남기기</button>
     </div>
+  </div>
+</div>
+
+<div class="modal" id="importModal" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="iTitle">
+    <h3 id="iTitle">가져온 기록을 어떻게 할까요?</h3>
+    <p id="iBody"></p>
+    <button type="button" class="yes neutral" id="iMerge" style="width:100%;margin-bottom:8px">지금 기록과 합치기</button>
+    <button type="button" class="no" id="iReplace" style="width:100%;margin-bottom:8px">가져온 기록으로 바꾸기</button>
+    <button type="button" class="no" id="iCancel" style="width:100%">취소</button>
   </div>
 </div>
 
@@ -1318,6 +1399,10 @@ var MM = (function () {
   var LS_KEY = 'maeummal.v1';
   var PATTERN_KEY = 'maeummal.own-pattern.v1';
   var PATTERN_FB_KEY = 'maeummal.pattern-feedback.v1';
+  var DRAFT_Q_KEY = 'maeummal.draft.quick.v1';
+  var DRAFT_T_KEY = 'maeummal.draft.train.v1';
+  var BACKUP_APP = 'maeum-mal';
+  var APP_VERSION = '2026-11-20-v3';
 
   var REL_ORDER = ['friend', 'lover', 'family', 'work', 'social'];
   var SIT_ORDER = ['refuse', 'hurt', 'ask', 'boundary', 'apology'];
@@ -1444,6 +1529,268 @@ var MM = (function () {
     }
   }
   function uid() { return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function lsGet(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function lsSet(key, val) { try { localStorage.setItem(key, val); return true; } catch (e) { return false; } }
+  function lsDel(key) { try { localStorage.removeItem(key); } catch (e) {} }
+
+  /* ---------------- 임시저장(작성 중 초안) ---------------- */
+  var draftTimer = null;
+
+  function draftSaveQuick() {
+    var text = $('qText').value;
+    if (!text.trim() && !Q.emotion) { lsDel(DRAFT_Q_KEY); return; }
+    lsSet(DRAFT_Q_KEY, JSON.stringify({
+      v: 1, at: Date.now(), relation: Q.relation, situation: Q.situation,
+      style: Q.style || '', emotion: Q.emotion || '', text: text
+    }));
+  }
+  function draftSaveTrain() {
+    var d = {
+      v: 1, at: Date.now(), step: T.step, relation: T.relation, situation: T.situation,
+      style: T.style || '', emotion: T.emotion || '', needs: (T.needs || []).slice(),
+      needCustom: $('needCustom').value, sit: $('sitText').value, fact: $('factText').value,
+      guess: $('guessText').value, want: $('wantText').value, sentence: $('mySentence').value,
+      hintOpened: !!T.hintOpened, selfCheck: T.selfCheck || {}
+    };
+    var empty = !d.sit.trim() && !d.fact.trim() && !d.guess.trim() && !d.want.trim() &&
+      !d.sentence.trim() && !d.needCustom.trim() && !d.emotion && !d.needs.length;
+    if (empty) { lsDel(DRAFT_T_KEY); return; }
+    lsSet(DRAFT_T_KEY, JSON.stringify(d));
+  }
+  function draftSaveNow() { draftSaveQuick(); draftSaveTrain(); }
+  function draftSaveSoon() { clearTimeout(draftTimer); draftTimer = setTimeout(draftSaveNow, 400); }
+
+  function restoreDrafts() {
+    var qd = null, td = null;
+    try { qd = JSON.parse(lsGet(DRAFT_Q_KEY) || 'null'); } catch (e) { qd = null; }
+    try { td = JSON.parse(lsGet(DRAFT_T_KEY) || 'null'); } catch (e) { td = null; }
+
+    if (qd && typeof qd === 'object') {
+      if (typeof qd.relation === 'string' && MM.REL[qd.relation]) Q.relation = qd.relation;
+      if (typeof qd.situation === 'string' && MM.SIT[qd.situation]) Q.situation = qd.situation;
+      if (typeof qd.style === 'string') Q.style = qd.style;
+      Q.emotion = emoById(qd.emotion) ? qd.emotion : null;
+      var qt = typeof qd.text === 'string' ? qd.text : '';
+      $('qText').value = qt; Q.text = qt;
+      $('qCount').textContent = String(qt.length);
+      renderQuickForm();
+      $('draftNoteQ').classList.remove('hide');
+    }
+
+    if (td && typeof td === 'object') {
+      if (typeof td.relation === 'string' && MM.REL[td.relation]) T.relation = td.relation;
+      if (typeof td.situation === 'string' && MM.SIT[td.situation]) T.situation = td.situation;
+      if (typeof td.style === 'string') T.style = td.style;
+      T.emotion = emoById(td.emotion) ? td.emotion : null;
+      T.needs = Array.isArray(td.needs) ? td.needs.filter(function (id) { return !!needById(id); }).slice(0, 3) : [];
+      T.sit = typeof td.sit === 'string' ? td.sit : '';
+      T.fact = typeof td.fact === 'string' ? td.fact : '';
+      T.guess = typeof td.guess === 'string' ? td.guess : '';
+      T.want = typeof td.want === 'string' ? td.want : '';
+      T.needCustom = typeof td.needCustom === 'string' ? td.needCustom : '';
+      T.sentence = typeof td.sentence === 'string' ? td.sentence : '';
+      T.hintOpened = !!td.hintOpened;
+      T.selfCheck = (td.selfCheck && typeof td.selfCheck === 'object') ? td.selfCheck : {};
+      $('sitText').value = T.sit; $('factText').value = T.fact; $('guessText').value = T.guess;
+      $('wantText').value = T.want; $('needCustom').value = T.needCustom; $('mySentence').value = T.sentence;
+      $('charCount').textContent = String(T.sentence.length);
+      renderTrainMeta();
+      var step = parseInt(td.step, 10);
+      showStep(Math.min(4, Math.max(1, isNaN(step) ? 1 : step)));
+      if (T.step >= 2) reviewSplit();
+      renderSpine();
+      if (T.hintOpened) $('btnHint').textContent = '예시 힌트 다시 보기';
+      $('draftNoteT').classList.remove('hide');
+    }
+  }
+
+  /* ---------------- 백업(JSON 내보내기·가져오기) ---------------- */
+  var pendingImport = null;
+
+  function stampNow() {
+    var d = new Date();
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
+  }
+  function setBackupStatus(msg) { $('backupStatus').textContent = msg || ''; }
+
+  function backupPayload() {
+    var list = loadRecords();
+    var memo = '', fb = null;
+    try { memo = localStorage.getItem(PATTERN_KEY) || ''; } catch (e) {}
+    try { fb = JSON.parse(localStorage.getItem(PATTERN_FB_KEY) || 'null'); } catch (e) { fb = null; }
+    return {
+      app: BACKUP_APP, schema: 1, version: APP_VERSION,
+      exportedAt: new Date().toISOString(), count: list.length,
+      records: list, patternMemo: memo, patternFeedback: fb
+    };
+  }
+
+  function downloadText(name, text) {
+    var blob = new Blob([text], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name; a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      try { document.body.removeChild(a); URL.revokeObjectURL(url); } catch (e) {}
+    }, 2000);
+  }
+
+  function exportBackup() {
+    var data = backupPayload();
+    if (!data.records.length) {
+      setBackupStatus('아직 내보낼 기록이 없어요. 연습을 마치거나 초안을 저장한 뒤에 내보낼 수 있어요.');
+      toast('내보낼 기록이 없어요');
+      return;
+    }
+    var text = JSON.stringify(data, null, 2);
+    var name = 'maeummal-backup-' + stampNow() + '.json';
+    try {
+      var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var file = new File([text], name, { type: 'application/json' });
+      if (iOS && navigator.canShare && navigator.canShare({ files: [file] })) {
+        setBackupStatus('공유 화면에서 ‘파일에 저장’을 골라 주세요.');
+        navigator.share({ files: [file], title: '마음말 기록 백업' }).then(function () {
+          setBackupStatus('파일로 저장했어요 · ' + data.records.length + '개');
+        }, function () {
+          downloadText(name, text);
+          setBackupStatus('내보냈어요 · ' + name + ' (' + data.records.length + '개)');
+        });
+        return;
+      }
+    } catch (e) {}
+    downloadText(name, text);
+    setBackupStatus('내보냈어요 · ' + name + ' (' + data.records.length + '개)');
+    toast('파일로 내보냈어요');
+  }
+
+  function cleanRecord(r) {
+    if (!r || typeof r !== 'object') return null;
+    var type = String(r.type || '');
+    if (['practice', 'quick', 'talk', 'thought'].indexOf(type) < 0) type = '';
+    var sentence = typeof r.sentence === 'string' ? r.sentence.slice(0, 4000) : '';
+    var at = '';
+    if (typeof r.at === 'string' && !isNaN(new Date(r.at).getTime())) at = new Date(r.at).toISOString();
+    else if (typeof r.at === 'number' && !isNaN(new Date(r.at).getTime())) at = new Date(r.at).toISOString();
+    if (!sentence.trim() && !at) return null;
+    var out = {};
+    for (var k in r) if (Object.prototype.hasOwnProperty.call(r, k)) out[k] = r[k];
+    out.type = type || 'quick';
+    out.sentence = sentence;
+    out.at = at || new Date().toISOString();
+    out.id = (typeof r.id === 'string' && r.id) ? r.id.slice(0, 60) : uid();
+    out.needs = Array.isArray(r.needs) ? r.needs.filter(function (n) { return typeof n === 'string'; }).slice(0, 6) : [];
+    if (r.retro && typeof r.retro !== 'object') out.retro = null;
+    return out;
+  }
+
+  function dupKey(r) {
+    return [r.type, r.at, String(r.sentence || '').slice(0, 80)].join('|');
+  }
+
+  function parseBackup(text) {
+    var obj;
+    try { obj = JSON.parse(text); } catch (e) { return { err: 'JSON 파일이 아니거나 내용이 깨져 있어요. 마음말에서 내보낸 .json 파일인지 확인해 주세요.' }; }
+    var recs = null;
+    if (Array.isArray(obj)) recs = obj;
+    else if (obj && Array.isArray(obj.records)) recs = obj.records;
+    else if (obj && obj.app && Array.isArray(obj.data && obj.data.records)) recs = obj.data.records;
+    else return { err: '마음말 백업 파일이 아니에요. 기록 목록(records)을 찾지 못했어요.' };
+    var clean = [], bad = 0;
+    recs.forEach(function (r) { var c = cleanRecord(r); if (c) clean.push(c); else bad++; });
+    if (!clean.length) return { err: '가져올 수 있는 기록이 없어요. 파일 내용을 확인해 주세요.' };
+    return {
+      records: clean, bad: bad,
+      patternMemo: (obj && typeof obj.patternMemo === 'string') ? obj.patternMemo : '',
+      patternFeedback: (obj && obj.patternFeedback && typeof obj.patternFeedback === 'object') ? obj.patternFeedback : null
+    };
+  }
+
+  function openImportModal(parsed) {
+    pendingImport = parsed;
+    var list = loadRecords();
+    $('iBody').textContent = '가져온 기록 ' + parsed.records.length + '개' +
+      (parsed.bad ? ' (읽을 수 없어 건너뛴 항목 ' + parsed.bad + '개)' : '') +
+      '\n지금 이 기기에는 ' + list.length + '개가 있어요.\n\n합치면 지금 기록은 그대로 두고 더해요.\n바꾸면 지금 기록을 지우고 가져온 기록만 남겨요.';
+    $('iMerge').disabled = false;
+    $('iReplace').disabled = false;
+    $('importModal').classList.add('on');
+    $('importModal').setAttribute('aria-hidden', 'false');
+    navPush();
+  }
+  function closeImport() {
+    $('importModal').classList.remove('on');
+    $('importModal').setAttribute('aria-hidden', 'true');
+    pendingImport = null;
+    $('importFile').value = '';
+  }
+
+  function applyImport(mode) {
+    var p = pendingImport;
+    pendingImport = null;
+    if (!p) { closeImport(); return; }
+    $('importFile').value = '';
+    var list = loadRecords();
+    var added = 0, skipped = 0;
+    if (mode === 'replace') {
+      list = p.records.slice();
+      added = list.length;
+    } else {
+      var seen = {};
+      list.forEach(function (r) { seen[r.id] = 1; seen['k:' + dupKey(r)] = 1; });
+      p.records.forEach(function (r) {
+        if (seen[r.id] || seen['k:' + dupKey(r)]) { skipped++; return; }
+        list.push(r); seen[r.id] = 1; seen['k:' + dupKey(r)] = 1; added++;
+      });
+      list.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
+    }
+    if (!persist(list)) { closeImport(); return; }
+    if (p.patternMemo) lsSet(PATTERN_KEY, p.patternMemo);
+    if (p.patternFeedback) lsSet(PATTERN_FB_KEY, JSON.stringify(p.patternFeedback));
+    setBackupStatus(mode === 'replace'
+      ? '가져온 기록 ' + added + '개로 바꿨어요.'
+      : added + '개를 더했어요.' + (skipped ? ' 이미 있던 ' + skipped + '개는 건너뛰었어요.' : ''));
+    toast(mode === 'replace' ? '기록을 바꿨어요' : added + '개를 가져왔어요');
+    renderLog(); renderHome();
+    try { history.back(); } catch (e) { closeImport(); }
+  }
+
+  /* ---------------- 뒤로가기(히스토리) ---------------- */
+  var navDepth = 0;
+  var skipPop = 0;
+
+  function navPush() {
+    navDepth = ((history.state && history.state.mm) || 0) + 1;
+    try { history.pushState({ mm: navDepth }, ''); } catch (e) {}
+  }
+  function navRewind() {
+    var d = (history.state && history.state.mm) || 0;
+    if (d > 0) { try { history.go(-d); } catch (e) {} }
+  }
+  function navBackSoft() {
+    skipPop++;
+    try { history.back(); } catch (e) { skipPop--; }
+  }
+  function modalState() {
+    if ($('importModal').classList.contains('on')) return 'import';
+    if ($('retroModal').classList.contains('on')) return 'retro';
+    if ($('modal').classList.contains('on')) return 'modal';
+    return '';
+  }
+  function quickResultOpen() { return !$('qResult').classList.contains('hide'); }
+  function onPopState() {
+    if (skipPop > 0) { skipPop--; return; }
+    var m = modalState();
+    if (m === 'import') { closeImport(); return; }
+    if (m === 'retro') { closeRetro(); return; }
+    if (m === 'modal') { closeModal(); return; }
+    if (quickResultOpen()) { showQuickForm(); return; }
+    if (state.tab !== 'home') { showTab('home'); return; }
+  }
+
 
   /* ---------------- 공통 ---------------- */
   var toastTimer = null;
@@ -1456,15 +1803,25 @@ var MM = (function () {
   }
 
   var modalAction = null;
-  function openModal(title, body, yesLabel, action, neutral) {
+  function openModal(title, body, yesLabel, action, neutral, more) {
     $('mTitle').textContent = title;
     $('mBody').textContent = body;
     var yes = $('mYes');
     yes.textContent = yesLabel || '확인';
     yes.className = 'yes' + (neutral ? ' neutral' : '');
+    var mb = $('mMore');
+    if (more && more.href) {
+      mb.classList.remove('hide');
+      mb.textContent = more.label || '자세히 보기';
+      mb.setAttribute('data-href', more.href);
+    } else {
+      mb.classList.add('hide');
+      mb.removeAttribute('data-href');
+    }
     modalAction = action || null;
     $('modal').classList.add('on');
     $('modal').setAttribute('aria-hidden', 'false');
+    navPush();
   }
   function closeModal() {
     $('modal').classList.remove('on');
@@ -1516,7 +1873,7 @@ var MM = (function () {
   }
 
   /* ---------------- 탭 ---------------- */
-  function switchTab(name) {
+  function showTab(name) {
     state.tab = name;
     var tabs = document.querySelectorAll('.tab');
     for (var i = 0; i < tabs.length; i++) {
@@ -1531,6 +1888,21 @@ var MM = (function () {
     if (name === 'log') renderLog();
     if (name === 'home') renderHome();
     window.scrollTo(0, 0);
+  }
+
+  function switchTab(name) {
+    if (name === state.tab) {
+      if (name === 'log') renderLog();
+      if (name === 'home') renderHome();
+      return;
+    }
+    if (name === 'home') {
+      showTab('home');
+      navRewind();
+      return;
+    }
+    showTab(name);
+    navPush();
   }
 
   /* ---------------- 칩 ---------------- */
@@ -1663,6 +2035,13 @@ var MM = (function () {
     $('qForm').classList.add('hide');
     $('qResult').classList.remove('hide');
     window.scrollTo(0, 0);
+    navPush();
+  }
+
+  function showQuickForm() {
+    $('qResult').classList.add('hide');
+    $('qForm').classList.remove('hide');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function renderQuickResult() {
@@ -2125,6 +2504,8 @@ var MM = (function () {
     var list = loadRecords();
     list.unshift(rec);
     if (!persist(list)) return;
+    lsDel(DRAFT_T_KEY);
+    $('draftNoteT').classList.add('hide');
     renderDone(rec);
     showDone();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2163,6 +2544,7 @@ var MM = (function () {
   }
 
   function resetTrain(keepMeta) {
+    $('draftNoteT').classList.add('hide');
     T.step = 1;
     T.sit = ''; T.fact = ''; T.guess = ''; T.emotion = null; T.needs = [];
     T.needCustom = ''; T.want = ''; T.sentence = ''; T.hintOpened = false;
@@ -2621,6 +3003,7 @@ var MM = (function () {
     $('retroModal').classList.add('on');
     $('retroModal').setAttribute('aria-hidden', 'false');
     renderRetroForm();
+    navPush();
   }
   function closeRetro() {
     $('retroModal').classList.remove('on');
@@ -2681,6 +3064,7 @@ var MM = (function () {
     }
     if (persist(list)) {
       closeRetro();
+      navBackSoft();
       renderLog();
       toast('대화 이후 기록을 남겼어요');
     }
@@ -2789,8 +3173,40 @@ var MM = (function () {
     };
   }
 
+  /* ---------------- 키보드·포커스 ---------------- */
+  function bindKeyboard() {
+    if (window.visualViewport) {
+      var apply = function () {
+        var vv = window.visualViewport;
+        var kb = Math.round(window.innerHeight - vv.height - vv.offsetTop);
+        document.documentElement.style.setProperty('--kb-pad', (kb > 80 ? kb : 0) + 'px');
+      };
+      try {
+        window.visualViewport.addEventListener('resize', apply);
+        window.visualViewport.addEventListener('scroll', apply);
+      } catch (e) {}
+      apply();
+    }
+    document.addEventListener('focusin', function (e) {
+      var t = e.target;
+      if (!t || !t.tagName) return;
+      if (t.tagName !== 'TEXTAREA' && t.tagName !== 'INPUT') return;
+      window.setTimeout(function () {
+        try { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        catch (err) { try { t.scrollIntoView(); } catch (e2) {} }
+      }, 320);
+    });
+  }
+
   /* ---------------- 초기화 ---------------- */
   function init() {
+    try { history.replaceState({ mm: 0 }, ''); } catch (e) {}
+    window.addEventListener('popstate', onPopState);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') draftSaveNow();
+    });
+    window.addEventListener('pagehide', draftSaveNow);
+
     renderQuickForm();
     renderTrainMeta();
     $('qCount').textContent = '0';
@@ -2813,13 +3229,12 @@ var MM = (function () {
     });
 
     /* --- 바로 말하기 --- */
-    $('qStyle').addEventListener('change', function () { Q.style = this.value; });
-    $('qText').addEventListener('input', quickBodyText);
+    $('qStyle').addEventListener('change', function () { Q.style = this.value; draftSaveSoon(); });
+    $('qText').addEventListener('input', function () { quickBodyText(); draftSaveSoon(); });
     $('qMake').addEventListener('click', makeQuick);
     $('qBack').addEventListener('click', function () {
-      $('qResult').classList.add('hide');
-      $('qForm').classList.remove('hide');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (quickResultOpen()) { try { history.back(); } catch (e) { showQuickForm(); } }
+      else showQuickForm();
     });
     $('qAgain').addEventListener('click', function () {
       Q.emotion = null; Q.text = '';
@@ -2827,12 +3242,24 @@ var MM = (function () {
       $('qCount').textContent = '0';
       Q.result = null;
       renderQuickForm();
-      $('qResult').classList.add('hide');
-      $('qForm').classList.remove('hide');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showQuickForm();
+      lsDel(DRAFT_Q_KEY);
+      $('draftNoteQ').classList.add('hide');
+      navBackSoft();
     });
     $('qSaveAll').addEventListener('click', saveQuickAll);
     $('qToTrain').addEventListener('click', toTrainFromQuick);
+    $('draftClearQ').addEventListener('click', function () {
+      Q.emotion = null; Q.text = ''; Q.result = null;
+      Q.relation = 'friend'; Q.situation = 'refuse'; Q.style = '';
+      $('qText').value = '';
+      $('qCount').textContent = '0';
+      lsDel(DRAFT_Q_KEY);
+      $('draftNoteQ').classList.add('hide');
+      renderQuickForm();
+      if (quickResultOpen()) showQuickForm();
+      toast('새 초안으로 시작해요');
+    });
 
     var qCap = makeCapture({
       btn: 'qCapBtn', body: 'qCapBody', file: 'qCapFile', pick: 'qCapPick', prev: 'qCapPrev',
@@ -2850,13 +3277,14 @@ var MM = (function () {
     $('styleSel').addEventListener('change', function () {
       T.style = this.value;
       T.polite = !!POLITE[T.style];
+      draftSaveSoon();
     });
-    $('sitText').addEventListener('input', syncSit);
-    $('factText').addEventListener('input', reviewSplit);
-    $('guessText').addEventListener('input', function () { T.guess = $('guessText').value; });
-    $('wantText').addEventListener('input', function () { T.want = $('wantText').value; });
-    $('needCustom').addEventListener('input', function () { T.needCustom = $('needCustom').value; });
-    $('mySentence').addEventListener('input', syncSentence);
+    $('sitText').addEventListener('input', function () { syncSit(); draftSaveSoon(); });
+    $('factText').addEventListener('input', function () { reviewSplit(); draftSaveSoon(); });
+    $('guessText').addEventListener('input', function () { T.guess = $('guessText').value; draftSaveSoon(); });
+    $('wantText').addEventListener('input', function () { T.want = $('wantText').value; draftSaveSoon(); });
+    $('needCustom').addEventListener('input', function () { T.needCustom = $('needCustom').value; draftSaveSoon(); });
+    $('mySentence').addEventListener('input', function () { syncSentence(); draftSaveSoon(); });
 
     $('btnToSplit').addEventListener('click', toSplit);
     $('btnToFeel').addEventListener('click', toFeel);
@@ -2873,14 +3301,21 @@ var MM = (function () {
     $('btnRestart').addEventListener('click', function () {
       openModal('처음부터 다시 할까요?', '지금까지 쓴 내용은 저장되지 않고 사라져요.', '다시 시작', function () {
         resetTrain(true);
+        lsDel(DRAFT_T_KEY);
         toast('새 연습을 시작해요');
       });
     });
     $('btnOneMore').addEventListener('click', function () {
       resetTrain(true);
+      lsDel(DRAFT_T_KEY);
       toast('새 연습을 시작해요');
     });
     $('btnGoLog').addEventListener('click', function () { switchTab('log'); });
+    $('draftClearT').addEventListener('click', function () {
+      resetTrain(true);
+      lsDel(DRAFT_T_KEY);
+      toast('새 연습으로 시작해요');
+    });
 
     var cap = makeCapture({
       btn: 'capBtn', body: 'capBody', file: 'capFile', pick: 'capPick', prev: 'capPrev',
@@ -2904,26 +3339,84 @@ var MM = (function () {
       });
     });
 
-    $('mNo').addEventListener('click', closeModal);
+    $('mNo').addEventListener('click', function () {
+      if (modalState() === 'modal') { try { history.back(); } catch (e) { closeModal(); } }
+    });
     $('mYes').addEventListener('click', function () {
       var act = modalAction;
-      closeModal();
+      modalAction = null;
+      try { history.back(); } catch (e) { closeModal(); }
       if (act) act();
     });
-    $('modal').addEventListener('click', function (e) { if (e.target === $('modal')) closeModal(); });
+    $('modal').addEventListener('click', function (e) {
+      if (e.target === $('modal')) { try { history.back(); } catch (err) { closeModal(); } }
+    });
+    $('mMore').addEventListener('click', function () {
+      var href = this.getAttribute('data-href');
+      if (href) window.open(href, '_blank', 'noopener');
+    });
 
-    $('rCancel').addEventListener('click', closeRetro);
+    $('rCancel').addEventListener('click', function () {
+      if (modalState() === 'retro') { try { history.back(); } catch (e) { closeRetro(); } }
+    });
     $('rSave').addEventListener('click', saveRetro);
-    $('retroModal').addEventListener('click', function (e) { if (e.target === $('retroModal')) closeRetro(); });
+    $('retroModal').addEventListener('click', function (e) {
+      if (e.target === $('retroModal')) { try { history.back(); } catch (err) { closeRetro(); } }
+    });
+
+    /* --- 백업 --- */
+    $('btnExport').addEventListener('click', exportBackup);
+    $('btnImport').addEventListener('click', function () { $('importFile').click(); });
+    $('importFile').addEventListener('change', function () {
+      var f = this.files && this.files[0];
+      if (!f) return;
+      if (f.size > 8 * 1024 * 1024) {
+        setBackupStatus('파일이 너무 커요. 8MB 이하의 마음말 백업 파일만 가져올 수 있어요.');
+        this.value = '';
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var parsed = parseBackup(String(reader.result || ''));
+        if (parsed.err) {
+          setBackupStatus('⚠️ ' + parsed.err);
+          toast('가져오지 못했어요');
+          $('importFile').value = '';
+          return;
+        }
+        openImportModal(parsed);
+      };
+      reader.onerror = function () {
+        setBackupStatus('⚠️ 파일을 읽지 못했어요. 다른 파일로 다시 시도해 주세요.');
+        $('importFile').value = '';
+      };
+      reader.readAsText(f, 'utf-8');
+    });
+    $('iMerge').addEventListener('click', function () { applyImport('merge'); });
+    $('iReplace').addEventListener('click', function () { applyImport('replace'); });
+    $('iCancel').addEventListener('click', function () {
+      if (modalState() === 'import') { try { history.back(); } catch (e) { closeImport(); } }
+    });
+    $('importModal').addEventListener('click', function (e) {
+      if (e.target === $('importModal')) { try { history.back(); } catch (err) { closeImport(); } }
+    });
 
     $('btnAbout').addEventListener('click', function () {
       openModal('마음말은 이렇게 써요',
-        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요. 모든 기록은 이 기기에만 남아요.',
-        '알겠어요', null, true);
+        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요.\n\n🔐 개인정보\n① 저장하는 것 — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 회고\n② 저장 위치 — 이 기기 브라우저 저장 공간(localStorage)에만. 계정도 서버도 없어요.\n③ 외부 전송 — 없어요. 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구를 내려받아요. 이미지는 보내지 않아요.\n④ 지우는 법 — 기록 카드의 삭제 / 기록 모두 지우기 / 앱 삭제',
+        '알겠어요', null, true, { label: '🔐 개인정보처리방침 보기', href: './privacy.html' });
     });
 
     resetTrain(true);
+    restoreDrafts();
     renderHome();
+    bindKeyboard();
+
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      window.addEventListener('load', function () {
+        try { navigator.serviceWorker.register('./sw.js').catch(function () {}); } catch (e) {}
+      });
+    }
   }
 
   function toTrainFromQuick() {
@@ -2938,6 +3431,7 @@ var MM = (function () {
     renderTrainMeta();
     switchTab('train');
     showStep(1);
+    draftSaveNow();
     toast('같은 내용으로 연습을 시작해요');
   }
 
