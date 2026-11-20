@@ -160,8 +160,11 @@ body.kb-open .tabbar{display:none}
 }
 .chip:active{transform:scale(.95)}
 .chip.on{background:linear-gradient(180deg,#f5edfb,#efe5f9);border-color:#ccb6e1;color:#60447f;box-shadow:0 2px 8px rgba(150,110,190,.15)}
-.chip.emo{width:calc(33.33% - 6px);flex-direction:column;justify-content:center;gap:4px;min-height:68px;padding:10px 4px;font-size:12px;text-align:center;border-radius:16px}
-.chip.emo i{font-style:normal;font-size:19px;line-height:1.2;display:block}
+.chip.has-emo{gap:6px;padding:0 13px;font-size:13.5px}
+.chip.has-emo i{font-style:normal;font-size:15px;line-height:1.1;display:block}
+.chip.emo{width:calc(33.33% - 6px);flex-direction:column;justify-content:center;gap:3px;min-height:62px;padding:7px 4px;font-size:11.5px;text-align:center;border-radius:15px;line-height:1.25}
+.chip.emo i{font-style:normal;font-size:19px;line-height:1.15;display:block}
+.chip.emo span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip.need{font-size:13px}
 
 textarea.field{width:100%;min-height:100px;border:1px solid #ece2ea;border-radius:16px;padding:13px 14px;background:#fffdfb;color:var(--ink);font-size:16px;line-height:1.6;outline:none;resize:none;display:block;-webkit-appearance:none}
@@ -505,7 +508,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
   background:rgba(43,32,52,0);visibility:hidden;
   transition:background .3s ease,visibility .4s;
 }
-.modal.on{background:rgba(43,32,52,.44);visibility:visible}
+.modal.on{background:rgba(38,28,46,.46);visibility:visible}
 .sheet{
   position:relative;width:100%;max-width:520px;
   background:var(--paper);
@@ -579,7 +582,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
     </div>
     <div class="ab-actions">
       <button class="icon-btn sos" id="btnSafety" type="button" aria-label="위기 안전 안내 열기">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="M5.7 5.7 9.4 9.4M14.6 14.6l3.7 3.7M18.3 5.7l-3.7 3.7M9.4 14.6l-3.7 3.7"/></svg>
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.7 3.6h2.5l1.7 4.2-2 1.4a12.6 12.6 0 0 0 5.9 5.9l1.4-2 4.2 1.7v2.5a2.3 2.3 0 0 1-2.5 2.3C11.1 19.1 4.9 12.9 4.4 6.1a2.3 2.3 0 0 1 2.3-2.5z"/></svg>
       </button>
       <button class="icon-btn" id="btnAbout" type="button" aria-label="마음말 사용법 보기">?</button>
     </div>
@@ -614,7 +617,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 
     <!-- ============ 바로 말하기 ============ -->
     <section class="view" id="view-quick">
-      <div class="hero tight" style="padding-top:2px">
+      <div class="hero tight" id="quickHero" style="padding-top:2px">
         <div class="eyebrow">QUICK HELP · 지금 바로</div>
         <h2>지금 바로 말해야 할 때</h2>
         <p>초안이에요. 그대로 보내도 되고, 내 말로 고쳐도 좋아요. 10초면 충분해요.</p>
@@ -675,7 +678,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 
     <!-- ============ 연습 ============ -->
     <section class="view" id="view-train">
-      <div class="hero tight" style="padding-top:2px">
+      <div class="hero tight" id="trainHero" style="padding-top:2px">
         <div class="eyebrow">TRAINING · 스스로 말하기</div>
         <h2>내 문장으로 말하는 연습</h2>
         <p>사실과 해석을 나누고, 감정과 욕구를 찾아, 내 말로 한 문장을 써요. 예시는 막힐 때만 열어요.</p>
@@ -904,15 +907,15 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       <span>홈</span>
     </button>
     <button class="tab" data-tab="quick" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 11.4c0 4.5-3.9 8.1-8.6 8.1-1 0-2-.2-2.9-.5L4.2 20.8l1.4-4.1a7.8 7.8 0 0 1-1.9-5.3c0-4.5 3.8-8.1 8.5-8.1s8.4 3.6 8.4 8.1z"/><path d="M8.7 11.4h6.6M11.6 8.5v5.8"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 11.4c0 4.5-3.9 8.1-8.6 8.1-1 0-2-.2-2.9-.5L4.2 20.8l1.4-4.1a7.8 7.8 0 0 1-1.9-5.3c0-4.5 3.8-8.1 8.5-8.1s8.4 3.6 8.4 8.1z"/><circle cx="8.9" cy="11.4" r=".95" fill="currentColor" stroke="none"/><circle cx="12" cy="11.4" r=".95" fill="currentColor" stroke="none"/><circle cx="15.1" cy="11.4" r=".95" fill="currentColor" stroke="none"/></svg>
       <span>즉시 도움</span>
     </button>
     <button class="tab" data-tab="train" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 20.5h9"/><path d="M10.2 20.5c5.2-2.4.8-6.2 2.9-9.6"/><path d="M9.6 9.7c1 .8 1.7 2.1 2.2 3.6-1.9.4-3.4.4-4.6-.3-1.2-.6-2.2-1.8-2.9-4 2.7-.5 4.2 0 5.3.7z"/><path d="M14.1 6.3c-.6 1.2-.9 2.5-1 3.8 1.8-.1 3.1-.6 4.1-1.4 1-.9 1.5-2.2 1.6-4.4-2.6.1-3.8.9-4.7 2z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7.2"/><path d="M12 14.2c0-3.4-2.8-6.2-6.2-6.2 0 3.4 2.8 6.2 6.2 6.2z"/><path d="M12 13.1c0-4 3.2-7.2 7.2-7.2 0 4-3.2 7.2-7.2 7.2z"/></svg>
       <span>표현 훈련</span>
     </button>
     <button class="tab" data-tab="log" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 5.6A2.4 2.4 0 0 1 6.6 3.2H20v14.5H6.6a2.4 2.4 0 0 0-2.4 2.4z"/><path d="M4.2 20.1a2.4 2.4 0 0 1 2.4-2.4H20"/><path d="M8.6 7.6h7"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 5.6A2.4 2.4 0 0 1 6.6 3.2H20v14.5H6.6a2.4 2.4 0 0 0-2.4 2.4z"/><path d="M4.2 20.1a2.4 2.4 0 0 1 2.4-2.4H20"/><path d="M8.8 7.6h6.6M8.8 11h4.2"/></svg>
       <span>기록·백업</span>
     </button>
   </nav>
@@ -2219,10 +2222,10 @@ var MM = (function () {
   }
 
   /* ---------------- 칩 ---------------- */
-  function chip(label, on, emoji, onClick) {
+  function chip(label, on, emoji, onClick, tile) {
     var b = document.createElement('button');
     b.type = 'button';
-    b.className = 'chip' + (on ? ' on' : '') + (emoji ? ' emo' : '');
+    b.className = 'chip' + (on ? ' on' : '') + (emoji ? (tile ? ' emo' : ' has-emo') : '');
     if (emoji) {
       var i = document.createElement('i');
       i.textContent = emoji;
@@ -2318,7 +2321,7 @@ var MM = (function () {
       emo.appendChild(chip(e.lab, Q.emotion === e.id, e.emoji, function () {
         Q.emotion = (Q.emotion === e.id) ? null : e.id;
         renderQuickForm();
-      }));
+      }, true));
     });
   }
 
@@ -2347,6 +2350,7 @@ var MM = (function () {
     renderQuickResult();
     $('qForm').classList.add('hide');
     $('qResult').classList.remove('hide');
+    $('quickHero').classList.add('hide');
     scrollTopNow();
     navPush();
   }
@@ -2354,6 +2358,7 @@ var MM = (function () {
   function showQuickForm() {
     $('qResult').classList.add('hide');
     $('qForm').classList.remove('hide');
+    $('quickHero').classList.remove('hide');
     scrollTopNow(true);
   }
 
@@ -2449,6 +2454,7 @@ var MM = (function () {
 
   function showStep(n) {
     T.step = n;
+    $('trainHero').classList.toggle('hide', n > 1);
     CARDS.forEach(function (id, i) { $(id).classList.toggle('hide', i !== (n - 1)); });
     $('cardDone').classList.add('hide');
     $('trainFoot').classList.remove('hide');
@@ -2501,7 +2507,7 @@ var MM = (function () {
       emo.appendChild(chip(e.lab, T.emotion === e.id, e.emoji, function () {
         T.emotion = (T.emotion === e.id) ? null : e.id;
         renderTrainMeta();
-      }));
+      }, true));
     });
     var needs = $('needChips');
     needs.innerHTML = '';
