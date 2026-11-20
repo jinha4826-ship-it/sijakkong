@@ -1,5 +1,5 @@
 /* 마음말 서비스 워커 — 네트워크 우선(항상 최신), 오프라인이면 마지막으로 받은 화면 */
-const CACHE = 'maeum-mal-2026-11-20-v4';
+const CACHE = 'maeum-mal-2026-11-20-v5';
 const CORE = [
   './',
   './index.html',
