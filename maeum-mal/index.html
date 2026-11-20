@@ -588,6 +588,40 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
   .tab span{font-size:9.5px}
 }
 @media (min-width:521px){body{background:#efeaf0}.app{box-shadow:0 24px 70px rgba(70,50,90,.13),0 0 0 1px rgba(120,95,140,.07)}}
+
+/* ───────── 태블릿 · 가로모드 (≥768px) — 모바일(≤430px) 레이아웃은 그대로 ───────── */
+@media (min-width:768px){
+  .app{max-width:min(94vw,900px);border-radius:24px}
+  .appbar{padding-left:24px;padding-right:24px}
+  .tabbar{padding-left:24px;padding-right:24px}
+  .scroller{padding-left:26px;padding-right:26px;padding-bottom:24px}
+  .prog{margin-left:-26px;margin-right:-26px;padding-left:26px;padding-right:26px}
+
+  /* 홈: 두 길을 나란히 */
+  #view-home.on{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}
+  #view-home.on > .home-hero,#view-home.on > .home-note{grid-column:1 / -1}
+
+  /* 초안 3개를 나란히 놓고 비교 */
+  #qCards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start;margin-top:4px}
+  #qCards .tone{margin:0;display:flex;flex-direction:column}
+  #qCards .tone .acts{margin-top:auto}
+  #qCards .tone .badge,#qCards .tone h3{align-self:flex-start}
+
+  /* 기록·요약: 넓은 화면에서 2열 */
+  .reclist{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .reclist > .rec{margin:0}
+  .reclist > .empty{grid-column:1 / -1}
+  .stats{flex-wrap:wrap}
+  .stat{min-width:130px}
+  .pattern-grid{grid-template-columns:repeat(4,1fr)}
+  .tel-grid{grid-template-columns:repeat(4,1fr)}
+
+  .ai-box{padding:16px}
+  .card,.summary,.rec{border-radius:20px}
+  .sheet{max-width:min(92vw,620px)}
+  .hero h2,.home-hero h2{font-size:26px}
+  .hero p,.home-hero p{font-size:14px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
