@@ -76,7 +76,8 @@
 - `privacy.html` — 개인정보처리방침 (Play Console 제출용)
 - `manifest.json`, `sw.js`, `icons/` — PWA/안드로이드 패키징용
 - `store/` — 스토어 스크린샷(1080×1920)·그래픽 이미지(1024×500)
-- `android/` — 서명 키스토어·`.aab`/`.apk` (Play 업로드용, 저장소에는 올리지 않음)
+- `android-app/` — Android WebView 래퍼 프로젝트(Gradle) · `keystore/maeummal-release.jks` 서명 키
+- `build.py`로 만든 `index.html`·`privacy.html`을 `android-app/app/src/main/assets/`에 넣고 `gradle bundleRelease`로 `.aab` 생성
 - `play_store_prep.md` — 스토어 등록 문구·데이터 보안 체크리스트
 
 ```sh
