@@ -4,19 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fbf7f3">
-<meta name="description" content="마음말 — 감정은 그대로, 말은 부드럽게. 비폭력대화(NVC)로 거절·서운함·부탁·선 긋기·사과를 3가지 톤으로 다듬어 주는 앱.">
+<meta name="description" content="마음말 — 급할 땐 초안을, 천천히는 내 말로 말하는 연습을. 사실과 해석을 나누고 감정과 욕구를 찾아 내 문장으로 말하는 훈련.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="마음말">
-<title>마음말 · 감정은 그대로, 말은 부드럽게</title>
+<title>마음말 · 내 언어로 마음을 꺼내는 연습</title>
 <style>
 :root{
   --bg:#fbf7f3;--paper:#fffefa;--ink:#40364a;--muted:#94899b;
   --lav:#b9a4d0;--lavdeep:#8871a4;--lavp:#f0e9f7;
-  --pink:#f8e8ec;--mint:#e8f1eb;--peach:#f6ddcb;--peachdeep:#a97a58;
+  --pink:#f8e8ec;--mint:#e8f1eb;--peach:#f6ddcb;
   --line:#eee5ed;--shadow:0 9px 26px #59466b12;
-  --soft-bg:#f2f7f2;--soft-line:#dbe8dc;--soft-ink:#4d7357;
-  --plain-bg:#f7f1fb;--plain-line:#e6d9f0;--plain-ink:#6b5486;
-  --firm-bg:#fdf4ec;--firm-line:#f0dccb;--firm-ink:#96694a;
+  --obs:#e6f1e8;--obs-ink:#3f6b4c;
+  --feel:#fbe7ee;--feel-ink:#a4566e;
+  --need:#efe6f8;--need-ink:#6a4f8b;
+  --req:#fdeede;--req-ink:#9a6438;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -36,23 +37,27 @@ button{border:0;background:none;cursor:pointer;-webkit-appearance:none;appearanc
 /* ---------- header ---------- */
 .top{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(140deg,#f2e8fa,#fbe6ea);display:grid;place-items:center;font-size:20px;box-shadow:0 4px 10px #9c83b51a}
+.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(140deg,#f2e8fa,#fbe6ea);display:grid;place-items:center;font-size:19px;box-shadow:0 4px 10px #9c83b51a}
 .brand h1{margin:0;font-size:19px;letter-spacing:-.7px;font-weight:850}
 .brand p{margin:1px 0 0;font-size:10.5px;color:var(--muted);letter-spacing:-.1px}
-.round{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#9c8ba5;font-size:13px;font-weight:800;display:grid;place-items:center}
+.round{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#9c8ba5;font-size:13px;font-weight:800;display:grid;place-items:center;flex:0 0 34px}
 /* ---------- tabs ---------- */
-.tabs{display:flex;gap:4px;background:#f1e9f1;border:1px solid #ece0ec;border-radius:16px;padding:4px;margin:2px 0 4px;position:sticky;top:env(safe-area-inset-top);z-index:20}
-.tab{flex:1;padding:9px 4px;border-radius:12px;font-size:12px;font-weight:800;color:#8b7c94;display:flex;align-items:center;justify-content:center;gap:4px;min-height:38px;letter-spacing:-.2px}
+.tabs{display:flex;gap:3px;background:#f1e9f1;border:1px solid #ece0ec;border-radius:16px;padding:4px;margin:2px 0 4px;position:sticky;top:env(safe-area-inset-top);z-index:20}
+.tab{flex:1;padding:8px 2px;border-radius:12px;font-size:11px;font-weight:800;color:#8b7c94;display:flex;align-items:center;justify-content:center;gap:3px;min-height:38px;letter-spacing:-.3px;white-space:nowrap}
 .tab.on{background:#fff;color:#604b76;box-shadow:0 2px 8px #7d63921f}
+.tab i{font-style:normal;font-size:12px}
 /* ---------- generic ---------- */
 .view{display:none;animation:fade .22s ease}
 .view.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.hero{padding:16px 4px 10px}
-.eyebrow{font-size:10px;letter-spacing:1.4px;color:var(--lavdeep);font-weight:850}
-.hero h2{font-size:26px;line-height:1.34;letter-spacing:-1.2px;margin:8px 0 8px;font-weight:850}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hide{display:none!important}
+.hero{padding:14px 4px 8px}
+.eyebrow{font-size:10px;letter-spacing:1.3px;color:var(--lavdeep);font-weight:850}
+.hero h2{font-size:25px;line-height:1.34;letter-spacing:-1.1px;margin:8px 0 8px;font-weight:850}
+.hero.tight h2{font-size:22px}
 .hero p{font-size:12.5px;line-height:1.7;color:var(--muted);margin:0}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:16px;margin:11px 0;box-shadow:var(--shadow)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:16px;margin:11px 0;box-shadow:var(--shadow);animation:pop .26s ease}
 .ct{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:850;letter-spacing:-.4px}
 .ct b{width:22px;height:22px;border-radius:50%;background:var(--lavp);color:#624b7a;font-size:11px;display:grid;place-items:center;flex:0 0 22px}
 .ct small{font-weight:700;color:#a99cb2;font-size:10.5px;margin-left:auto;letter-spacing:0}
@@ -63,20 +68,15 @@ button{border:0;background:none;cursor:pointer;-webkit-appearance:none;appearanc
 .chip{border:1px solid var(--line);border-radius:999px;background:#fffdfa;padding:9px 13px;min-height:40px;color:#6c6074;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:5px;transition:transform .12s,background .12s}
 .chip:active{transform:scale(.97)}
 .chip.on{background:var(--lavp);border-color:var(--lav);color:#5f4779;box-shadow:0 2px 8px #b9a4d033}
-.chip.emo{width:calc(33.33% - 5px);justify-content:center;padding:12px 6px;min-height:64px;flex-direction:column;gap:3px;font-size:11.5px;text-align:center}
-.chip.emo i{font-style:normal;font-size:18px;line-height:1.4;display:block}
-.seg{display:flex;gap:4px;background:#f7f1f6;border:1px solid #efe3ef;border-radius:14px;padding:4px}
-.seg button{flex:1;padding:9px 4px;border-radius:11px;font-size:12.5px;font-weight:800;color:#94869d;min-height:38px}
-.seg button.on{background:#fff;color:#604b76;box-shadow:0 2px 6px #7d63921f}
-textarea.field{width:100%;min-height:104px;border:1px solid var(--line);border-radius:16px;padding:13px 14px;background:#fffdfa;color:var(--ink);font-size:14px;line-height:1.72;outline:none;resize:vertical;display:block;-webkit-appearance:none}
-textarea.field:focus{border-color:var(--lav);box-shadow:0 0 0 3px #eadcf455}
-textarea.field::placeholder{color:#bcb0c3}
-.exline{margin-top:11px}
-.exline .exlabel{font-size:10.5px;color:#b0a2b8;font-weight:750;margin-bottom:6px}
-.exchip{border:1px dashed #e3d6e8;background:#fdfafd;border-radius:13px;padding:9px 11px;font-size:11.5px;color:#8b7a97;text-align:left;line-height:1.5;width:100%;margin-bottom:6px;display:block}
-.exchip:active{background:#f7f0fa}
-.count{text-align:right;font-size:10px;color:#bdb2c4;margin-top:5px}
-.primary{width:100%;border-radius:17px;padding:16px 18px;margin-top:6px;background:linear-gradient(100deg,#b9a4d0,#d8a4b6);color:#fff;font-weight:850;font-size:15px;letter-spacing:-.3px;box-shadow:0 8px 18px #b48fc04a;min-height:54px}
+.chip.emo{width:calc(33.33% - 5px);justify-content:center;padding:11px 6px;min-height:62px;flex-direction:column;gap:3px;font-size:11.5px;text-align:center}
+.chip.emo i{font-style:normal;font-size:17px;line-height:1.3;display:block}
+.chip.need{font-size:12px}
+textarea.field{width:100%;min-height:92px;border:1px solid var(--line);border-radius:16px;padding:13px 14px;background:#fffdfa;color:var(--ink);font-size:14px;line-height:1.72;outline:none;resize:vertical;display:block;-webkit-appearance:none}
+input.field{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fffdfa;font-size:13px;outline:none;-webkit-appearance:none;margin-top:9px}
+textarea.field:focus,input.field:focus,.sel:focus{border-color:var(--lav);box-shadow:0 0 0 3px #eadcf455}
+textarea.field::placeholder,input.field::placeholder{color:#bcb0c3}
+.sel{width:100%;border:1px solid #e9dfeb;background:#fffdfa;border-radius:13px;padding:11px 34px 11px 12px;font-size:12.5px;outline:none;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#a596ae 50%),linear-gradient(135deg,#a596ae 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;text-overflow:ellipsis}
+.primary{width:100%;border-radius:17px;padding:16px 18px;margin-top:14px;background:linear-gradient(100deg,#b9a4d0,#d8a4b6);color:#fff;font-weight:850;font-size:15px;letter-spacing:-.3px;box-shadow:0 8px 18px #b48fc04a;min-height:54px}
 .primary:active{transform:scale(.99)}
 .primary.ghost{background:#f4edf7;color:#6b5486;box-shadow:none;border:1px solid #e9dcf1}
 .primary.small{padding:12px;font-size:13px;min-height:46px;border-radius:14px;margin-top:0}
@@ -84,92 +84,238 @@ textarea.field::placeholder{color:#bcb0c3}
 .row2{display:flex;gap:8px;margin-top:10px}
 .row2>*{flex:1}
 .tiny{font-size:10.5px;color:#b1a4b8;text-align:center;line-height:1.6;margin:12px 4px 0}
-.steps{display:flex;align-items:center;gap:6px;margin:4px 2px 10px}
-.stepchip{flex:1;display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;color:#a99cb2;background:#fff9;border:1px solid #f0e7f0;border-radius:12px;padding:7px 8px}
-.stepchip b{width:17px;height:17px;border-radius:50%;background:#eee7f1;color:#96889f;font-size:9.5px;display:grid;place-items:center}
-.stepchip.on{color:#5f4779;border-color:#dfcdea;background:#fbf6ff}
-.stepchip.on b{background:var(--lav);color:#fff}
-/* ---------- result ---------- */
-.reshead{display:flex;align-items:center;gap:8px;margin:12px 0 8px}
-.back{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#80688f;font-size:19px;line-height:1;display:grid;place-items:center;flex:0 0 36px}
-.reshead h2{font-size:18px;margin:0;letter-spacing:-.7px;font-weight:850}
-.reshead p{margin:2px 0 0;font-size:10.5px;color:var(--muted)}
-.metabar{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 12px}
-.metabar span{font-size:10.5px;font-weight:800;color:#7a668b;background:#fff;border:1px solid #ece1ef;border-radius:999px;padding:5px 9px}
-.metabar span.nvc{color:#8a6a4f;background:#fdf6ee;border-color:#f0e2d1}
-.tone{margin:10px 0;border-radius:20px;padding:15px 15px 12px;border:1px solid var(--line);background:#fff;box-shadow:0 6px 18px #59466b0e;position:relative}
-.tone .badge{font-size:9.5px;font-weight:850;letter-spacing:.4px;padding:4px 8px;border-radius:8px;display:inline-block}
+.count{text-align:right;font-size:10px;color:#bdb2c4;margin-top:5px}
+.backlink{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;color:#8a75a0;padding:2px 0 6px}
+/* ---------- home ---------- */
+.home-hero{padding:14px 4px 4px;text-align:left}
+.home-hero h2{font-size:26px;line-height:1.32;letter-spacing:-1.2px;margin:9px 0 9px;font-weight:850}
+.home-hero p{font-size:12.5px;line-height:1.72;color:var(--muted);margin:0}
+.home-hero p b{color:#7a668b;font-weight:800}
+.entry{display:block;width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:16px;margin:11px 0;box-shadow:var(--shadow);transition:transform .12s}
+.entry:active{transform:scale(.995)}
+.entry .ehead{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.entry .ehead i{font-style:normal;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-size:17px;background:#f2ebf8;flex:0 0 34px}
+.entry .ehead b{font-size:15px;letter-spacing:-.5px;color:#4f4060;font-weight:850}
+.entry .ehead em{font-style:normal;margin-left:auto;font-size:9.5px;font-weight:850;color:#8a79a0;background:#f4eef9;border-radius:7px;padding:3px 7px;white-space:nowrap}
+.entry p{margin:0;font-size:11.5px;line-height:1.65;color:#97899f}
+.entry .efoot{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;font-weight:850;color:#80688f}
+.entry.quick{background:linear-gradient(160deg,#fffdfa,#fdf7f4)}
+.entry.quick .ehead i{background:#fbeef0}
+.entry.train{background:linear-gradient(160deg,#fffdfa,#f7faf5)}
+.entry.train .ehead i{background:#eaf2ea}
+.home-note{background:#f8f4fb;border:1px solid #ece1f1;border-radius:16px;padding:11px 13px;margin:12px 0;font-size:10.5px;line-height:1.65;color:#877a94}
+.home-note b{color:#6b5486}
+.home-stat{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 0}
+.home-stat span{font-size:10px;font-weight:800;color:#7a668b;background:#fff;border:1px solid #ece1ef;border-radius:999px;padding:4px 9px}
+/* ---------- progress ---------- */
+.prog{margin:4px 2px 8px}
+.prog-bar{height:6px;border-radius:999px;background:#efe7f1;overflow:hidden}
+.prog-bar i{display:block;height:100%;width:20%;border-radius:999px;background:linear-gradient(90deg,#b9a4d0,#d8a4b6);transition:width .3s ease}
+.prog-lab{display:flex;justify-content:space-between;font-size:10.5px;font-weight:800;color:#a294aa;margin-top:5px}
+.prog-lab b{color:#6b5486}
+/* ---------- capture ---------- */
+.capture{margin-top:12px}
+.cap-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:44px;border-radius:13px;background:#f5eff8;color:#705a85;font-size:12px;font-weight:850;border:1px dashed #e2d5ea}
+.cap-body{margin-top:10px;padding:12px;border:1px dashed #ddcfe5;border-radius:16px;background:#fdfafd}
+.cap-pick{display:flex;align-items:center;justify-content:center;width:100%;min-height:42px;border-radius:12px;background:#fff;border:1px solid #e9dcef;color:#705a85;font-size:12px;font-weight:800;margin-top:7px}
+.cap-prev{display:none;margin-top:9px}
+.cap-prev.on{display:block}
+.cap-prev img{display:block;width:100%;max-height:230px;object-fit:contain;border-radius:12px;background:#f4f0f5;border:1px solid #eee5ed}
+.cap-prev button{margin-top:6px;font-size:11px;font-weight:800;color:#a47780;padding:6px 3px}
+.cap-status{font-size:10.5px;color:#96879f;line-height:1.55;margin:7px 1px 0}
+.cap-status:empty{display:none}
+.cap-note{font-size:9.5px;color:#a89cb0;line-height:1.5;margin:8px 1px 0}
+/* ---------- quick ---------- */
+.tone{margin:10px 0;border-radius:20px;padding:15px 15px 12px;border:1px solid var(--line);background:#fff;box-shadow:0 6px 18px #59466b0e}
+.tone .badge{font-size:9.5px;font-weight:850;letter-spacing:.4px;padding:4px 8px;border-radius:8px;display:inline-block;background:#fff;border:1px solid #e7dbea;color:#6d5789}
 .tone h3{font-size:13px;margin:9px 0 8px;letter-spacing:-.3px;color:#514661;font-weight:850}
 .tone .say{font-size:15px;line-height:1.86;color:#3f344a;letter-spacing:-.25px;word-break:keep-all;white-space:pre-wrap}
 .tone .why{font-size:10.8px;line-height:1.62;color:#9b8ea6;margin-top:10px;padding-top:9px;border-top:1px dashed #efe6f0}
 .tone .acts{display:flex;gap:6px;margin-top:10px}
 .tone .acts button{flex:1;border-radius:12px;padding:9px;font-size:11.5px;font-weight:800;min-height:40px;background:#fff;border:1px solid #e7dbea;color:#6d5789}
-.btn-copy{color:#5f4779!important}
-.btn-copy.done{background:#e6f1e8;color:#4d7357}
-.btn-save{background:#fff;border:1px solid #e9dcef;color:#8a75a0}
-.btn-save.done{background:#eef5ee;border-color:#dbe8dc;color:#4d7357}
-.tone.soft{background:var(--soft-bg);border-color:var(--soft-line)}
-.tone.soft .badge{background:#fff;color:var(--soft-ink);border:1px solid #d6e5d8}
-.tone.plain{background:var(--plain-bg);border-color:var(--plain-line)}
-.tone.plain .badge{background:#fff;color:var(--plain-ink);border:1px solid #e0d0ee}
-.tone.firm{background:var(--firm-bg);border-color:var(--firm-line)}
-.tone.firm .badge{background:#fff;color:var(--firm-ink);border:1px solid #eed9c5}
-.nvcbox{background:#fffdf8;border:1px solid #f0e6d8;border-radius:20px;padding:15px;margin:12px 0;box-shadow:var(--shadow)}
-.nvcbox h4{margin:0 0 3px;font-size:13px;font-weight:850;display:flex;align-items:center;gap:6px}
-.nvcbox>p{margin:0 0 11px;font-size:10.5px;color:#a898ac}
-.nvcrow{display:flex;gap:9px;padding:8px 0;border-top:1px solid #f4ece2}
-.nvcrow:first-of-type{border-top:0}
-.nvcrow dt{flex:0 0 40px;font-size:10px;font-weight:850;color:#a98b6b;letter-spacing:.3px;padding-top:2px}
-.nvcrow dd{margin:0;font-size:12px;line-height:1.62;color:#5b5067}
-.quick-edit{border:1px solid var(--line);background:#fffdfa;border-radius:16px;padding:11px 12px;margin:12px 0 4px}
-.quick-edit p{margin:0 0 8px;font-size:10.5px;color:#a090a8;font-weight:750}
-.quick-edit .chips{gap:5px}
-.quick-edit .chip{font-size:11px;padding:6px 10px;min-height:32px}
-/* ---------- thought ---------- */
-.tsum{background:linear-gradient(150deg,#fdf7f0,#fbf1f6);border:1px solid #f1e2e6;border-radius:22px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}
-.tsum .tline{display:flex;gap:10px;padding:11px 0;border-top:1px solid #f3e7e7}
-.tsum .tline:first-child{border-top:0;padding-top:0}
-.tsum .tline i{font-style:normal;flex:0 0 26px;height:26px;border-radius:9px;background:#fff;display:grid;place-items:center;font-size:13px;box-shadow:0 2px 6px #b98e8e14}
-.tsum .tline div{min-width:0}
-.tsum .tline b{display:block;font-size:10px;letter-spacing:.4px;color:#b58f7e;font-weight:850;margin-bottom:2px}
-.tsum .tline p{margin:0;font-size:13.5px;line-height:1.66;color:#4a4055}
-.tsum .one{margin-top:12px;padding:12px 13px;background:#fff;border-radius:14px;font-size:13px;line-height:1.7;color:#5a4a63;border:1px dashed #e9d9e0}
-.tsum .one b{display:block;font-size:10px;color:#b58f7e;letter-spacing:.4px;margin-bottom:4px}
+.tone .acts button.done{background:#e6f1e8;border-color:#dbe8dc;color:#4d7357}
+.tone.soft{background:#f5faf6;border-color:#dbe8dc}
+.tone.soft .badge{border-color:#d6e5d8;color:#4d7357}
+.tone.plain{background:#f8f4fc;border-color:#e6d9f0}
+.tone.plain .badge{border-color:#e0d0ee;color:#6b5486}
+.tone.firm{background:#fdf6ef;border-color:#f0dccb}
+.tone.firm .badge{border-color:#eed9c5;color:#96694a}
+.metabar{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 10px}
+.metabar span{font-size:10.5px;font-weight:800;color:#7a668b;background:#fff;border:1px solid #ece1ef;border-radius:999px;padding:5px 9px}
+.reshead{display:flex;align-items:center;gap:8px;margin:8px 0 6px}
+.reshead .back{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#80688f;font-size:19px;line-height:1;display:grid;place-items:center;flex:0 0 36px}
+.reshead h2{font-size:18px;margin:0;letter-spacing:-.7px;font-weight:850}
+.reshead p{margin:2px 0 0;font-size:10.5px;color:var(--muted)}
+/* ---------- split (사실/해석) ---------- */
+.split-cell{border-radius:16px;padding:12px 13px;margin-top:10px;border:1px solid transparent}
+.split-cell.fact{background:#f3f8f3;border-color:#dfece1}
+.split-cell.guess{background:#fbf3f5;border-color:#f0dfe4}
+.split-cell .field-label{margin:0 0 5px}
+.split-cell.fact .field-label{color:#4f7758}
+.split-cell.guess .field-label{color:#a4747f}
+.cell-hint{font-size:10.5px;color:#9a8ea2;margin:0 0 8px;line-height:1.55}
+.split-cell textarea.field{background:#fff;min-height:80px;font-size:13px}
+.split-check{background:#fffdf7;border:1px solid #f0e6d6;border-radius:14px;padding:10px 12px;margin-top:11px;font-size:11px;line-height:1.65;color:#8a7458}
+.split-check b{color:#9a6438}
+.split-check p{margin:0 0 6px}
+.split-check p:last-child{margin:0}
+.split-move{display:flex;align-items:center;gap:7px;margin-top:7px;background:#fff;border:1px dashed #e8d8c6;border-radius:11px;padding:8px 9px;flex-wrap:wrap}
+.split-move span{flex:1 1 100%;font-size:11px;color:#7a6a58;line-height:1.5;min-width:0}
+.split-move .mv{display:flex;gap:6px;width:100%}
+.split-move button{flex:1;font-size:10.5px;font-weight:850;color:#96694a;background:#fdf3e9;border-radius:9px;padding:7px 9px;min-height:32px}
+.split-move button.keep{background:#f1f5f1;color:#5d7a63}
+/* ---------- needs ---------- */
+.mini-details{margin-top:12px;border-top:1px dashed #eee2f0;padding-top:9px}
+.mini-details summary{font-size:11px;font-weight:800;color:#8a79a0;list-style:none;cursor:pointer;padding:4px 0}
+.mini-details summary::-webkit-details-marker{display:none}
+.mini-details summary::before{content:'＋ ';color:#b9a4d0;font-weight:850}
+.mini-details[open] summary::before{content:'－ '}
+.mini-details ul{margin:6px 2px 2px;padding-left:16px}
+.mini-details li{font-size:11px;line-height:1.7;color:#93859c;margin-bottom:4px}
+/* ---------- spine ---------- */
+.spine{background:#fbf8fd;border:1px solid #eee4f2;border-radius:16px;padding:11px 12px;margin:10px 0 12px}
+.spine-row{display:flex;gap:8px;align-items:flex-start;padding:5px 0}
+.spine-row .bone{flex:0 0 auto}
+.spine-row span:last-child{font-size:11.5px;line-height:1.6;color:#7d6e88;word-break:keep-all}
+.spine-row span.empty{color:#bcb0c3}
+.ghost-link{display:block;width:100%;text-align:center;font-size:11.5px;font-weight:800;color:#8a75a0;padding:13px 0 4px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#dccce8}
+.hint-panel{margin-top:8px;background:#fffdf8;border:1px solid #f0e6d8;border-radius:18px;padding:13px}
+.hint-panel-note{font-size:10.5px;line-height:1.6;color:#a08e72;margin:0 0 10px}
+.hint-card{border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:9px;background:#fff}
+.hint-card:last-child{margin-bottom:0}
+.hint-card.soft{background:#f5faf6;border-color:#dbe8dc}
+.hint-card.plain{background:#f8f4fc;border-color:#e6d9f0}
+.hint-card.firm{background:#fdf6ef;border-color:#f0dccb}
+.hint-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.hint-head b{font-size:10px;font-weight:850;letter-spacing:.3px;padding:4px 8px;border-radius:8px;background:#fff;border:1px solid #e7dbea;color:#6d5789}
+.hint-card.soft .hint-head b{border-color:#d6e5d8;color:#4d7357}
+.hint-card.plain .hint-head b{border-color:#e0d0ee;color:#6b5486}
+.hint-card.firm .hint-head b{border-color:#eed9c5;color:#96694a}
+.hint-why{font-size:10px;color:#a395ad;margin-top:7px;line-height:1.55}
+.hint-acts{display:flex;gap:6px;margin-top:9px}
+.hint-acts button{flex:1;border-radius:11px;padding:9px;font-size:11px;font-weight:800;min-height:38px;background:#fff;border:1px solid #e7dbea;color:#6d5789}
+.hint-acts button.done{background:#e6f1e8;color:#4d7357;border-color:#d6e5d8}
+/* ---------- bones ---------- */
+.bone{display:inline-block;font-size:9.5px;font-weight:850;letter-spacing:.2px;padding:3px 7px;border-radius:7px;border:1px solid transparent;line-height:1.3;white-space:nowrap}
+.bone.obs{background:var(--obs);color:var(--obs-ink);border-color:#d3e5d6}
+.bone.feel{background:var(--feel);color:var(--feel-ink);border-color:#f2d6e0}
+.bone.need{background:var(--need);color:var(--need-ink);border-color:#e2d4f0}
+.bone.req{background:var(--req);color:var(--req-ink);border-color:#f2dfc9}
+mark.b{background:transparent;border-radius:5px;padding:1px 2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+mark.b.obs{background:#dcefe1;color:#31573c}
+mark.b.feel{background:#fadde7;color:#96455f}
+mark.b.need{background:#ece0f9;color:#5f4483}
+mark.b.req{background:#fce4cb;color:#8d5a2c}
+.bone-say{font-size:13.5px;line-height:1.9;color:#3f344a;letter-spacing:-.2px;word-break:keep-all;white-space:pre-wrap}
+.legend{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.legend .bone{font-size:9px;padding:2px 6px}
+/* ---------- self check ---------- */
+.selfcheck{margin:10px 0 0}
+.selfcheck-note{font-size:10.5px;color:#9a8da3;line-height:1.6;margin:0 0 8px}
+.qrow{background:#fbf8fd;border:1px solid #eee4f2;border-radius:14px;padding:11px 12px;margin-bottom:8px}
+.qrow>p{margin:0 0 8px;font-size:12px;line-height:1.6;color:#57486a;font-weight:750}
+.qrow .qopts{display:flex;gap:6px}
+.qrow .qopts button{flex:1;border:1px solid #e6d9ee;background:#fff;border-radius:10px;padding:8px 4px;font-size:10.5px;font-weight:800;color:#8a79a0;min-height:38px}
+.qrow .qopts button.on{background:#efe6f8;border-color:#c9b2dd;color:#5f4483}
+.qrow .qopts button.on.no{background:#f4f2f5;border-color:#ded4e4;color:#7d6e88}
+.qrow .qhint{font-size:10px;color:#a89cb0;margin:6px 0 0;line-height:1.5}
+.confirm{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:#f7f4fa;border:1px solid #e6d9ee;border-radius:14px;padding:12px 13px;margin-top:10px;font-size:12px;font-weight:850;color:#6b5486;min-height:48px}
+.confirm i{font-style:normal;width:20px;height:20px;border-radius:50%;border:2px solid #cbb8db;display:grid;place-items:center;font-size:11px;color:#fff;flex:0 0 20px}
+.confirm.on{background:#eef6f0;border-color:#cfe3d3;color:#456f51}
+.confirm.on i{background:#7fae8d;border-color:#7fae8d}
+/* ---------- done ---------- */
+.card.done{background:linear-gradient(155deg,#fdf6f0,#f8f2fb);border-color:#f0e2ea}
+.done-top{text-align:center;padding:6px 0 2px}
+.done-top i{font-style:normal;font-size:34px;display:block;margin-bottom:6px}
+.done-top h3{margin:0;font-size:19px;letter-spacing:-.7px;font-weight:850}
+.done-top p{margin:6px 0 0;font-size:11.5px;color:#94879f;line-height:1.6}
+.done-quote{margin:13px 0 0;padding:13px 14px;background:#fff;border-radius:15px;border:1px solid #f0e6ef;font-size:13.5px;line-height:1.8;color:#4a3f56;white-space:pre-wrap}
+.done-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.done-meta span{font-size:10px;font-weight:800;color:#7a668b;background:#fff;border:1px solid #ece1ef;border-radius:999px;padding:4px 8px}
+.review-tip{background:#f7f9f6;border:1px solid #e3ece3;border-radius:14px;padding:11px 12px;margin:10px 0;font-size:11px;line-height:1.65;color:#5f7765}
+.review-tip b{color:#4d7357}
+.self-badge{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:850;border-radius:7px;padding:3px 7px;background:#e9f3ea;color:#41724f;border:1px solid #d3e5d6}
+.self-badge.helped{background:#f3edf9;color:#7a5f96;border-color:#e2d4f0}
 /* ---------- log ---------- */
 .privacy{display:flex;gap:9px;align-items:flex-start;background:#f3f7f3;border:1px solid #e0ebe0;border-radius:16px;padding:11px 13px;margin:10px 0;font-size:11px;line-height:1.6;color:#5f7565}
 .privacy b{font-weight:850}
+.summary{background:#fffdfa;border:1px solid var(--line);border-radius:20px;padding:15px;margin:10px 0;box-shadow:var(--shadow)}
+.summary-head{display:flex;align-items:baseline;gap:8px}
+.summary-head b{font-size:28px;font-weight:850;letter-spacing:-1.2px;color:#5d4a70;line-height:1.1}
+.summary-head span{font-size:10.5px;color:#a294aa;font-weight:750}
+.summary-bar{height:8px;border-radius:999px;background:#f1e9f4;margin:10px 0 7px;overflow:hidden}
+.summary-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#a9c9b1,#b9a4d0);transition:width .4s ease}
+.summary p{margin:0;font-size:10.5px;line-height:1.6;color:#93859c}
+.summary p b{color:#6f5c82}
+.mode-split{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
+.mode-split span{font-size:10px;font-weight:800;color:#7a668b;background:#f7f2fa;border:1px solid #ece1ef;border-radius:999px;padding:4px 9px}
 .stats{display:flex;gap:8px;margin:10px 0}
-.stat{flex:1;background:#fffdfa;border:1px solid var(--line);border-radius:16px;padding:11px 12px;box-shadow:0 4px 12px #59466b0b}
-.stat b{display:block;font-size:19px;font-weight:850;letter-spacing:-.6px;color:#5d4a70}
+.stat{flex:1;background:#fffdfa;border:1px solid var(--line);border-radius:16px;padding:11px 12px;box-shadow:0 4px 12px #59466b0b;min-width:0}
+.stat b{display:block;font-size:18px;font-weight:850;letter-spacing:-.6px;color:#5d4a70;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat span{display:block;font-size:10px;color:#a294aa;margin-top:1px}
-.stat em{display:block;font-style:normal;font-size:10.5px;color:#7a668b;font-weight:800;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.reclist{margin-top:8px}
+.stat em{display:block;font-style:normal;font-size:10px;color:#8a79a0;font-weight:800;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel{background:#fff;border:1px solid #eee5ed;border-radius:18px;padding:14px;margin:12px 0}
+.panel h3{font-size:13px;margin:0 0 5px;color:#5c4b6c;display:flex;align-items:center;gap:6px}
+.panel h3 small{margin-left:auto;font-size:9.5px;font-weight:750;color:#b3a6bd}
+.panel>p{margin:0 0 10px;font-size:10.5px;color:#988ba0;line-height:1.6}
+.retro-line{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.retro-line span{font-size:9.5px;font-weight:800;color:#6f8090;background:#f1f5f8;border:1px solid #e0e9ef;border-radius:7px;padding:2px 6px}
+.flow-item{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-top:1px solid #f4eef5}
+.flow-item:first-of-type{border-top:0;padding-top:0}
+.flow-dot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#cfd9d2;margin-top:7px}
+.flow-dot.self{background:#7fae8d}
+.flow-body{min-width:0}
+.flow-body b{display:block;font-size:10px;color:#a89ab0;font-weight:800;margin-bottom:2px}
+.flow-body span{display:block;font-size:11.5px;line-height:1.6;color:#695c74;word-break:keep-all}
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pattern-item{background:#faf7fb;border-radius:12px;padding:10px;min-width:0}
+.pattern-item b{display:block;font-size:10px;color:#a18eaa;margin-bottom:4px}
+.pattern-item strong{font-size:12px;color:#574767;line-height:1.5;display:block;word-break:keep-all;font-weight:750}
+.feedback-actions{display:flex;gap:6px;margin-top:7px}
+.feedback-actions button{flex:1;background:#fff;border:1px solid #eadfed;border-radius:11px;padding:8px;font-size:10.5px;font-weight:800;color:#725d83;min-height:38px}
+.pattern-save{width:100%;min-height:38px;border-radius:10px;background:#f3edf7;color:#705a85;font-size:11px;font-weight:800;margin-top:7px}
+.log-filter{display:flex;align-items:center;gap:8px;margin:14px 0 6px}
+.log-filter label{font-size:11px;color:#887895;font-weight:800;flex:0 0 auto}
+.log-filter select{flex:1}
+.reclist{margin-top:4px}
 .rec{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:13px 14px;margin:9px 0;box-shadow:0 5px 16px #59466b0c}
 .rec .rh{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap}
 .rec .rh b{font-size:9.5px;font-weight:850;color:#7a668b;background:#f3ecf8;border-radius:7px;padding:3px 7px}
-.rec .rh b.th{background:#fdf1e8;color:#a57754}
+.rec .rh b.quick{background:#fdf0f1;color:#a4686f}
+.rec .rh b.legacy{background:#f5f1ec;color:#a08a6f}
 .rec .rh time{font-size:9.5px;color:#b1a4b8;margin-left:auto}
-.rec .say{font-size:13px;line-height:1.72;color:#4a4055;white-space:pre-wrap;word-break:keep-all}
+.rec .say{font-size:13px;line-height:1.78;color:#4a4055;white-space:pre-wrap;word-break:keep-all}
 .rec .tmini{display:flex;gap:8px;font-size:11.5px;line-height:1.6;color:#6a5c75;margin-top:3px}
 .rec .tmini b{flex:0 0 52px;font-size:9.5px;color:#b58f7e;padding-top:2px;font-weight:850;white-space:nowrap}
-.rec .acts{display:flex;gap:6px;margin-top:9px}
+.rec .acts{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
 .rec .acts button{font-size:11px;font-weight:800;padding:7px 11px;border-radius:10px;background:#f6f1f9;color:#7d6892;min-height:34px}
+.rec .acts button.retro{background:#f1f5f8;color:#62798b}
 .rec .acts button.del{background:#fdf2f2;color:#b27a7a;margin-left:auto}
-.empty{text-align:center;padding:34px 16px;color:#b1a4b8;font-size:12px;line-height:1.8}
-.empty i{font-style:normal;font-size:30px;display:block;margin-bottom:8px;opacity:.7}
+.retro-box{margin-top:9px;background:#f4f8fa;border:1px solid #e2ebf1;border-radius:13px;padding:10px 11px;font-size:10.5px;line-height:1.65;color:#5f7281}
+.retro-box b{display:block;font-size:10px;color:#7d909e;font-weight:850;margin-bottom:4px}
+.retro-box .memo{margin-top:5px;color:#4f6371;font-size:11px;line-height:1.6}
+.empty{text-align:center;padding:30px 16px;color:#b1a4b8;font-size:12px;line-height:1.8}
+.empty i{font-style:normal;font-size:30px;display:block;margin-bottom:8px;opacity:.75}
 /* ---------- toast / modal ---------- */
 .toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translate(-50%,14px);background:#4a3d55e8;color:#fff;font-size:12px;font-weight:750;padding:11px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:60;max-width:86vw;text-align:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-.modal{position:fixed;inset:0;background:#3b2f4480;display:none;align-items:center;justify-content:center;padding:24px;z-index:70}
+.modal{position:fixed;inset:0;background:#3b2f4480;display:none;align-items:center;justify-content:center;padding:20px;z-index:70}
 .modal.on{display:flex}
-.sheet{background:#fffdfa;border-radius:22px;padding:20px;width:100%;max-width:330px;box-shadow:0 20px 50px #3b2f4433}
+.sheet{background:#fffdfa;border-radius:22px;padding:20px;width:100%;max-width:350px;box-shadow:0 20px 50px #3b2f4433;max-height:86vh;overflow:auto}
 .sheet h3{margin:0 0 6px;font-size:15px;font-weight:850;letter-spacing:-.4px}
-.sheet p{margin:0 0 16px;font-size:12px;line-height:1.65;color:#8b7d94;white-space:pre-line}
+.sheet p{margin:0 0 16px;font-size:12px;line-height:1.7;color:#8b7d94;white-space:pre-line}
 .sheet .row2{margin-top:0}
 .sheet button{border-radius:13px;padding:12px;font-size:13px;font-weight:800;min-height:46px}
 .sheet .no{background:#f3edf6;color:#6d5789}
 .sheet .yes{background:#b9797a;color:#fff}
 .sheet .yes.neutral{background:var(--lav);color:#fff}
+.retro-q{margin:0 0 14px}
+.retro-q>b{display:block;font-size:11.5px;color:#6b5c78;margin-bottom:7px}
+.retro-q .qopts{display:flex;flex-direction:column;gap:5px}
+.retro-q .qopts button{text-align:left;font-size:11.5px;font-weight:750;padding:10px 12px;border-radius:11px;background:#f7f3fa;border:1px solid #ece1ef;color:#7a668b;min-height:42px}
+.retro-q .qopts button.on{background:#ece4f5;border-color:#c9b2dd;color:#5f4483;font-weight:850}
+.retro-memo{width:100%;min-height:64px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.6;background:#fffdfa;outline:none;resize:vertical}
+@media (max-width:360px){.tab{font-size:10px}.home-hero h2{font-size:23px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -180,148 +326,251 @@ textarea.field::placeholder{color:#bcb0c3}
       <div class="logo">💬</div>
       <div class="bt">
         <h1>마음말</h1>
-        <p>감정은 그대로, 말은 부드럽게</p>
+        <p>내 언어로 마음을 꺼내는 연습</p>
       </div>
     </div>
     <button class="round" id="btnAbout" aria-label="마음말 사용법 보기">?</button>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="화면 선택">
-    <button class="tab" data-tab="thought" role="tab" aria-selected="false">✍️ 생각 정리</button>
-    <button class="tab on" data-tab="talk" role="tab" aria-selected="true">💬 말 다듬기</button>
-    <button class="tab" data-tab="log" role="tab" aria-selected="false">🗂 내 기록</button>
+    <button class="tab on" data-tab="home" role="tab" aria-selected="true"><i>🏠</i>시작</button>
+    <button class="tab" data-tab="quick" role="tab" aria-selected="false"><i>💬</i>바로 말하기</button>
+    <button class="tab" data-tab="train" role="tab" aria-selected="false"><i>🌱</i>연습</button>
+    <button class="tab" data-tab="log" role="tab" aria-selected="false"><i>🗂</i>기록</button>
   </nav>
 
   <main>
-    <!-- ============ 말 다듬기 ============ -->
-    <section class="view on" id="view-talk">
-      <div class="hero">
-        <div class="eyebrow">NVC · 비폭력대화</div>
-        <h2>할 말은 있는데,<br>어떻게 꺼낼지 모르겠을 때</h2>
-        <p>감정은 숨기지 않고 말만 다듬어 드려요. 같은 마음을 3가지 톤으로 만들어 골라 쓰세요.</p>
+    <!-- ============ 시작 ============ -->
+    <section class="view on" id="view-home">
+      <div class="home-hero">
+        <div class="eyebrow">MAEUM-MAL</div>
+        <h2>지금 말해야 하나요,<br>말하는 법을 익히고 있나요?</h2>
+        <p>급할 땐 <b>초안</b>을 빨리 만들고, 천천히는 <b>내 말로 꺼내는 연습</b>을 해요. 이 앱의 목표는 언젠가 나 없이도 말할 수 있게 되는 거예요.</p>
       </div>
 
-      <div class="steps" id="steps">
-        <div class="stepchip on"><b>1</b>상대·상황</div>
-        <div class="stepchip"><b>2</b>감정</div>
-        <div class="stepchip"><b>3</b>속마음</div>
+      <button type="button" class="entry quick" id="goQuick">
+        <div class="ehead"><i>💬</i><b>지금 바로 말해야 해요</b><em>10초 도움</em></div>
+        <p>상황과 감정만 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.</p>
+        <div class="efoot">빠르게 초안 받기 →</div>
+      </button>
+
+      <button type="button" class="entry train" id="goTrain">
+        <div class="ehead"><i>🌱</i><b>내 마음을 연습하고 싶어요</b><em>자기표현 훈련</em></div>
+        <p>사실과 해석을 나누고, 감정과 욕구를 찾아, <b>내 문장</b>을 직접 써요. 예시는 막힐 때만.</p>
+        <div class="efoot">차분히 연습하기 →</div>
+      </button>
+
+      <div class="home-note" id="homeStat">
+        <b>기록은 이 기기에만 남아요.</b> 연습을 시작하면 자주 마주치는 감정과 욕구가 쌓여서 내 기록에 보여요.
+      </div>
+    </section>
+
+    <!-- ============ 바로 말하기 ============ -->
+    <section class="view" id="view-quick">
+      <button type="button" class="backlink" data-home>‹ 시작으로</button>
+      <div class="hero tight" style="padding-top:2px">
+        <div class="eyebrow">QUICK HELP · 지금 바로</div>
+        <h2>지금 바로 말해야 할 때</h2>
+        <p>초안이에요. 그대로 보내도 되고, 내 말로 고쳐도 좋아요. 10초면 충분해요.</p>
       </div>
 
-      <div class="card" id="card1">
-        <div class="ct"><b>1</b>누구에게, 어떤 상황인가요?<small>한 번씩만</small></div>
+      <div id="qForm">
+        <div class="card">
+          <div class="field-label" style="margin-top:0">상대</div>
+          <div class="chips" id="qRel"></div>
+          <div class="field-label">상황</div>
+          <div class="chips" id="qSit"></div>
+          <div class="field-label">말투</div>
+          <select class="sel" id="qStyle" aria-label="관계에 어울리는 말투"></select>
+          <div class="field-label" style="margin-top:16px">지금 감정</div>
+          <div class="chips" id="qEmo"></div>
+          <div class="field-label" style="margin-top:16px">속마음, 날것 그대로 <span><span id="qCount">0</span>자</span></div>
+          <textarea class="field" id="qText" rows="4" placeholder="예) 주말에 쉬고 싶은데 또 나오래. 맨날 나만 맞추는 것 같아서 지친다."></textarea>
+          <div class="capture" id="qCapture">
+            <button type="button" class="cap-btn" id="qCapBtn">📎 대화 캡처로 채우기</button>
+            <div class="cap-body hide" id="qCapBody">
+              <input type="file" id="qCapFile" accept="image/*" hidden>
+              <button type="button" class="cap-pick" id="qCapPick">캡처 이미지 선택</button>
+              <div class="cap-prev" id="qCapPrev">
+                <img id="qCapImg" alt="첨부한 대화 캡처">
+                <button type="button" id="qCapRemove">첨부 삭제</button>
+              </div>
+              <button type="button" class="cap-pick" id="qCapOcr">🔎 캡처 속 글자 읽기</button>
+              <p class="cap-status" id="qCapStatus" aria-live="polite"></p>
+              <textarea class="field hide" id="qCapText" rows="4" placeholder="읽어 온 대화가 여기 표시돼요. 잘못 읽힌 글자는 고쳐 주세요."></textarea>
+              <button type="button" class="cap-pick hide" id="qCapUse">읽은 대화를 입력창에 넣기</button>
+              <p class="cap-note">캡처는 브라우저 안에서만 처리해요. 글자 읽기에 필요한 프로그램과 언어 데이터를 내려받지만, 이미지는 외부로 보내지 않아요.</p>
+            </div>
+          </div>
+        </div>
+        <button class="primary" id="qMake">초안 만들기 →</button>
+        <p class="tiny">🔒 입력한 내용은 기기 안에서만 처리돼요. 저장은 직접 누를 때만.</p>
+      </div>
+
+      <div id="qResult" class="hide">
+        <div class="reshead">
+          <button class="back" id="qBack" aria-label="다시 고치기">‹</button>
+          <div>
+            <h2>이렇게 말해보세요</h2>
+            <p id="qSub">마음은 그대로, 표현만 다듬었어요.</p>
+          </div>
+        </div>
+        <div class="metabar" id="qMeta"></div>
+        <div id="qCards"></div>
+        <div class="row2">
+          <button class="primary small" id="qSaveAll">세 문장 모두 저장</button>
+          <button class="primary ghost small" id="qAgain">다시 쓰기</button>
+        </div>
+        <button class="ghost-link" id="qToTrain">이 내용으로 한 번 연습해보기 →</button>
+        <p class="tiny">초안은 복사해서 그대로 보내도 되고, 내 말로 고쳐도 좋아요.</p>
+      </div>
+    </section>
+
+    <!-- ============ 연습 ============ -->
+    <section class="view" id="view-train">
+      <button type="button" class="backlink" data-home>‹ 시작으로</button>
+      <div class="hero tight" style="padding-top:2px">
+        <div class="eyebrow">TRAINING · 스스로 말하기</div>
+        <h2>내 문장으로 말하는 연습</h2>
+        <p>사실과 해석을 나누고, 감정과 욕구를 찾아, 내 말로 한 문장을 써요. 예시는 막힐 때만 열어요.</p>
+      </div>
+
+      <div class="prog">
+        <div class="prog-bar"><i id="progFill"></i></div>
+        <div class="prog-lab"><span id="progNow">1단계 · 어떤 일이 있었나요</span><b id="progCnt">1 / 5</b></div>
+      </div>
+
+      <!-- 1. 상황 -->
+      <section class="card" id="cardSit">
+        <div class="ct"><b>1</b>누구에게, 어떤 일이 있었나요?<small>시작</small></div>
         <div class="field-label">상대</div>
         <div class="chips" id="relChips"></div>
         <div class="field-label">상황</div>
         <div class="chips" id="sitChips"></div>
-        <p class="hint" id="sitHint"></p>
-        <div class="field-label">말투</div>
-        <div class="seg" id="toneSeg">
-          <button data-v="1" class="on">존댓말</button>
-          <button data-v="0">반말</button>
+        <div class="field-label">말투 <span>관계에 맞게</span></div>
+        <select class="sel" id="styleSel" aria-label="관계에 어울리는 말투"></select>
+        <div class="field-label" style="margin-top:16px">있었던 일 <span>사실 그대로, 날것으로도 괜찮아요</span></div>
+        <textarea class="field" id="sitText" rows="3" placeholder="예) 주말에 친구가 단톡방에서 나오라고 정했다. 물어보지도 않고."></textarea>
+        <div class="capture">
+          <button type="button" class="cap-btn" id="capBtn">📎 대화 캡처로 채우기</button>
+          <div class="cap-body hide" id="capBody">
+            <input type="file" id="capFile" accept="image/*" hidden>
+            <button type="button" class="cap-pick" id="capPick">캡처 이미지 선택</button>
+            <div class="cap-prev" id="capPrev">
+              <img id="capImg" alt="첨부한 대화 캡처">
+              <button type="button" id="capRemove">첨부 삭제</button>
+            </div>
+            <button type="button" class="cap-pick" id="capOcr">🔎 캡처 속 글자 읽기</button>
+            <p class="cap-status" id="capStatus" aria-live="polite"></p>
+            <textarea class="field hide" id="capText" rows="4" placeholder="읽어 온 대화가 여기 표시돼요. 잘못 읽힌 글자는 고쳐 주세요."></textarea>
+            <button type="button" class="cap-pick hide" id="capUse">읽은 대화를 상황 칸에 넣기</button>
+            <p class="cap-note">캡처는 브라우저 안에서만 처리해요. 글자 읽기에 필요한 프로그램과 언어 데이터를 내려받지만, 이미지는 외부로 보내지 않아요.</p>
+          </div>
         </div>
-      </div>
+        <button class="primary" id="btnToSplit">다음 · 사실과 해석 나누기 →</button>
+      </section>
 
-      <div class="card" id="card2">
-        <div class="ct"><b>2</b>지금 내 감정은?<small>솔직하게</small></div>
-        <div class="chips" id="emoChips" style="margin-top:12px"></div>
-      </div>
-
-      <div class="card" id="card3">
-        <div class="ct"><b>3</b>속마음, 날것 그대로<small><span id="charCount">0</span>자</small></div>
-        <p class="hint" style="margin-bottom:10px">예쁘게 쓰지 않아도 돼요. 욕이 나와도 괜찮아요 — 그걸 말로 바꾸는 게 이 앱이 할 일이에요.</p>
-        <textarea class="field" id="txt" rows="4" placeholder="예) 주말에 쉬고 싶은데 또 나오래. 맨날 나만 맞추는 것 같아서 지친다."></textarea>
-        <div class="exline" id="examples"></div>
-      </div>
-
-      <button class="primary" id="btnMake">마음말 만들기 →</button>
-      <p class="tiny">🔒 입력한 내용은 기기 안에서만 처리돼요. 기록 저장은 직접 누를 때만.</p>
-    </section>
-
-    <!-- ============ 말 다듬기 결과 ============ -->
-    <section class="view" id="view-result">
-      <div class="reshead">
-        <button class="back" id="btnBackTalk" aria-label="다시 고치기">‹</button>
-        <div>
-          <h2>이렇게 말해보세요</h2>
-          <p id="resSub">마음은 그대로, 표현만 다듬었어요.</p>
+      <!-- 2. 사실 vs 해석 -->
+      <section class="card hide" id="cardSplit">
+        <div class="ct"><b>2</b>사실과 해석을 나눠보세요<small>관찰 연습</small></div>
+        <p class="hint">머릿속에서는 사실과 해석이 붙어 있어요. 떼어놓으면 할 말이 훨씬 차분해져요.</p>
+        <div class="split-cell fact">
+          <label class="field-label" for="factText">🧾 실제로 일어난 사실</label>
+          <p class="cell-hint">누가 · 언제 · 무엇을 했는지. 눈으로 본 것, 들은 말.</p>
+          <textarea class="field" id="factText" rows="3" placeholder="예) 단톡방에 '토요일 2시'라고 날짜가 올라왔다. 내게는 따로 묻지 않았다."></textarea>
         </div>
-      </div>
-      <div class="metabar" id="resMeta"></div>
-      <div id="resCards"></div>
-
-      <div class="nvcbox">
-        <h4>🧭 NVC 포인트</h4>
-        <p>관찰 · 느낌 · 욕구 · 부탁 — 이 네 가지가 문장에 다 들어 있어요.</p>
-        <dl id="nvcRows"></dl>
-      </div>
-
-      <div class="quick-edit" id="quickEdit">
-        <p>상황이 다르면 바로 바꿔보세요</p>
-        <div class="chips" id="quickSit"></div>
-      </div>
-
-      <div class="row2">
-        <button class="primary small" id="btnSaveAll">세 문장 모두 저장</button>
-        <button class="primary ghost small" id="btnAgain">처음부터</button>
-      </div>
-      <p class="tiny">복사한 문장은 그대로 붙여넣어 보내면 돼요. 저장은 기기에만 남아요.</p>
-    </section>
-
-    <!-- ============ 생각 정리 ============ -->
-    <section class="view" id="view-thought">
-      <div class="hero">
-        <div class="eyebrow">THOUGHT → WORDS</div>
-        <h2>말로 꺼내기 전에,<br>생각부터 정리해볼까요</h2>
-        <p>사실과 감정과 원하는 것을 나눠 적으면, 할 말이 저절로 좁혀져요. 다 적으면 말 다듬기로 바로 이어드려요.</p>
-      </div>
-
-      <div class="card">
-        <div class="ct"><b>1</b>무슨 일이 있었나요?<small>사실만 1줄</small></div>
-        <textarea class="field" id="tFact" rows="2" placeholder="예) 주말에 친구가 또 모임에 나오라고 했다."></textarea>
-        <div class="exline" id="exFact"></div>
-      </div>
-
-      <div class="card">
-        <div class="ct"><b>2</b>내 안에서 걸리는 점은?<small>감정·이유</small></div>
-        <textarea class="field" id="tMatter" rows="3" placeholder="예) 내 시간이 무시당하는 느낌이라 서운했다. 거절하면 관계가 깨질까 봐 말도 못 하겠다."></textarea>
-        <div class="field-label">지금 감정에 가까운 것 <span>선택</span></div>
-        <div class="chips" id="tEmoChips"></div>
-      </div>
-
-      <div class="card">
-        <div class="ct"><b>3</b>내가 진짜 원하는 건?<small>핵심 1가지</small></div>
-        <textarea class="field" id="tWant" rows="2" placeholder="예) 이번 주말은 혼자 쉬고 싶다. 다음엔 미리 물어봐 줬으면 좋겠다."></textarea>
-        <div class="exline" id="exWant"></div>
-      </div>
-
-      <button class="primary" id="btnThought">생각 정리하기</button>
-      <p class="tiny">🔒 적은 내용은 기기 안에서만 정리돼요. 저장은 직접 누를 때만.</p>
-    </section>
-
-    <!-- ============ 생각 정리 결과 ============ -->
-    <section class="view" id="view-thought-result">
-      <div class="reshead">
-        <button class="back" id="btnBackThought" aria-label="다시 정리하기">‹</button>
-        <div>
-          <h2>내 생각 정리</h2>
-          <p>사실 · 내 마음 · 원하는 것</p>
+        <div class="split-cell guess">
+          <label class="field-label" for="guessText">💭 내 머릿속 해석·추측</label>
+          <p class="cell-hint">그때 든 생각. '왜 그랬을까', '무시한 걸까', '또 그러겠지'.</p>
+          <textarea class="field" id="guessText" rows="3" placeholder="예) 내 사정은 생각하지 않은 것 같다. 어차피 내가 맞출 거라고 본 것 같다."></textarea>
         </div>
-      </div>
-      <div class="tsum" id="tSummary"></div>
-      <button class="primary" id="btnToTalk">이 내용으로 말 만들기 →</button>
-      <div class="row2">
-        <button class="primary ghost small" id="btnSaveThought">기록에 저장</button>
-        <button class="primary ghost small" id="btnEditThought">다시 정리</button>
-      </div>
-      <p class="tiny">말 만들기를 누르면 위 정리가 말 다듬기 화면에 그대로 채워져요.</p>
+        <div class="split-check hide" id="splitCheck"></div>
+        <button class="primary" id="btnToFeel">다음 · 감정과 욕구 찾기 →</button>
+        <p class="tiny">사실 칸에는 내가 본 것만. 해석은 따로 두는 것 — 그게 말의 절반이에요.</p>
+      </section>
+
+      <!-- 3. 감정·욕구 -->
+      <section class="card hide" id="cardFeel">
+        <div class="ct"><b>3</b>그때 내 감정, 그 아래 욕구<small>감정 → 욕구</small></div>
+        <p class="hint">감정은 신호예요. 그 감정이 커진 건, 내가 필요로 한 게 있었기 때문이에요.</p>
+        <div class="field-label">지금 마음에 가까운 감정 <span>하나</span></div>
+        <div class="chips" id="emoChips"></div>
+        <div class="field-label" style="margin-top:18px">그 아래에 있던 욕구 <span>최대 3개</span></div>
+        <div class="chips" id="needChips"></div>
+        <input class="field one-line" id="needCustom" type="text" placeholder="직접 적기 예) 내 속도대로 할 수 있는 여유">
+        <div class="field-label" style="margin-top:16px">그래서 바라는 한 가지 <span>선택</span></div>
+        <textarea class="field" id="wantText" rows="2" placeholder="예) 다음엔 날짜를 정하기 전에 내 사정을 먼저 물어봐 줬으면 해요."></textarea>
+        <details class="mini-details">
+          <summary>감정 뒤의 욕구를 찾는 질문 3개</summary>
+          <ul>
+            <li>이 감정이 올라올 때, 내가 '당연히 받아야 한다'고 생각한 건 뭐였을까요?</li>
+            <li>그 사람이 어떻게 해줬다면 덜 아팠을까요?</li>
+            <li>지금의 나에게 가장 필요한 건 무엇인가요?</li>
+          </ul>
+        </details>
+        <button class="primary" id="btnToWrite">다음 · 내 문장 쓰기 →</button>
+      </section>
+
+      <!-- 4. 내 문장 -->
+      <section class="card hide" id="cardWrite">
+        <div class="ct"><b>4</b>이제 내 문장으로<small>직접 쓰기</small></div>
+        <p class="hint">아래 뼈대만 보고, 내 말로 한 문장을 써보세요. 예쁘지 않아도 괜찮아요.</p>
+        <div class="spine">
+          <div class="spine-row"><span class="bone obs">사실</span><span id="spineFact">—</span></div>
+          <div class="spine-row"><span class="bone feel">감정</span><span id="spineFeel">—</span></div>
+          <div class="spine-row"><span class="bone need">욕구</span><span id="spineNeed">—</span></div>
+          <div class="spine-row"><span class="bone req">바라는 것</span><span id="spineWant">—</span></div>
+        </div>
+        <textarea class="field" id="mySentence" rows="5" placeholder="예) 토요일 약속 날짜가 단톡방에서 정해졌을 때, 내 사정을 안 물어본 것 같아 서운했어. 다음엔 정하기 전에 한 번 물어봐 줬으면 해."></textarea>
+        <div class="count"><span id="charCount">0</span>자</div>
+        <button class="primary" id="btnCheck">내 문장 스스로 점검하기</button>
+        <button type="button" class="ghost-link" id="btnHint">막혔어요 · 예시 힌트 보기</button>
+        <div class="hint-panel hide" id="hintPanel">
+          <p class="hint-panel-note">예시는 정답이 아니에요. 참고만 하고, 마지막엔 꼭 내 말로 다시 써보세요. 예시를 본 연습은 ‘도움 받음’으로 기록돼요.</p>
+          <div id="hintCards"></div>
+        </div>
+      </section>
+
+      <!-- 5. 자기점검 -->
+      <section class="card hide" id="cardReview">
+        <div class="ct"><b>5</b>내 문장 스스로 점검<small>정답은 없어요</small></div>
+        <div class="done-quote" id="mySay" style="margin-top:12px"></div>
+        <p class="selfcheck-note" style="margin-top:12px">아래 질문은 채점이 아니에요. 내 기준으로 한 번 확인해 보는 질문이에요.</p>
+        <div class="selfcheck" id="selfCheck"></div>
+        <button type="button" class="confirm" id="btnConfirm" aria-pressed="false">
+          <i>✓</i><span>이 문장이 내 마음과 맞아요</span>
+        </button>
+        <button class="primary" id="btnSavePractice">이 문장 저장하고 마치기</button>
+        <div class="row2">
+          <button class="primary ghost small" id="btnEditSentence">문장 고치기</button>
+          <button class="primary ghost small" id="btnRestart">처음부터</button>
+        </div>
+        <p class="tiny">저장은 내가 누를 때만. 모든 기록은 이 기기에만 남아요.</p>
+      </section>
+
+      <!-- 6. 완료 -->
+      <section class="card done hide" id="cardDone">
+        <div class="done-top">
+          <i>🌱</i>
+          <h3 id="doneTitle">오늘의 연습 완료</h3>
+          <p id="doneSub">내 기록에 저장했어요. 이 문장은 이 기기에만 남아요.</p>
+        </div>
+        <div class="done-quote" id="doneQuote"></div>
+        <div class="done-meta" id="doneMeta"></div>
+        <div class="review-tip" id="doneTip"></div>
+        <button class="primary" id="btnOneMore">한 번 더 연습하기</button>
+        <button class="primary ghost small" id="btnGoLog" style="margin-top:8px">내 기록 보기</button>
+      </section>
+
+      <p class="tiny" id="trainFoot">마음말은 문장을 대신 만들어 주지 않아요. 대신, 혼자서도 말할 수 있게 같이 연습해요.</p>
     </section>
 
     <!-- ============ 내 기록 ============ -->
     <section class="view" id="view-log">
-      <div class="hero" style="padding-bottom:4px">
+      <div class="hero" style="padding-bottom:2px">
         <div class="eyebrow">MY WORDS</div>
-        <h2 style="margin-bottom:6px">내 말 기록</h2>
-        <p>저장한 문장과 생각 정리를 모아봤어요. 반복되는 패턴이 보이면, 그게 내가 지켜야 할 경계예요.</p>
+        <h2 style="margin-bottom:6px">내 기록</h2>
+        <p>연습과 대화 이후의 기록이 쌓이면, 내가 자주 마주치는 감정과 필요한 것이 보여요.</p>
       </div>
 
       <div class="privacy">
@@ -329,7 +578,31 @@ textarea.field::placeholder{color:#bcb0c3}
         <div><b>모든 기록은 이 기기에만 저장돼요.</b><br>서버로 보내지 않고, 앱을 지우면 함께 사라져요.</div>
       </div>
 
+      <div class="summary" id="summary"></div>
       <div class="stats" id="stats"></div>
+
+      <section class="panel" id="retroPanel">
+        <h3>대화 이후</h3>
+        <p id="retroSummary"></p>
+        <div id="retroLatest"></div>
+      </section>
+
+      <section class="panel">
+        <h3>최근 연습 흐름 <small>스스로 완성은 초록 점</small></h3>
+        <div id="flowList"></div>
+      </section>
+
+      <section class="panel">
+        <h3>내 기록에서 발견한 마음</h3>
+        <p>기록의 반복 경향을 요약해요. 심리 진단이 아니라 기록 요약이에요.</p>
+        <div class="pattern-grid" id="patternGrid"></div>
+      </section>
+
+      <div class="log-filter">
+        <label for="logFilter">모아보기</label>
+        <select class="sel" id="logFilter" aria-label="기록 모아보기"></select>
+      </div>
+
       <div class="reclist" id="recList"></div>
       <button class="primary ghost small" id="btnClearAll" style="margin-top:14px">기록 모두 지우기</button>
     </section>
@@ -340,19 +613,26 @@ textarea.field::placeholder{color:#bcb0c3}
 <div class="modal" id="modal" aria-hidden="true">
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <h3 id="mTitle">기록을 모두 지울까요?</h3>
-    <p id="mBody">이 기기에 저장된 문장과 생각 정리가 전부 사라져요. 되돌릴 수 없어요.</p>
+    <p id="mBody">이 기기에 저장된 연습 기록이 전부 사라져요. 되돌릴 수 없어요.</p>
     <div class="row2">
       <button class="no" id="mNo">취소</button>
       <button class="yes" id="mYes">지우기</button>
     </div>
   </div>
 </div>
+<div class="modal" id="retroModal" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rTitle">
+    <h3 id="rTitle">대화 이후, 어떻게 되었나요?</h3>
+    <p style="margin-bottom:12px">하고 나서의 기록이에요. 다음 연습에만 쓰이고, 이 기기에만 남아요.</p>
+    <div id="retroBody"></div>
+    <div class="row2" style="margin-top:6px">
+      <button class="no" id="rCancel" style="flex:1">나중에</button>
+      <button class="yes neutral" id="rSave" style="flex:1">남기기</button>
+    </div>
+  </div>
+</div>
 
 <script>
-/* 마음말 v1 — 말 다듬기 엔진
-   외부 API 없이 100% 기기 안에서 동작하는 한국어 NVC 변환 엔진.
-   입력: 상대 / 상황 / 감정 / 말투(존댓말·반말) / 속마음 텍스트
-   출력: 3가지 톤(부드러움·솔직·단호) 문장 + 바꾼 이유 + NVC 4요소 */
 var MM = (function () {
   'use strict';
 
@@ -1024,74 +1304,146 @@ var MM = (function () {
   };
 })();
 
-if (typeof module !== 'undefined' && module.exports) module.exports = MM;
-
 </script>
 <script>
-/* 마음말 v1 — 화면 앱 */
+/* 마음말 v2 — 두 경로 앱
+   · 바로 말하기(즉시 도움): 상황·감정 → 초안 3개 → 고쳐 쓰고 복사
+   · 연습(자기표현 훈련): 사실/해석 → 감정/욕구 → 내 문장 → 자기점검 질문 → 스스로 완성 기록
+   원칙: 사용자 문장을 규칙으로 채점하지 않는다. 뼈대 해부는 예시 힌트(학습)에서만. */
 (function () {
   'use strict';
 
   var $ = function (id) { return document.getElementById(id); };
-  var LS_KEY = 'maeummal.v1';
-  var state = {
-    tab: 'talk',
-    talkView: 'input',
-    relation: 'friend',
-    situation: 'refuse',
-    polite: true,
-    emotion: null,
-    text: '',
-    result: null,
-    fromThought: false,
-    thought: { fact: '', matter: '', want: '', emotion: null },
-    thoughtResult: null
-  };
 
-  var EXAMPLES = {
-    talk: [
-      '주말에 쉬고 싶은데 또 나오래',
-      '맨날 나만 맞추는 거 같아',
-      '거절하면 서운해할까 봐 말 못 하겠어',
-      '약속 시간에 자꾸 늦어서 기다리다 지쳤어'
-    ],
-    fact: [
-      '주말에 친구가 또 모임에 나오라고 했다',
-      '단톡방에서 내 사정은 묻지 않고 날짜가 정해졌다',
-      '퇴근하고 나서도 계속 카톡이 왔다'
-    ],
-    want: [
-      '이번 주말은 혼자 쉬고 싶다',
-      '다음엔 미리 물어봐 줬으면 좋겠다',
-      '이 부분은 더 묻지 말아 줬으면 좋겠다'
-    ]
-  };
+  var LS_KEY = 'maeummal.v1';
+  var PATTERN_KEY = 'maeummal.own-pattern.v1';
+  var PATTERN_FB_KEY = 'maeummal.pattern-feedback.v1';
 
   var REL_ORDER = ['friend', 'lover', 'family', 'work', 'social'];
   var SIT_ORDER = ['refuse', 'hurt', 'ask', 'boundary', 'apology'];
-  var EMO_ORDER = ['seoun', 'tired', 'burden', 'angry', 'sorry', 'careful'];
+
+  var STYLES = {
+    friend: { def: 'casual', opts: [['casual', '편한 반말'], ['calm', '차분한 반말'], ['polite', '조금 예의를 갖춘 존댓말']] },
+    lover: { def: 'calm', opts: [['calm', '차분하고 다정한 반말'], ['casual', '담백한 반말'], ['polite', '부드러운 존댓말']] },
+    family: { def: 'casual', opts: [['casual', '편한 반말'], ['polite', '조심스러운 존댓말'], ['firm', '단호한 반말']] },
+    work: { def: 'polite', opts: [['polite', '정중한 존댓말'], ['brief', '간결한 존댓말'], ['calm', '차분한 존댓말']] },
+    social: { def: 'polite', opts: [['polite', '부드러운 존댓말'], ['casual', '편한 반말'], ['formal', '격식 있는 존댓말']] }
+  };
+  var POLITE = { polite: 1, brief: 1, formal: 1 };
+
+  /* ---------------- 감정 ---------------- */
+  var EMO_LIST = [
+    { id: 'seoun', mm: 'seoun', lab: '서운함', emoji: '💧', kw: ['서운', '섭섭', '허탈', '아쉬'] },
+    { id: 'sok', mm: 'seoun', lab: '속상함', emoji: '🩹', kw: ['속상', '상처', '마음이 아', '슬펐', '슬퍼'] },
+    { id: 'angry', mm: 'angry', lab: '화남·답답', emoji: '🔥', kw: ['화가', '화나', '짜증', '분노', '답답', '억울'] },
+    { id: 'tired', mm: 'tired', lab: '지침·피곤', emoji: '🪫', kw: ['지치', '지친', '피곤', '힘들', '지겨', '버겁'] },
+    { id: 'burden', mm: 'burden', lab: '부담스러움', emoji: '🫧', kw: ['부담', '눈치', '숨막'] },
+    { id: 'anxious', mm: 'careful', lab: '불안·걱정', emoji: '😰', kw: ['불안', '긴장', '두렵', '무서', '걱정', '초조'] },
+    { id: 'lonely', mm: 'seoun', lab: '외로움', emoji: '🌙', kw: ['외로', '허전', '아무도'] },
+    { id: 'sorry', mm: 'sorry', lab: '미안함', emoji: '🌧️', kw: ['미안', '죄송', '후회'] },
+    { id: 'careful', mm: 'careful', lab: '조심스러움', emoji: '🍃', kw: ['조심', '망설', '말 꺼내기', '어려웠'] }
+  ];
+
+  /* ---------------- 욕구 ---------------- */
+  var NEEDS = [
+    { id: 'respect', lab: '존중', emoji: '🙂', kw: ['존중', '무시', '함부로', '대접', '인격'] },
+    { id: 'understand', lab: '이해', emoji: '👂', kw: ['이해', '알아줘', '알아주', '들어줘', '공감', '오해'] },
+    { id: 'rest', lab: '휴식', emoji: '🛌', kw: ['쉬고', '쉴', '휴식', '충전'] },
+    { id: 'promise', lab: '약속', emoji: '🤝', kw: ['약속', '미리 알', '지켜', '늦'] },
+    { id: 'boundary', lab: '경계', emoji: '🚧', kw: ['경계', '선을', '사생활', '간섭', '묻지', '참견', '허락'] },
+    { id: 'safety', lab: '안정', emoji: '🌿', kw: ['안정', '편안', '안심', '안전', '차분'] },
+    { id: 'recognize', lab: '인정', emoji: '✨', kw: ['인정', '칭찬', '고마', '노력'] },
+    { id: 'trust', lab: '신뢰', emoji: '🫶', kw: ['신뢰', '믿고', '믿어'] },
+    { id: 'autonomy', lab: '자율', emoji: '🧭', kw: ['자율', '스스로 정', '내가 정', '선택', '내 뜻', '결정'] },
+    { id: 'talk', lab: '대화', emoji: '💬', kw: ['대화', '이야기', '소통', '말투', '말해'] },
+    { id: 'fair', lab: '공정함', emoji: '⚖️', kw: ['공평', '공정', '똑같이', '번갈아', '나만'] }
+  ];
+
+  /* ---------------- 예시 문장 뼈대 표시용 (학습) ---------------- */
+  var REQ = ['해줬으면', '해 주면 좋겠', '주시면 좋겠', '해 주실 수 있', '해 줄 수 있', '해도 될까', '괜찮을까',
+    '부탁', '바랄게', '원해', '원하는', '하고 싶', '말아 줘', '말아줘', '하지 말', '해주세요', '해 주세요',
+    '해 줘', '할 수 있을까', '물어봐', '알려 줘', '알려줘', '기다려', '챙겨', '이해해 줬', '한 번만'];
+
+  var TR = (function () {
+    function contentWords(s) {
+      var stop = ['그리고', '그래서', '하지만', '그때', '내가', '나는', '너는', '정말', '너무', '조금', '계속',
+        '그냥', '이런', '그런', '있는', '하는', '했다', '같아', '같아요', '것', '수', '거', '나', '너', '제가'];
+      return String(s || '').replace(/[^가-힣a-zA-Z0-9\s]/g, ' ').split(/\s+/).filter(function (w) {
+        return w.length >= 2 && stop.indexOf(w) < 0;
+      });
+    }
+    function collect(text, ctx) {
+      ctx = ctx || {};
+      var ranges = [];
+      function push(kw, cat) {
+        if (!kw) return;
+        var i = text.indexOf(kw);
+        while (i >= 0) {
+          ranges.push({ s: i, e: i + kw.length, cat: cat });
+          i = text.indexOf(kw, i + kw.length);
+        }
+      }
+      EMO_LIST.forEach(function (e) { e.kw.forEach(function (k) { push(k, 'feel'); }); });
+      NEEDS.forEach(function (n) { n.kw.forEach(function (k) { push(k, 'need'); }); });
+      REQ.forEach(function (k) { push(k, 'req'); });
+      contentWords(ctx.fact || '').forEach(function (w) { push(w, 'obs'); });
+      ranges.sort(function (a, b) {
+        if (a.s !== b.s) return a.s - b.s;
+        return (b.e - b.s) - (a.e - a.s);
+      });
+      var out = [], lastEnd = -1;
+      ranges.forEach(function (r) {
+        if (r.s >= lastEnd) { out.push(r); lastEnd = r.e; }
+      });
+      return out;
+    }
+    function render(container, text, ctx) {
+      container.textContent = '';
+      if (!text) return;
+      var ranges = collect(text, ctx);
+      var pos = 0;
+      ranges.forEach(function (r) {
+        if (r.s > pos) container.appendChild(document.createTextNode(text.slice(pos, r.s)));
+        var m = document.createElement('mark');
+        m.className = 'b ' + r.cat;
+        m.textContent = text.slice(r.s, r.e);
+        container.appendChild(m);
+        pos = r.e;
+      });
+      if (pos < text.length) container.appendChild(document.createTextNode(text.slice(pos)));
+    }
+    return { render: render };
+  })();
+
+  /* ---------------- 상태 ---------------- */
+  var state = {
+    tab: 'home',
+    quick: { relation: 'friend', situation: 'refuse', style: '', emotion: null, text: '', result: null },
+    train: {
+      step: 1, relation: 'friend', situation: 'refuse', style: '', polite: true,
+      sit: '', fact: '', guess: '', emotion: null, needs: [], needCustom: '', want: '',
+      sentence: '', hintOpened: false, selfCheck: {}, confirmed: false
+    }
+  };
+  var T = state.train;
 
   /* ---------------- 저장소 ---------------- */
   function loadRecords() {
     try {
-      var raw = localStorage.getItem(LS_KEY);
-      if (!raw) return [];
-      var o = JSON.parse(raw);
-      return (o && o.records) || [];
+      var o = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+      return (o && Array.isArray(o.records)) ? o.records : [];
     } catch (e) { return []; }
   }
   function persist(list) {
     try {
-      localStorage.setItem(LS_KEY, JSON.stringify({ records: list }));
+      localStorage.setItem(LS_KEY, JSON.stringify({ v: 2, records: list }));
       return true;
     } catch (e) {
-      toast('저장 공간이 부족해요. 기록을 조금 지워주세요.');
+      toast('저장 공간이 부족해요. 기록을 조금 지워 주세요.');
       return false;
     }
   }
-  function uid() {
-    return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-  }
+  function uid() { return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
   /* ---------------- 공통 ---------------- */
   var toastTimer = null;
@@ -1100,7 +1452,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     t.textContent = msg;
     t.classList.add('on');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { t.classList.remove('on'); }, 1900);
+    toastTimer = setTimeout(function () { t.classList.remove('on'); }, 2200);
   }
 
   var modalAction = null;
@@ -1125,7 +1477,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       if (btn) {
         if (!btn.dataset.old) btn.dataset.old = btn.textContent;
         btn.classList.add('done');
-        btn.textContent = '복사됨!';
+        btn.textContent = '복사됨';
         setTimeout(function () {
           btn.classList.remove('done');
           btn.textContent = btn.dataset.old || '복사';
@@ -1154,6 +1506,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     } else fallback();
   }
 
+  function scrollToEl(el) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function shorten(s, n) {
+    s = String(s || '').replace(/\s+/g, ' ').trim();
+    return s.length > n ? s.slice(0, n) + '…' : s;
+  }
+
   /* ---------------- 탭 ---------------- */
   function switchTab(name) {
     state.tab = name;
@@ -1163,29 +1524,17 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       tabs[i].classList.toggle('on', on);
       tabs[i].setAttribute('aria-selected', on ? 'true' : 'false');
     }
-    showView(name === 'talk' ? (state.talkView === 'result' ? 'view-result' : 'view-talk')
-      : name === 'thought' ? 'view-thought'
-      : name === 'log' ? 'view-log' : 'view-talk');
+    var views = document.querySelectorAll('.view');
+    for (var j = 0; j < views.length; j++) {
+      views[j].classList.toggle('on', views[j].id === 'view-' + name);
+    }
     if (name === 'log') renderLog();
+    if (name === 'home') renderHome();
     window.scrollTo(0, 0);
   }
 
-  function pushView(v) {
-    try { history.pushState({ v: v }, ''); } catch (e) {}
-  }
-
-  function backOr(elseView) {
-    if (history.state && history.state.v) history.back();
-    else { showView(elseView); }
-  }
-
-  function showView(id) {
-    var views = document.querySelectorAll('.view');
-    for (var i = 0; i < views.length; i++) views[i].classList.toggle('on', views[i].id === id);
-  }
-
-  /* ---------------- 칩 렌더 ---------------- */
-  function chipButton(label, on, emoji) {
+  /* ---------------- 칩 ---------------- */
+  function chip(label, on, emoji, onClick) {
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'chip' + (on ? ' on' : '') + (emoji ? ' emo' : '');
@@ -1199,389 +1548,640 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       b.textContent = label;
     }
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (onClick) b.addEventListener('click', onClick);
     return b;
   }
+  function emoById(id) {
+    for (var i = 0; i < EMO_LIST.length; i++) if (EMO_LIST[i].id === id) return EMO_LIST[i];
+    return null;
+  }
+  function needById(id) {
+    for (var i = 0; i < NEEDS.length; i++) if (NEEDS[i].id === id) return NEEDS[i];
+    return null;
+  }
 
-  function renderRel() {
-    var box = $('relChips');
+  function styleSelect(sel, relation, current) {
+    var prof = STYLES[relation] || STYLES.friend;
+    var ok = prof.opts.some(function (o) { return o[0] === current; });
+    var val = ok ? current : prof.def;
+    sel.innerHTML = '';
+    prof.opts.forEach(function (o) {
+      var op = document.createElement('option');
+      op.value = o[0]; op.textContent = o[1];
+      sel.appendChild(op);
+    });
+    sel.value = val;
+    return val;
+  }
+  function styleLabel(sel) {
+    return sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : '';
+  }
+
+  /* ---------------- 홈 ---------------- */
+  function renderHome() {
+    var list = loadRecords();
+    var trainN = list.filter(function (r) { return r.type === 'practice'; }).length;
+    var quickN = list.filter(function (r) { return r.type === 'quick' || r.type === 'talk'; }).length;
+    var selfN = list.filter(function (r) { return r.type === 'practice' && r.selfMade; }).length;
+    var box = $('homeStat');
     box.innerHTML = '';
-    REL_ORDER.forEach(function (id) {
-      var r = MM.REL[id];
-      var b = chipButton(r.lab, state.relation === id, r.emoji);
-      b.addEventListener('click', function () { state.relation = id; renderRel(); });
-      box.appendChild(b);
-    });
-  }
-
-  function renderSit() {
-    var box = $('sitChips');
-    box.innerHTML = '';
-    SIT_ORDER.forEach(function (id) {
-      var s = MM.SIT[id];
-      var b = chipButton(s.emoji + ' ' + s.lab, state.situation === id);
-      b.addEventListener('click', function () { state.situation = id; renderSit(); renderQuickSit(); });
-      box.appendChild(b);
-    });
-    $('sitHint').textContent = MM.SIT[state.situation].hint;
-  }
-
-  function renderEmo() {
-    var box = $('emoChips');
-    box.innerHTML = '';
-    EMO_ORDER.forEach(function (id) {
-      var e = MM.EMO[id];
-      var b = chipButton(e.lab, state.emotion === id, e.emoji);
-      b.addEventListener('click', function () {
-        state.emotion = id;
-        renderEmo();
-        updateSteps();
-      });
-      box.appendChild(b);
-    });
-  }
-
-  function renderTone() {
-    var btns = document.querySelectorAll('#toneSeg button');
-    for (var i = 0; i < btns.length; i++) {
-      var on = (btns[i].getAttribute('data-v') === '1') === state.polite;
-      btns[i].classList.toggle('on', on);
-      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
-    }
-  }
-
-  function renderExamples() {
-    var box = $('examples');
-    box.innerHTML = '';
-    var lab = document.createElement('div');
-    lab.className = 'exlabel';
-    lab.textContent = '이런 말, 그대로 눌러서 해보세요';
-    box.appendChild(lab);
-    EXAMPLES.talk.forEach(function (t) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'exchip';
-      b.textContent = '“' + t + '”';
-      b.addEventListener('click', function () {
-        $('txt').value = t;
-        state.text = t;
-        updateCount();
-        updateSteps();
-      });
-      box.appendChild(b);
-    });
-  }
-
-  function exList(container, list) {
-    container.innerHTML = '';
-    list.forEach(function (t) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'exchip';
-      b.textContent = '“' + t + '”';
-      b.addEventListener('click', function () {
-        var target = container.id === 'exFact' ? $('tFact')
-          : container.id === 'exWant' ? $('tWant') : null;
-        if (target) { target.value = t; target.dispatchEvent(new Event('input')); }
-      });
-      container.appendChild(b);
-    });
-  }
-
-  function updateCount() {
-    var v = $('txt').value || '';
-    state.text = v;
-    $('charCount').textContent = String(v.length);
-  }
-
-  function updateSteps() {
-    var chips = document.querySelectorAll('#steps .stepchip');
-    if (chips[1]) chips[1].classList.toggle('on', !!state.emotion);
-    if (chips[2]) chips[2].classList.toggle('on', ($('txt').value || '').length > 0);
-  }
-
-  /* ---------------- 말 다듬기 ---------------- */
-  function doGenerate() {
-    if (!state.emotion) {
-      toast('지금 감정을 하나만 골라 주세요');
-      var c2 = $('card2');
-      c2.style.borderColor = '#e2b6b6';
-      setTimeout(function () { c2.style.borderColor = ''; }, 1200);
-      c2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!list.length) {
+      box.innerHTML = '<b>기록은 이 기기에만 남아요.</b> 연습을 시작하면 자주 마주치는 감정과 욕구가 쌓여서 내 기록에 보여요.';
       return;
     }
-    state.text = $('txt').value || '';
-    var r = MM.generate({
-      text: state.text,
-      relation: state.relation,
-      situation: state.situation,
-      emotion: state.emotion,
-      polite: state.polite
+    var p = document.createElement('p');
+    p.style.cssText = 'margin:0 0 8px;font-size:10.5px;line-height:1.6;color:#877a94';
+    p.innerHTML = '<b>지금까지</b> 연습 ' + trainN + '번 · 스스로 완성 ' + selfN + '번 · 바로 말하기 ' + quickN + '번';
+    box.appendChild(p);
+    var row = document.createElement('div');
+    row.className = 'home-stat';
+    var t = document.createElement('span');
+    t.textContent = '🌱 연습 ' + trainN;
+    var q = document.createElement('span');
+    q.textContent = '💬 바로 ' + quickN;
+    row.appendChild(t); row.appendChild(q);
+    box.appendChild(row);
+  }
+
+  /* ---------------- 바로 말하기 ---------------- */
+  var Q = state.quick;
+
+  function renderQuickForm() {
+    var rel = $('qRel');
+    rel.innerHTML = '';
+    REL_ORDER.forEach(function (id) {
+      var r = MM.REL[id];
+      rel.appendChild(chip(r.lab, Q.relation === id, r.emoji, function () {
+        Q.relation = id;
+        Q.style = '';
+        renderQuickForm();
+      }));
     });
-    state.result = r;
-    state.talkView = 'result';
-    renderResult();
-    showView('view-result');
-    pushView('result');
+    var sit = $('qSit');
+    sit.innerHTML = '';
+    SIT_ORDER.forEach(function (id) {
+      var s = MM.SIT[id];
+      sit.appendChild(chip(s.emoji + ' ' + s.lab, Q.situation === id, null, function () {
+        Q.situation = id;
+        renderQuickForm();
+      }));
+    });
+    Q.style = styleSelect($('qStyle'), Q.relation, Q.style);
+    var emo = $('qEmo');
+    emo.innerHTML = '';
+    EMO_LIST.forEach(function (e) {
+      emo.appendChild(chip(e.lab, Q.emotion === e.id, e.emoji, function () {
+        Q.emotion = (Q.emotion === e.id) ? null : e.id;
+        renderQuickForm();
+      }));
+    });
+  }
+
+  function quickBodyText() {
+    Q.text = $('qText').value;
+    $('qCount').textContent = String(Q.text.length);
+    return Q.text;
+  }
+
+  function makeQuick() {
+    quickBodyText();
+    if (!Q.emotion) {
+      toast('지금 감정을 하나만 골라 주세요');
+      scrollToEl($('qEmo'));
+      return;
+    }
+    var emo = emoById(Q.emotion);
+    var res = MM.generate({
+      text: Q.text,
+      relation: Q.relation,
+      situation: Q.situation,
+      emotion: emo ? emo.mm : 'seoun',
+      polite: !!POLITE[Q.style]
+    });
+    Q.result = res;
+    renderQuickResult();
+    $('qForm').classList.add('hide');
+    $('qResult').classList.remove('hide');
     window.scrollTo(0, 0);
   }
 
-  function renderResult() {
-    var r = state.result;
-    if (!r) return;
-    var meta = $('resMeta');
+  function renderQuickResult() {
+    var res = Q.result;
+    if (!res) return;
+    var meta = $('qMeta');
     meta.innerHTML = '';
-    var chips = [r.meta.relation, r.meta.situation, r.meta.emotion, r.meta.tone];
-    if (state.fromThought) chips.unshift('생각 정리에서');
-    chips.forEach(function (t) {
+    [res.meta.relation, res.meta.situation, res.meta.emotion, res.meta.tone].forEach(function (t) {
       var s = document.createElement('span');
       s.textContent = t;
       meta.appendChild(s);
     });
+    $('qSub').textContent = res.meta.relation + '에게 · ' + res.meta.situation + ' · ' + res.meta.tone;
 
-    var wrap = $('resCards');
+    var wrap = $('qCards');
     wrap.innerHTML = '';
-    r.cards.forEach(function (card) {
+    res.cards.forEach(function (card) {
       var box = document.createElement('div');
       box.className = 'tone ' + card.key;
-
       var badge = document.createElement('span');
       badge.className = 'badge';
       badge.textContent = card.badge;
-      box.appendChild(badge);
-
       var h = document.createElement('h3');
       h.textContent = card.title;
-      box.appendChild(h);
-
       var say = document.createElement('div');
       say.className = 'say';
       say.textContent = card.text;
-      box.appendChild(say);
-
       var why = document.createElement('div');
       why.className = 'why';
       why.textContent = '↳ ' + card.why;
-      box.appendChild(why);
-
       var acts = document.createElement('div');
       acts.className = 'acts';
       var cp = document.createElement('button');
       cp.type = 'button';
-      cp.className = 'btn-copy';
       cp.textContent = '복사';
       cp.addEventListener('click', function () { copyText(card.text, cp); });
       var sv = document.createElement('button');
       sv.type = 'button';
-      sv.className = 'btn-save';
       sv.textContent = '저장';
-      sv.addEventListener('click', function () { saveTalk(card, sv); });
+      sv.addEventListener('click', function () { saveQuick(card, sv); });
       acts.appendChild(cp); acts.appendChild(sv);
-      box.appendChild(acts);
-
+      box.appendChild(badge); box.appendChild(h); box.appendChild(say); box.appendChild(why); box.appendChild(acts);
       wrap.appendChild(box);
     });
-
-    var dl = $('nvcRows');
-    dl.innerHTML = '';
-    [['관찰', r.nvc.obs], ['느낌', r.nvc.feeling], ['욕구', r.nvc.need], ['부탁', r.nvc.request]].forEach(function (p) {
-      var row = document.createElement('div');
-      row.className = 'nvcrow';
-      var dt = document.createElement('dt');
-      dt.textContent = p[0];
-      var dd = document.createElement('dd');
-      dd.textContent = p[1];
-      row.appendChild(dt); row.appendChild(dd);
-      dl.appendChild(row);
-    });
-
-    renderQuickSit();
-    $('resSub').textContent = r.meta.relation + '에게 · ' + r.meta.situation + ' · ' + r.meta.tone;
   }
 
-  function renderQuickSit() {
-    var box = $('quickSit');
-    if (!box) return;
-    box.innerHTML = '';
-    SIT_ORDER.forEach(function (id) {
-      var s = MM.SIT[id];
-      var b = chipButton(s.lab, state.situation === id);
-      b.addEventListener('click', function () {
-        state.situation = id;
-        renderSit();
-        if (state.result && state.emotion) {
-          state.result = MM.generate({
-            text: state.text, relation: state.relation,
-            situation: state.situation, emotion: state.emotion, polite: state.polite
-          });
-          renderResult();
-        }
-      });
-      box.appendChild(b);
-    });
-  }
-
-  function saveTalk(card, btn) {
-    var list = loadRecords();
-    var dup = list.some(function (r) { return r.type === 'talk' && r.sentence === card.text; });
-    if (dup) { toast('이미 저장한 문장이에요'); return; }
-    list.unshift({
-      id: uid(), type: 'talk', at: new Date().toISOString(),
-      relation: MM.REL[state.relation].lab,
-      situation: MM.SIT[state.situation].lab,
-      emotion: state.emotion ? MM.EMO[state.emotion].lab : '',
-      tone: card.title,
+  function quickRecord(card) {
+    var res = Q.result;
+    return {
+      id: uid(), type: 'quick', at: new Date().toISOString(),
+      relation: res.meta.relation,
+      situation: res.meta.situation,
+      tone: styleLabel($('qStyle')),
+      emotion: res.meta.emotion,
       sentence: card.text,
       why: card.why
+    };
+  }
+
+  function saveQuick(card, btn) {
+    var list = loadRecords();
+    var dup = list.some(function (r) {
+      return (r.type === 'quick' || r.type === 'talk') && r.sentence === card.text;
     });
+    if (dup) { toast('이미 저장한 문장이에요'); return; }
+    list.unshift(quickRecord(card));
     if (persist(list)) {
       toast('내 기록에 저장했어요');
       if (btn) { btn.classList.add('done'); btn.textContent = '저장됨'; }
     }
   }
 
-  function saveAll() {
-    if (!state.result) return;
+  function saveQuickAll() {
+    if (!Q.result) return;
     var list = loadRecords();
     var added = 0;
-    state.result.cards.forEach(function (card) {
-      var dup = list.some(function (r) { return r.type === 'talk' && r.sentence === card.text; });
-      if (dup) return;
-      list.unshift({
-        id: uid(), type: 'talk', at: new Date().toISOString(),
-        relation: MM.REL[state.relation].lab,
-        situation: MM.SIT[state.situation].lab,
-        emotion: state.emotion ? MM.EMO[state.emotion].lab : '',
-        tone: card.title,
-        sentence: card.text,
-        why: card.why
+    Q.result.cards.forEach(function (card) {
+      var dup = list.some(function (r) {
+        return (r.type === 'quick' || r.type === 'talk') && r.sentence === card.text;
       });
+      if (dup) return;
+      list.unshift(quickRecord(card));
       added++;
     });
     if (!added) { toast('이미 저장한 문장이에요'); return; }
     if (persist(list)) toast(added + '문장을 저장했어요');
   }
 
-  /* ---------------- 생각 정리 ---------------- */
-  function renderThoughtEmo() {
-    var box = $('tEmoChips');
-    box.innerHTML = '';
-    EMO_ORDER.forEach(function (id) {
-      var e = MM.EMO[id];
-      var b = chipButton(e.lab, state.thought.emotion === id, e.emoji);
-      b.addEventListener('click', function () {
-        state.thought.emotion = (state.thought.emotion === id) ? null : id;
-        renderThoughtEmo();
-      });
-      box.appendChild(b);
+  /* ---------------- 연습 ---------------- */
+  var CARDS = ['cardSit', 'cardSplit', 'cardFeel', 'cardWrite', 'cardReview'];
+  var STAGE_LABEL = ['어떤 일이 있었나요', '사실과 해석', '감정과 욕구', '내 문장', '스스로 점검'];
+
+  function showStep(n) {
+    T.step = n;
+    CARDS.forEach(function (id, i) { $(id).classList.toggle('hide', i !== (n - 1)); });
+    $('cardDone').classList.add('hide');
+    $('trainFoot').classList.remove('hide');
+    $('progFill').style.width = Math.round((n / 5) * 100) + '%';
+    $('progNow').textContent = n + '단계 · ' + STAGE_LABEL[n - 1];
+    $('progCnt').textContent = n + ' / 5';
+  }
+  function showDone() {
+    CARDS.forEach(function (id) { $(id).classList.add('hide'); });
+    $('cardDone').classList.remove('hide');
+    $('trainFoot').classList.add('hide');
+    $('progFill').style.width = '100%';
+    $('progNow').textContent = '완료 · 오늘의 연습';
+    $('progCnt').textContent = '✓';
+  }
+  function goCard(id) {
+    var map = { cardSit: 1, cardSplit: 2, cardFeel: 3, cardWrite: 4, cardReview: 5 };
+    showStep(map[id] || 1);
+    var el = $(id);
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 220);
+  }
+
+  function renderTrainMeta() {
+    var rel = $('relChips');
+    rel.innerHTML = '';
+    REL_ORDER.forEach(function (id) {
+      var r = MM.REL[id];
+      rel.appendChild(chip(r.lab, T.relation === id, r.emoji, function () {
+        T.relation = id;
+        T.style = '';
+        renderTrainMeta();
+      }));
+    });
+    var sit = $('sitChips');
+    sit.innerHTML = '';
+    SIT_ORDER.forEach(function (id) {
+      var s = MM.SIT[id];
+      sit.appendChild(chip(s.emoji + ' ' + s.lab, T.situation === id, null, function () {
+        T.situation = id;
+        renderTrainMeta();
+      }));
+    });
+    T.style = styleSelect($('styleSel'), T.relation, T.style);
+    T.polite = !!POLITE[T.style];
+
+    var emo = $('emoChips');
+    emo.innerHTML = '';
+    EMO_LIST.forEach(function (e) {
+      emo.appendChild(chip(e.lab, T.emotion === e.id, e.emoji, function () {
+        T.emotion = (T.emotion === e.id) ? null : e.id;
+        renderTrainMeta();
+      }));
+    });
+    var needs = $('needChips');
+    needs.innerHTML = '';
+    NEEDS.forEach(function (n) {
+      var on = T.needs.indexOf(n.id) >= 0;
+      needs.appendChild(chip(n.emoji + ' ' + n.lab, on, null, function () {
+        var i = T.needs.indexOf(n.id);
+        if (i >= 0) T.needs.splice(i, 1);
+        else {
+          if (T.needs.length >= 3) { toast('욕구는 3개까지 골라보세요'); return; }
+          T.needs.push(n.id);
+        }
+        renderTrainMeta();
+      }));
     });
   }
 
-  function normalizeEnd(s) {
-    s = String(s || '').replace(/\s+/g, ' ').trim();
-    if (s && !/[.!?~]$/.test(s)) s += '.';
-    return s;
-  }
+  function syncSit() { T.sit = $('sitText').value; }
 
-  function doThought() {
-    var f = $('tFact').value.trim();
-    var m = $('tMatter').value.trim();
-    var w = $('tWant').value.trim();
-    if (!f && !m && !w) {
-      toast('한 칸이라도 적어보세요');
-      $('tFact').focus();
+  function toSplit() {
+    syncSit();
+    if (T.sit.trim().length < 2) {
+      toast('있었던 일을 한 줄만 적어 주세요');
+      $('sitText').focus();
       return;
     }
-    state.thought = { fact: f, matter: m, want: w, emotion: state.thought.emotion };
-    state.thoughtResult = { fact: f, matter: m, want: w, emotion: state.thought.emotion };
-    renderThoughtSummary();
-    showView('view-thought-result');
-    pushView('thought-result');
-    window.scrollTo(0, 0);
+    if (!$('factText').value.trim()) {
+      $('factText').value = T.sit.trim();
+    }
+    T.fact = $('factText').value;
+    T.guess = $('guessText').value.trim();
+    goCard('cardSplit');
+    reviewSplit();
   }
 
-  function renderThoughtSummary() {
-    var t = state.thoughtResult;
-    if (!t) return;
-    var box = $('tSummary');
+  /* 사실 칸 자기점검: 단정하는 말이 보이면 '한 번 확인해 볼까요' 수준으로만 안내 */
+  var SOFT_FLAGS = ['왜 ', '맨날', '항상', '매번', '또 ', '무시', '당연', '일부러', '나만', '역시', '때문에'];
+  function reviewSplit() {
+    var fact = $('factText').value.trim();
+    var box = $('splitCheck');
+    T.fact = fact;
+    T.guess = $('guessText').value.trim();
     box.innerHTML = '';
+    if (!fact) { box.classList.add('hide'); return; }
+    box.classList.remove('hide');
 
-    var rows = [
-      ['🧾', '사실', t.fact],
-      ['💗', '내 마음', (t.emotion ? '[' + MM.EMO[t.emotion].lab + '] ' : '') + t.matter],
-      ['🎯', '원하는 것', t.want]
-    ];
-    rows.forEach(function (row) {
-      var line = document.createElement('div');
-      line.className = 'tline';
-      var i = document.createElement('i');
-      i.textContent = row[0];
-      var d = document.createElement('div');
-      var b = document.createElement('b');
-      b.textContent = row[1];
-      var p = document.createElement('p');
-      p.textContent = row[2] || '—';
-      d.appendChild(b); d.appendChild(p);
-      line.appendChild(i); line.appendChild(d);
-      box.appendChild(line);
+    var parts = fact.split(/[\n.。!?]+/).map(function (s) { return s.trim(); }).filter(Boolean);
+    var flagged = parts.filter(function (s) {
+      for (var i = 0; i < SOFT_FLAGS.length; i++) if (s.indexOf(SOFT_FLAGS[i]) >= 0) return true;
+      return false;
     });
 
-    var one = document.createElement('div');
-    one.className = 'one';
-    var ob = document.createElement('b');
-    ob.textContent = '한 줄로 말하면';
-    var op = document.createElement('span');
-    var s = '';
-    if (t.emotion) s = '나는 지금 ' + MM.J(MM.EMO[t.emotion].nvc, '을/를') + ' 느끼고 있고, ';
-    if (t.want) s += t.want.replace(/[.!?~]$/, '');
-    else if (t.matter) s += t.matter.replace(/[.!?~]$/, '');
-    if (!s) s = '아직 정리 중이에요.';
-    op.textContent = s;
-    one.appendChild(ob); one.appendChild(op);
-    box.appendChild(one);
-  }
-
-  function saveThought() {
-    var t = state.thoughtResult;
-    if (!t) return;
-    if (!t.fact && !t.matter && !t.want) { toast('정리한 내용이 없어요'); return; }
-    var list = loadRecords();
-    var dup = list.some(function (r) {
-      return r.type === 'thought' && r.fact === t.fact && r.matter === t.matter && r.want === t.want;
-    });
-    if (dup) { toast('이미 저장한 정리예요'); return; }
-    list.unshift({
-      id: uid(), type: 'thought', at: new Date().toISOString(),
-      fact: t.fact, matter: t.matter, want: t.want,
-      emotion: t.emotion ? MM.EMO[t.emotion].lab : '',
-      sentence: [t.fact, t.matter, t.want].filter(Boolean).join(' / ')
-    });
-    if (persist(list)) toast('생각 정리를 저장했어요');
-  }
-
-  function toTalk() {
-    var t = state.thoughtResult;
-    if (!t) return;
-    var text = MM.thoughtToText(t.fact, t.matter, t.want);
-    $('txt').value = text;
-    state.text = text;
-    updateCount();
-    if (t.emotion) state.emotion = t.emotion;
-    else {
-      var g = MM.emotionFromText(t.matter + ' ' + t.want);
-      if (g) state.emotion = g;
-    }
-    renderEmo();
-    updateSteps();
-    state.fromThought = true;
-    state.talkView = 'input';
-    switchTab('talk');
-    if (state.emotion) {
-      doGenerate();
-      toast('정리한 내용으로 세 문장을 만들었어요');
+    var p = document.createElement('p');
+    if (flagged.length) {
+      p.innerHTML = '<b>한 번만 확인해 볼까요?</b> ‘왜 · 맨날 · 무시 · 당연’ 같은 표현이 들어간 문장은 ' +
+        '내가 본 것보다 내 생각에 가까울 수 있어요. 정답은 없고, 나눠보는 연습이에요.';
+      box.appendChild(p);
+      flagged.forEach(function (s) {
+        var row = document.createElement('div');
+        row.className = 'split-move';
+        var span = document.createElement('span');
+        span.textContent = s;
+        var mv = document.createElement('div');
+        mv.className = 'mv';
+        var move = document.createElement('button');
+        move.type = 'button';
+        move.textContent = '해석 칸으로 옮기기';
+        move.addEventListener('click', function () {
+          var f = $('factText').value;
+          var upd = f.replace(s, '').replace(/\s{2,}/g, ' ').replace(/\.\s*\./g, '.').trim();
+          if (upd && !/[.!?]$/.test(upd)) upd += '.';
+          $('factText').value = upd;
+          var g = $('guessText').value.trim();
+          $('guessText').value = g ? g.replace(/[.]?$/, '.') + ' ' + s + '.' : s + '.';
+          reviewSplit();
+          toast('해석 칸으로 옮겼어요');
+        });
+        var keep = document.createElement('button');
+        keep.type = 'button';
+        keep.className = 'keep';
+        keep.textContent = '이건 사실이에요';
+        keep.addEventListener('click', function () {
+          row.style.display = 'none';
+          toast('그대로 두었어요');
+        });
+        mv.appendChild(move); mv.appendChild(keep);
+        row.appendChild(span); row.appendChild(mv);
+        box.appendChild(row);
+      });
     } else {
-      toast('내용을 채웠어요. 감정을 하나 골라 주세요');
-      $('card2').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      p.innerHTML = '<b>내가 본 것만 적혀 있네요.</b> 해석은 따로 두면, 말할 때 훨씬 차분해져요.';
+      box.appendChild(p);
+      if (!T.guess) {
+        var p2 = document.createElement('p');
+        p2.textContent = '해석 칸도 한 줄 적어보면 좋아요. ‘그때 내가 무슨 생각을 했나’ — 건너뛰어도 돼요.';
+        box.appendChild(p2);
+      }
     }
+  }
+
+  function toFeel() {
+    T.fact = $('factText').value.trim();
+    T.guess = $('guessText').value.trim();
+    if (T.fact.length < 2) {
+      toast('사실 칸에 있었던 일을 적어 주세요');
+      $('factText').focus();
+      return;
+    }
+    goCard('cardFeel');
+  }
+
+  function toWrite() {
+    if (!T.emotion) {
+      toast('지금 감정을 하나 골라 주세요');
+      scrollToEl($('emoChips'));
+      return;
+    }
+    if (!T.needs.length) {
+      toast('그 감정 뒤의 욕구를 하나 골라 주세요');
+      scrollToEl($('needChips'));
+      return;
+    }
+    T.want = $('wantText').value.trim();
+    T.needCustom = $('needCustom').value.trim();
+    renderSpine();
+    goCard('cardWrite');
+  }
+
+  function needLabels() {
+    var out = T.needs.map(function (id) { var n = needById(id); return n ? n.lab : ''; }).filter(Boolean);
+    if (T.needCustom) out.push(T.needCustom);
+    return out;
+  }
+  function emoLabel() { var e = emoById(T.emotion); return e ? e.lab : ''; }
+
+  function renderSpine() {
+    function set(id, text) {
+      var el = $(id);
+      el.textContent = text || '—';
+      el.classList.toggle('empty', !text);
+    }
+    set('spineFact', shorten(T.fact, 62));
+    set('spineFeel', emoLabel() ? emoLabel() + (T.guess ? ' · ' + shorten(T.guess, 24) : '') : '');
+    set('spineNeed', needLabels().join(' · '));
+    set('spineWant', shorten(T.want, 46));
+  }
+
+  function syncSentence() {
+    T.sentence = $('mySentence').value;
+    $('charCount').textContent = String(T.sentence.length);
+  }
+
+  function renderHints() {
+    var box = $('hintCards');
+    box.innerHTML = '';
+    if (!T.hintOpened) return;
+    var emo = emoById(T.emotion);
+    var res = MM.generate({
+      text: [T.fact, T.want, T.guess].filter(Boolean).join('. '),
+      relation: T.relation,
+      situation: T.situation,
+      emotion: emo ? emo.mm : 'seoun',
+      polite: T.polite
+    });
+    res.cards.forEach(function (card) {
+      var wrap = document.createElement('div');
+      wrap.className = 'hint-card ' + card.key;
+      var head = document.createElement('div');
+      head.className = 'hint-head';
+      var b = document.createElement('b');
+      b.textContent = card.badge;
+      head.appendChild(b);
+      wrap.appendChild(head);
+      var say = document.createElement('div');
+      say.className = 'bone-say';
+      TR.render(say, card.text, { fact: T.fact });
+      wrap.appendChild(say);
+      var legend = document.createElement('div');
+      legend.className = 'legend';
+      [['obs', '사실'], ['feel', '감정'], ['need', '욕구'], ['req', '바라는 것']].forEach(function (x) {
+        var s = document.createElement('span');
+        s.className = 'bone ' + x[0];
+        s.textContent = x[1];
+        legend.appendChild(s);
+      });
+      wrap.appendChild(legend);
+      if (card.why) {
+        var why = document.createElement('p');
+        why.className = 'hint-why';
+        why.textContent = '↳ ' + card.why;
+        wrap.appendChild(why);
+      }
+      var acts = document.createElement('div');
+      acts.className = 'hint-acts';
+      var cp = document.createElement('button');
+      cp.type = 'button';
+      cp.textContent = '복사';
+      cp.addEventListener('click', function () { copyText(card.text, cp); });
+      var use = document.createElement('button');
+      use.type = 'button';
+      use.textContent = '이 예시에서 출발하기';
+      use.addEventListener('click', function () {
+        $('mySentence').value = card.text;
+        syncSentence();
+        toast('예시를 넣었어요. 내 말로 고쳐보세요.');
+        scrollToEl($('mySentence'));
+      });
+      acts.appendChild(cp); acts.appendChild(use);
+      wrap.appendChild(acts);
+      box.appendChild(wrap);
+    });
+  }
+
+  function toggleHints() {
+    var panel = $('hintPanel');
+    if (panel.classList.contains('hide')) {
+      T.hintOpened = true;
+      panel.classList.remove('hide');
+      $('btnHint').textContent = '예시 힌트 접기';
+      renderHints();
+      scrollToEl(panel);
+    } else {
+      panel.classList.add('hide');
+      $('btnHint').textContent = '막혔어요 · 예시 힌트 보기';
+    }
+  }
+
+  /* 자기점검 질문 (채점 아님) */
+  var SELF_Q = [
+    ['q1', '내 문장에 실제로 있었던 일이 담겼나요?', '예) 날짜가 단톡방에서 정해졌다는 사실'],
+    ['q2', '그때의 감정을 내 말로 표현했나요?', '예) 서운했어 / 답답했어'],
+    ['q3', '그 감정 뒤의 욕구가 드러나나요?', '예) 내 사정을 먼저 물어봐 주는 것'],
+    ['q4', '내가 바라는 것이 담겼나요?', '상대가 무엇을 하면 되는지 — 없어도 괜찮아요']
+  ];
+
+  function renderSelfCheck() {
+    var box = $('selfCheck');
+    box.innerHTML = '';
+    SELF_Q.forEach(function (q) {
+      var row = document.createElement('div');
+      row.className = 'qrow';
+      var p = document.createElement('p');
+      p.textContent = q[1];
+      var opts = document.createElement('div');
+      opts.className = 'qopts';
+      [['yes', '담겼어요'], ['more', '더 다듬을래요']].forEach(function (o) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = o[1];
+        if (o[0] === 'more') b.classList.add('no');
+        if (T.selfCheck[q[0]] === o[0]) b.classList.add('on');
+        b.addEventListener('click', function () {
+          T.selfCheck[q[0]] = o[0];
+          renderSelfCheck();
+        });
+        opts.appendChild(b);
+      });
+      var hint = document.createElement('p');
+      hint.className = 'qhint';
+      hint.textContent = q[2];
+      row.appendChild(p); row.appendChild(opts); row.appendChild(hint);
+      box.appendChild(row);
+    });
+  }
+
+  function doCheck() {
+    syncSentence();
+    if (T.sentence.trim().length < 8) {
+      toast('한 문장만 써보면 점검할 수 있어요 (8자 이상)');
+      $('mySentence').focus();
+      return;
+    }
+    T.want = $('wantText').value.trim();
+    T.needCustom = $('needCustom').value.trim();
+    $('mySay').textContent = T.sentence.trim();
+    T.confirmed = false;
+    $('btnConfirm').classList.remove('on');
+    $('btnConfirm').setAttribute('aria-pressed', 'false');
+    T.selfCheck = {};
+    renderSelfCheck();
+    goCard('cardReview');
+  }
+
+  function confirmSentence() {
+    T.confirmed = !T.confirmed;
+    $('btnConfirm').classList.toggle('on', T.confirmed);
+    $('btnConfirm').setAttribute('aria-pressed', T.confirmed ? 'true' : 'false');
+    if (T.confirmed) toast('좋아요. 이제 저장할 수 있어요');
+  }
+
+  function savePractice() {
+    syncSentence();
+    if (T.sentence.trim().length < 8) { toast('문장을 먼저 써 주세요'); goCard('cardWrite'); return; }
+    if (!T.confirmed) {
+      toast('‘이 문장이 내 마음과 맞아요’를 한 번 눌러 주세요');
+      scrollToEl($('btnConfirm'));
+      return;
+    }
+    var rec = {
+      id: uid(), type: 'practice', at: new Date().toISOString(),
+      relation: MM.REL[T.relation].lab,
+      situation: MM.SIT[T.situation].lab,
+      tone: styleLabel($('styleSel')),
+      emotion: emoLabel(),
+      needs: needLabels(),
+      fact: T.fact, guess: T.guess, want: T.want,
+      sentence: T.sentence.trim(),
+      selfMade: !T.hintOpened,
+      hintOpened: !!T.hintOpened,
+      selfCheck: T.selfCheck,
+      selfConfirmed: true
+    };
+    var list = loadRecords();
+    list.unshift(rec);
+    if (!persist(list)) return;
+    renderDone(rec);
+    showDone();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderDone(rec) {
+    $('doneTitle').textContent = '오늘의 연습 완료';
+    $('doneSub').textContent = rec.selfMade
+      ? '예시 없이 끝까지 썼어요. 내 기록에 저장했어요 — 이 기기에만 남아요.'
+      : '끝까지 써냈어요. 내 기록에 저장했어요 — 이 기기에만 남아요.';
+    $('doneQuote').textContent = rec.sentence;
+
+    var meta = $('doneMeta');
+    meta.innerHTML = '';
+    var badge = document.createElement('span');
+    badge.className = 'self-badge' + (rec.selfMade ? '' : ' helped');
+    badge.textContent = rec.selfMade ? '🌱 스스로 완성' : '🤝 예시 참고';
+    meta.appendChild(badge);
+    [rec.relation, rec.situation, rec.emotion].concat(rec.needs || []).forEach(function (v) {
+      if (!v) return;
+      var s = document.createElement('span');
+      s.textContent = v;
+      meta.appendChild(s);
+    });
+
+    var practices = loadRecords().filter(function (r) { return r.type === 'practice'; });
+    var selfMade = practices.filter(function (r) { return r.selfMade; }).length;
+    var tip = $('doneTip');
+    tip.innerHTML = '';
+    var l1 = document.createElement('div');
+    l1.innerHTML = '<b>' + practices.length + '번째 연습</b> · 스스로 완성 ' + selfMade + '번';
+    var l2 = document.createElement('div');
+    l2.style.marginTop = '5px';
+    l2.textContent = '전달한 뒤에 내 기록에서 ‘대화 이후’를 남겨보면, 무엇이 잘 통했는지 쌓여요.';
+    tip.appendChild(l1); tip.appendChild(l2);
+  }
+
+  function resetTrain(keepMeta) {
+    T.step = 1;
+    T.sit = ''; T.fact = ''; T.guess = ''; T.emotion = null; T.needs = [];
+    T.needCustom = ''; T.want = ''; T.sentence = ''; T.hintOpened = false;
+    T.selfCheck = {}; T.confirmed = false;
+    if (!keepMeta) { T.relation = 'friend'; T.situation = 'refuse'; T.style = ''; }
+
+    $('sitText').value = ''; $('factText').value = ''; $('guessText').value = '';
+    $('wantText').value = ''; $('needCustom').value = ''; $('mySentence').value = '';
+    $('charCount').textContent = '0';
+    $('splitCheck').classList.add('hide'); $('splitCheck').innerHTML = '';
+    $('hintPanel').classList.add('hide');
+    $('btnHint').textContent = '막혔어요 · 예시 힌트 보기';
+    $('hintCards').innerHTML = '';
+    $('btnConfirm').classList.remove('on');
+    $('selfCheck').innerHTML = '';
+    $('mySay').textContent = '';
+    renderTrainMeta();
+    showStep(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* ---------------- 기록 ---------------- */
@@ -1592,27 +2192,79 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     var hh = d.getHours(), mi = d.getMinutes();
     return mm + '.' + (dd < 10 ? '0' + dd : dd) + ' ' + (hh < 10 ? '0' + hh : hh) + ':' + (mi < 10 ? '0' + mi : mi);
   }
-
-  function topOf(list, key) {
-    var cnt = {}, best = null, n = 0;
+  function topOf(list, pick) {
+    var cnt = {}, order = [];
     list.forEach(function (r) {
-      var v = r[key]; if (!v) return;
-      cnt[v] = (cnt[v] || 0) + 1;
-      if (cnt[v] > n) { n = cnt[v]; best = v; }
+      (pick(r) || []).forEach(function (v) {
+        if (!v) return;
+        if (!cnt[v]) { cnt[v] = 0; order.push(v); }
+        cnt[v]++;
+      });
     });
-    return best ? best + ' · ' + n + '회' : '—';
+    if (!order.length) return null;
+    order.sort(function (a, b) { return cnt[b] - cnt[a]; });
+    return { lab: order[0], n: cnt[order[0]] };
   }
+
+  var DELIVERY = { yes: '전달했어요', edited: '수정해서 전달했어요', not: '아직 전달 전' };
+  var AFTER = { delivered: '마음이 전달된 것 같아요', partial: '일부만 전달된 것 같아요', hard: '여전히 어려웠어요', different: '생각과 달랐어요' };
 
   function renderLog() {
     var list = loadRecords();
+    var practices = list.filter(function (r) { return r.type === 'practice'; });
+    var quicks = list.filter(function (r) { return r.type === 'quick' || r.type === 'talk'; });
+    var legacy = list.filter(function (r) { return r.type === 'talk' || r.type === 'thought'; });
+    var selfMade = practices.filter(function (r) { return r.selfMade; });
+    var retros = list.filter(function (r) { return r.retro; });
+
+    // 상단 요약
+    var sum = $('summary');
+    sum.innerHTML = '';
+    var head = document.createElement('div');
+    head.className = 'summary-head';
+    var big = document.createElement('b');
+    var pct = practices.length ? Math.round((selfMade.length / practices.length) * 100) : 0;
+    big.textContent = practices.length ? pct + '%' : '—';
+    var sp = document.createElement('span');
+    sp.textContent = practices.length ? '스스로 완성한 비율 (자립도)' : '아직 연습 기록이 없어요';
+    head.appendChild(big); head.appendChild(sp);
+    sum.appendChild(head);
+    var bar = document.createElement('div');
+    bar.className = 'summary-bar';
+    var fill = document.createElement('i');
+    fill.style.width = (practices.length ? pct : 0) + '%';
+    bar.appendChild(fill);
+    sum.appendChild(bar);
+    var p = document.createElement('p');
+    if (!practices.length) {
+      p.innerHTML = '<b>첫 연습을 하면 여기서부터 쌓여요.</b> 예시를 안 열고 끝까지 쓰면 ‘스스로 완성’으로 기록돼요.';
+    } else {
+      p.innerHTML = '훈련 <b>' + practices.length + '번</b> 중 <b>' + selfMade.length + '번</b>은 예시 없이 완성했어요.' +
+        (pct >= 80 && practices.length >= 5 ? ' 슬슬 앱 없이 한 번 말해봐도 좋아요.'
+          : pct >= 50 ? ' 앱 없이도 말할 수 있는 문장이 늘고 있어요.'
+            : ' 지금은 예시를 참고해도 괜찮아요. 한 번씩 직접 써보는 게 목표예요.');
+    }
+    sum.appendChild(p);
+
+    var total = practices.length + quicks.length;
+    var split = document.createElement('div');
+    split.className = 'mode-split';
+    var s1 = document.createElement('span');
+    s1.textContent = '🌱 훈련 ' + practices.length + (total ? ' · ' + Math.round(practices.length / total * 100) + '%' : '');
+    var s2 = document.createElement('span');
+    s2.textContent = '💬 바로 말하기 ' + quicks.length + (total ? ' · ' + Math.round(quicks.length / total * 100) + '%' : '');
+    split.appendChild(s1); split.appendChild(s2);
+    sum.appendChild(split);
+
+    // 통계
+    var topEmo = topOf(practices.concat(quicks), function (r) { return r.emotion ? [r.emotion] : []; });
+    var topNeed = topOf(practices, function (r) { return r.needs || []; });
     var stats = $('stats');
     stats.innerHTML = '';
-    var talks = list.filter(function (r) { return r.type === 'talk'; });
-    var thoughts = list.filter(function (r) { return r.type === 'thought'; });
     [
-      ['저장한 말', String(list.length), thoughts.length ? '정리 ' + thoughts.length + '개 포함' : '아직 비어 있어요'],
-      ['많이 나온 상황', topOf(talks, 'situation').split(' · ')[0], topOf(talks, 'situation').split(' · ')[1] || ''],
-      ['많이 나온 감정', topOf(talks, 'emotion').split(' · ')[0], topOf(talks, 'emotion').split(' · ')[1] || '']
+      ['자주 마주친 감정', topEmo ? topEmo.lab : '—', topEmo ? topEmo.n + '회' : ''],
+      ['자주 필요했던 것', topNeed ? topNeed.lab : '—', topNeed ? topNeed.n + '회' : ''],
+      ['대화 이후 남김', String(retros.length), total ? '전체 ' + total + '개 중' : '']
     ].forEach(function (row) {
       var d = document.createElement('div');
       d.className = 'stat';
@@ -1626,43 +2278,244 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       stats.appendChild(d);
     });
 
+    // 대화 이후 요약
+    var deliv = retros.filter(function (r) { return r.retro.delivered === 'yes' || r.retro.delivered === 'edited'; });
+    var notYet = retros.filter(function (r) { return r.retro.delivered === 'not'; });
+    var wellRecv = retros.filter(function (r) { return r.retro.feeling === 'delivered'; });
+    var rs = $('retroSummary');
+    if (!retros.length) {
+      rs.innerHTML = '아직 남긴 회고가 없어요. <b>기록 카드에서 ‘대화 이후’</b>를 누르면, 전달했는지 · 대화 후 내 마음이 어땠는지 남길 수 있어요.';
+    } else {
+      rs.innerHTML = '전달까지 간 기록 <b>' + deliv.length + '개</b>' +
+        (notYet.length ? ' · 아직 전달 전 ' + notYet.length + '개' : '') +
+        (wellRecv.length ? '<br>‘내 마음이 전달된 것 같아요’ <b>' + wellRecv.length + '개</b>' : '');
+    }
+    var latest = $('retroLatest');
+    latest.innerHTML = '';
+    var withNext = retros.filter(function (r) { return r.retro.next; });
+    if (withNext.length) {
+      var box = document.createElement('div');
+      box.className = 'retro-box';
+      var b2 = document.createElement('b');
+      b2.textContent = '다음에 다르게 해보고 싶은 것';
+      var memo = document.createElement('div');
+      memo.className = 'memo';
+      memo.textContent = '“' + withNext[0].retro.next + '”';
+      var when = document.createElement('div');
+      when.style.cssText = 'margin-top:5px;font-size:9.5px;color:#93a4b0';
+      when.textContent = fmtDate(withNext[0].retro.at || withNext[0].at) + ' 기록에서';
+      box.appendChild(b2); box.appendChild(memo); box.appendChild(when);
+      latest.appendChild(box);
+    }
+
+    // 최근 연습 흐름
+    var flow = $('flowList');
+    flow.innerHTML = '';
+    if (!practices.length) {
+      var e0 = document.createElement('p');
+      e0.style.cssText = 'margin:0;font-size:11px;color:#b1a4b8;line-height:1.7';
+      e0.textContent = '훈련을 마치면 최근 흐름이 여기 쌓여요.';
+      flow.appendChild(e0);
+    } else {
+      practices.slice(0, 6).forEach(function (r) {
+        var item = document.createElement('div');
+        item.className = 'flow-item';
+        var dot = document.createElement('i');
+        dot.className = 'flow-dot' + (r.selfMade ? ' self' : '');
+        var body = document.createElement('div');
+        body.className = 'flow-body';
+        var b = document.createElement('b');
+        b.textContent = fmtDate(r.at) + ' · ' + (r.emotion || '감정 미기록') + (r.selfMade ? ' · 스스로' : ' · 도움');
+        var s = document.createElement('span');
+        s.textContent = shorten(r.sentence, 70);
+        body.appendChild(b); body.appendChild(s);
+        item.appendChild(dot); item.appendChild(body);
+        flow.appendChild(item);
+      });
+    }
+
+    renderPattern(practices);
+
+    // 필터
+    var sel = $('logFilter');
+    var prev = sel.value || 'all';
+    sel.innerHTML = '';
+    [['all', '모든 기록'], ['mode:train', '훈련 연습만'], ['mode:quick', '바로 말하기만']]
+      .concat(REL_ORDER.map(function (id) { return ['rel:' + MM.REL[id].lab, MM.REL[id].lab]; }))
+      .concat([['legacy', '이전 기록만']]).forEach(function (o) {
+        var op = document.createElement('option');
+        op.value = o[0]; op.textContent = o[1];
+        sel.appendChild(op);
+      });
+    sel.value = prev;
+    sel.onchange = function () { renderList(list); };
+
+    renderList(list);
+  }
+
+  var savedOwnPattern = '';
+  function renderPattern(practices) {
+    var grid = $('patternGrid');
+    grid.innerHTML = '';
+    var usable = practices.filter(function (r) { return r.emotion && (r.situation || r.relation); });
+    function item(label, value, full) {
+      var d = document.createElement('div');
+      d.className = 'pattern-item';
+      if (full) d.style.gridColumn = '1/-1';
+      var b = document.createElement('b');
+      b.textContent = label;
+      d.appendChild(b);
+      if (value) {
+        var st = document.createElement('strong');
+        st.textContent = value;
+        d.appendChild(st);
+      }
+      grid.appendChild(d);
+      return d;
+    }
+    if (usable.length < 3) {
+      item('아직은 패턴을 판단하기 어려워요', '서로 다른 날의 연습을 3개 이상 모으면 반복되는 감정과 상황을 같이 살펴볼게요.', true);
+    } else {
+      var groups = {};
+      usable.forEach(function (r) {
+        var e = r.emotion;
+        if (!groups[e]) groups[e] = { n: 0, places: {} };
+        groups[e].n++;
+        groups[e].places[r.situation || r.relation] = true;
+      });
+      var best = null;
+      Object.keys(groups).forEach(function (k) {
+        var g = groups[k];
+        if (!best || g.n > best.n) best = { emo: k, n: g.n, places: Object.keys(g.places) };
+      });
+      item('살펴본 연습', usable.length + '개');
+      var relCount = {};
+      usable.forEach(function (r) { if (r.relation) relCount[r.relation] = (relCount[r.relation] || 0) + 1; });
+      var topRel = Object.keys(relCount).sort(function (a, b) { return relCount[b] - relCount[a]; })[0];
+      if (topRel) item('연습이 가장 많은 관계', topRel + ' · ' + relCount[topRel] + '회');
+      if (best && best.n >= 2 && best.places.length >= 2) {
+        var d = item('반복해서 나타난 감정',
+          best.places.join(' · ') + ' 상황에서 ‘' + best.emo + '’ 감정이 ' + best.n + '번 기록됐어요.', true);
+        var q = document.createElement('div');
+        q.style.cssText = 'font-size:10px;color:#a18eaa;margin-top:6px';
+        q.textContent = '이 관찰이 나와 맞나요?';
+        d.appendChild(q);
+        var fb = document.createElement('div');
+        fb.className = 'feedback-actions';
+        [['맞아요', 'yes'], ['아니에요', 'no']].forEach(function (c) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = c[0];
+          b.addEventListener('click', function () {
+            try {
+              localStorage.setItem(PATTERN_FB_KEY, JSON.stringify({
+                value: c[1], text: best.places.join(' · ') + ' 상황에서 ' + best.emo + ' 감정이 반복됨',
+                at: new Date().toISOString()
+              }));
+            } catch (e) {}
+            fb.querySelectorAll('button').forEach(function (x) { x.disabled = true; x.style.opacity = '.55'; });
+            b.style.opacity = '1';
+            b.textContent = c[0] + ' · 반영했어요';
+          });
+          fb.appendChild(b);
+        });
+        d.appendChild(fb);
+      } else {
+        item('아직 뚜렷한 반복은 없어요', '감정이 반복되거나 서로 다른 상황에서 나타나는지 조금 더 연습해 보세요.', true);
+      }
+    }
+    var ownWrap = item('내가 발견한 패턴', '', true);
+    var ta = document.createElement('textarea');
+    ta.className = 'retro-memo';
+    ta.rows = 2;
+    ta.placeholder = '예) 나는 내 사정을 묻지 않고 정할 때 서운함을 느낀다.';
+    ta.style.minHeight = '58px';
+    ta.style.fontSize = '11.5px';
+    var saved = savedOwnPattern;
+    if (!saved) { try { saved = localStorage.getItem(PATTERN_KEY) || ''; } catch (e) { saved = ''; } }
+    if (saved) ta.value = saved;
+    var save = document.createElement('button');
+    save.type = 'button';
+    save.className = 'pattern-save';
+    save.textContent = '내 패턴 저장하기';
+    var stt = document.createElement('p');
+    stt.style.cssText = 'margin:6px 0 0;font-size:9.5px;color:#a89cb0;line-height:1.5';
+    stt.textContent = '내가 직접 적은 패턴은 이 기기에만 저장돼요.';
+    save.addEventListener('click', function () {
+      var v = ta.value.trim();
+      if (!v) { stt.textContent = '먼저 발견한 패턴을 적어 주세요.'; return; }
+      try {
+        localStorage.setItem(PATTERN_KEY, v);
+        savedOwnPattern = v;
+        stt.textContent = '저장했어요. 이 기기에만 남아요.';
+      } catch (e) { stt.textContent = '저장하지 못했어요. 기기 저장 공간을 확인해 주세요.'; }
+    });
+    ownWrap.appendChild(ta); ownWrap.appendChild(save); ownWrap.appendChild(stt);
+  }
+
+  function renderList(list) {
     var box = $('recList');
+    var sel = $('logFilter');
+    var f = sel ? sel.value : 'all';
+    var rows = list.filter(function (r) {
+      if (f === 'all') return true;
+      if (f === 'legacy') return r.type === 'talk' || r.type === 'thought';
+      if (f === 'mode:train') return r.type === 'practice';
+      if (f === 'mode:quick') return r.type === 'quick' || r.type === 'talk';
+      if (f.indexOf('rel:') === 0) return r.relation === f.slice(4);
+      return true;
+    });
     box.innerHTML = '';
-    if (!list.length) {
+    if (!rows.length) {
       var e = document.createElement('div');
       e.className = 'empty';
       var i = document.createElement('i');
       i.textContent = '🌱';
       var p1 = document.createElement('div');
-      p1.textContent = '아직 저장한 기록이 없어요.';
+      p1.textContent = f === 'all' ? '아직 저장한 기록이 없어요.' : '이 조건에 맞는 기록이 없어요.';
       var p2 = document.createElement('div');
-      p2.textContent = '마음에 드는 문장만 골라 저장해 보세요.';
+      p2.textContent = f === 'all' ? '연습을 마치거나 초안을 저장하면 여기 쌓여요.' : '다른 조건으로 모아보세요.';
       e.appendChild(i); e.appendChild(p1); e.appendChild(p2);
       box.appendChild(e);
       return;
     }
-
-    list.forEach(function (rec) {
+    rows.forEach(function (rec) {
       var card = document.createElement('div');
       card.className = 'rec';
       var head = document.createElement('div');
       head.className = 'rh';
+
       var tag = document.createElement('b');
-      if (rec.type === 'thought') { tag.className = 'th'; tag.textContent = '생각 정리'; }
-      else { tag.textContent = rec.situation || '말'; }
+      if (rec.type === 'practice') tag.textContent = '훈련';
+      else if (rec.type === 'quick') { tag.textContent = '바로 말하기'; tag.className = 'quick'; }
+      else if (rec.type === 'thought') { tag.textContent = '생각 정리'; tag.className = 'legacy'; }
+      else { tag.textContent = '이전 기록'; tag.className = 'legacy'; }
       head.appendChild(tag);
-      if (rec.type === 'talk' && rec.emotion) {
+
+      if (rec.relation) {
+        var t1 = document.createElement('b');
+        t1.textContent = rec.relation;
+        t1.style.background = '#f7f0fa';
+        head.appendChild(t1);
+      }
+      if (rec.situation) {
         var t2 = document.createElement('b');
-        t2.textContent = rec.emotion;
-        t2.style.background = '#f7f0fa';
+        t2.textContent = rec.situation;
+        t2.style.background = '#f4f7f4';
+        t2.style.color = '#5d7a63';
         head.appendChild(t2);
       }
-      if (rec.type === 'talk' && rec.tone) {
+      if (rec.emotion) {
         var t3 = document.createElement('b');
-        t3.textContent = rec.tone;
-        t3.style.background = '#f4f7f4';
-        t3.style.color = '#5d7a63';
+        t3.textContent = rec.emotion;
         head.appendChild(t3);
+      }
+      if (rec.type === 'practice') {
+        var sb = document.createElement('b');
+        sb.className = 'self-badge' + (rec.selfMade ? '' : ' helped');
+        sb.style.fontSize = '9px';
+        sb.textContent = rec.selfMade ? '🌱 스스로' : '🤝 도움';
+        head.appendChild(sb);
       }
       var time = document.createElement('time');
       time.textContent = fmtDate(rec.at);
@@ -1670,7 +2523,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       card.appendChild(head);
 
       if (rec.type === 'thought') {
-        [['사실', rec.fact], ['마음', (rec.emotion ? '[' + rec.emotion + '] ' : '') + rec.matter], ['원하는 것', rec.want]].forEach(function (row) {
+        [['사실', rec.fact], ['마음', (rec.emotion ? '[' + rec.emotion + '] ' : '') + (rec.matter || '')], ['원하는 것', rec.want]].forEach(function (row) {
           if (!row[1]) return;
           var line = document.createElement('div');
           line.className = 'tmini';
@@ -1684,8 +2537,45 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       } else {
         var say = document.createElement('div');
         say.className = 'say';
-        say.textContent = rec.sentence;
+        say.textContent = rec.sentence || '';
         card.appendChild(say);
+        if (rec.type === 'practice' && (rec.needs || []).length) {
+          var nl = document.createElement('div');
+          nl.className = 'tmini';
+          var nb = document.createElement('b');
+          nb.textContent = '욕구';
+          var ns = document.createElement('span');
+          ns.textContent = rec.needs.join(' · ');
+          nl.appendChild(nb); nl.appendChild(ns);
+          card.appendChild(nl);
+        }
+      }
+
+      if (rec.retro) {
+        var rb = document.createElement('div');
+        rb.className = 'retro-box';
+        var rbt = document.createElement('b');
+        rbt.textContent = '대화 이후';
+        var rl = document.createElement('div');
+        rl.className = 'retro-line';
+        if (DELIVERY[rec.retro.delivered]) {
+          var d1 = document.createElement('span');
+          d1.textContent = DELIVERY[rec.retro.delivered];
+          rl.appendChild(d1);
+        }
+        if (AFTER[rec.retro.feeling]) {
+          var d2 = document.createElement('span');
+          d2.textContent = AFTER[rec.retro.feeling];
+          rl.appendChild(d2);
+        }
+        rb.appendChild(rbt); rb.appendChild(rl);
+        if (rec.retro.next) {
+          var memo = document.createElement('div');
+          memo.className = 'memo';
+          memo.textContent = '다음엔: ' + rec.retro.next;
+          rb.appendChild(memo);
+        }
+        card.appendChild(rb);
       }
 
       var acts = document.createElement('div');
@@ -1694,6 +2584,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
       cp.type = 'button';
       cp.textContent = '복사';
       cp.addEventListener('click', function () { copyText(rec.sentence || '', cp); });
+      var retro = document.createElement('button');
+      retro.type = 'button';
+      retro.className = 'retro';
+      retro.textContent = rec.retro ? '대화 이후 다시 남기기' : '대화 이후, 어떻게 되었나요?';
+      retro.addEventListener('click', function () { openRetro(rec.id); });
       var del = document.createElement('button');
       del.type = 'button';
       del.className = 'del';
@@ -1702,18 +2597,203 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
         var l = loadRecords().filter(function (x) { return x.id !== rec.id; });
         if (persist(l)) { renderLog(); toast('지웠어요'); }
       });
-      acts.appendChild(cp); acts.appendChild(del);
+      acts.appendChild(cp); acts.appendChild(retro); acts.appendChild(del);
       card.appendChild(acts);
       box.appendChild(card);
     });
   }
 
-  /* ---------------- 이벤트 연결 ---------------- */
+  /* ---------------- 회고 모달 ---------------- */
+  var retroTarget = null;
+  var retroDraft = { delivered: '', feeling: '', next: '' };
+
+  function openRetro(id) {
+    var list = loadRecords();
+    var rec = null;
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) rec = list[i];
+    if (!rec) return;
+    retroTarget = id;
+    retroDraft = {
+      delivered: (rec.retro && rec.retro.delivered) || '',
+      feeling: (rec.retro && rec.retro.feeling) || '',
+      next: (rec.retro && rec.retro.next) || ''
+    };
+    $('retroModal').classList.add('on');
+    $('retroModal').setAttribute('aria-hidden', 'false');
+    renderRetroForm();
+  }
+  function closeRetro() {
+    $('retroModal').classList.remove('on');
+    $('retroModal').setAttribute('aria-hidden', 'true');
+    retroTarget = null;
+  }
+  function renderRetroForm() {
+    var body = $('retroBody');
+    body.innerHTML = '';
+    function q(label, key, opts) {
+      var wrap = document.createElement('div');
+      wrap.className = 'retro-q';
+      var b = document.createElement('b');
+      b.textContent = label;
+      var box = document.createElement('div');
+      box.className = 'qopts';
+      opts.forEach(function (o) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = o[1];
+        if (retroDraft[key] === o[0]) btn.classList.add('on');
+        btn.addEventListener('click', function () {
+          retroDraft[key] = (retroDraft[key] === o[0]) ? '' : o[0];
+          renderRetroForm();
+        });
+        box.appendChild(btn);
+      });
+      wrap.appendChild(b); wrap.appendChild(box);
+      body.appendChild(wrap);
+    }
+    q('실제로 전달했나요?', 'delivered', [['yes', '네, 전달했어요'], ['edited', '수정해서 전달했어요'], ['not', '아직 전달하지 않았어요']]);
+    q('대화 후 내 마음은 어땠나요?', 'feeling', [['delivered', '내 마음이 전달된 것 같아요'], ['partial', '일부만 전달된 것 같아요'], ['hard', '여전히 어려웠어요'], ['different', '생각과 달랐어요']]);
+    var memo = document.createElement('div');
+    memo.className = 'retro-q';
+    var mb = document.createElement('b');
+    mb.textContent = '다음에는 무엇을 다르게 해보고 싶나요?';
+    var ta = document.createElement('textarea');
+    ta.className = 'retro-memo';
+    ta.placeholder = '예) 다음엔 바로 말하지 말고, 먼저 내가 뭘 원하는지 적어보기';
+    ta.value = retroDraft.next || '';
+    ta.addEventListener('input', function () { retroDraft.next = ta.value; });
+    memo.appendChild(mb); memo.appendChild(ta);
+    body.appendChild(memo);
+  }
+  function saveRetro() {
+    if (!retroTarget) { closeRetro(); return; }
+    var list = loadRecords();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === retroTarget) {
+        list[i].retro = {
+          delivered: retroDraft.delivered,
+          feeling: retroDraft.feeling,
+          next: String(retroDraft.next || '').trim(),
+          at: new Date().toISOString()
+        };
+        break;
+      }
+    }
+    if (persist(list)) {
+      closeRetro();
+      renderLog();
+      toast('대화 이후 기록을 남겼어요');
+    }
+  }
+
+  /* ---------------- 캡처 OCR ---------------- */
+  function makeCapture(ids, onFill) {
+    var image = '';
+    var busy = false;
+    var d = ids;
+    $(d.btn).addEventListener('click', function () { $(d.body).classList.toggle('hide'); });
+    $(d.pick).addEventListener('click', function () { $(d.file).click(); });
+    $(d.file).addEventListener('change', function () {
+      var f = $(d.file).files && $(d.file).files[0];
+      if (!f) return;
+      if (!/^image\//.test(f.type)) { toast('이미지 파일을 선택해 주세요'); $(d.file).value = ''; return; }
+      if (f.size > 12 * 1024 * 1024) { toast('12MB 이하 이미지를 선택해 주세요'); $(d.file).value = ''; return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var im = new Image();
+        im.onload = function () {
+          var scale = Math.min(1, 1400 / Math.max(im.width, im.height));
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(im.width * scale));
+          canvas.height = Math.max(1, Math.round(im.height * scale));
+          canvas.getContext('2d').drawImage(im, 0, 0, canvas.width, canvas.height);
+          image = canvas.toDataURL('image/jpeg', 0.78);
+          $(d.img).src = image;
+          $(d.prev).classList.add('on');
+          $(d.status).textContent = '캡처를 붙였어요. 이제 글자를 읽어볼까요?';
+        };
+        im.src = reader.result;
+      };
+      reader.readAsDataURL(f);
+    });
+    $(d.remove).addEventListener('click', function () {
+      image = '';
+      $(d.file).value = '';
+      $(d.img).removeAttribute('src');
+      $(d.prev).classList.remove('on');
+      $(d.status).textContent = '';
+    });
+    $(d.ocr).addEventListener('click', async function () {
+      if (!image) { $(d.status).textContent = '먼저 캡처 이미지를 선택해 주세요.'; return; }
+      if (busy) return;
+      if (!window.Tesseract) {
+        $(d.status).textContent = '기기에서 글자를 읽는 도구를 불러오는 중이에요.';
+        try {
+          await new Promise(function (resolve, reject) {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+            s.onload = resolve; s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        } catch (e) {
+          $(d.status).textContent = '글자 읽기 도구를 불러오지 못했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.';
+          return;
+        }
+      }
+      busy = true;
+      $(d.ocr).disabled = true;
+      $(d.ocr).textContent = '글자를 읽고 있어요…';
+      var worker;
+      try {
+        worker = await Tesseract.createWorker('kor+eng', 1, {
+          logger: function (m) {
+            if (m.status === 'recognizing text') $(d.status).textContent = '캡처를 읽고 있어요… ' + Math.round((m.progress || 0) * 100) + '%';
+          }
+        });
+        var result = await worker.recognize(image);
+        var txt = ((result.data && result.data.text) || '').trim();
+        $(d.text).value = txt;
+        $(d.text).classList.remove('hide');
+        $(d.use).classList.remove('hide');
+        $(d.status).textContent = txt ? '읽었어요. 잘못 읽힌 글자는 고친 뒤 입력창에 넣어 주세요.' : '글자를 찾지 못했어요. 더 선명한 캡처로 시도해 주세요.';
+      } catch (e) {
+        $(d.status).textContent = '글자를 읽는 중 문제가 생겼어요. 더 선명한 캡처로 다시 시도해 주세요.';
+      } finally {
+        if (worker) { try { await worker.terminate(); } catch (e) {} }
+        busy = false;
+        $(d.ocr).disabled = false;
+        $(d.ocr).textContent = '🔎 다시 글자 읽기';
+      }
+    });
+    $(d.use).addEventListener('click', function () {
+      var ex = $(d.text).value.trim();
+      if (!ex) { $(d.status).textContent = '먼저 캡처 속 글자를 읽어 주세요.'; return; }
+      if (!onFill(ex)) {
+        $(d.status).textContent = '캡처 속 글자를 읽지 못했어요. 직접 적어 주세요.';
+        return;
+      }
+      $(d.status).textContent = '입력창에 넣었어요. 내 말로 고쳐도 좋아요.';
+    });
+    return {
+      clear: function () {
+        image = '';
+        $(d.file).value = '';
+        $(d.img).removeAttribute('src');
+        $(d.prev).classList.remove('on');
+        $(d.text).value = '';
+        $(d.text).classList.add('hide');
+        $(d.use).classList.add('hide');
+        $(d.status).textContent = '';
+        $(d.body).classList.add('hide');
+      }
+    };
+  }
+
+  /* ---------------- 초기화 ---------------- */
   function init() {
-    renderRel(); renderSit(); renderEmo(); renderTone(); renderExamples();
-    exList($('exFact'), EXAMPLES.fact);
-    exList($('exWant'), EXAMPLES.want);
-    renderThoughtEmo();
+    renderQuickForm();
+    renderTrainMeta();
+    $('qCount').textContent = '0';
 
     var tabs = document.querySelectorAll('.tab');
     for (var i = 0; i < tabs.length; i++) {
@@ -1721,70 +2801,105 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
         btn.addEventListener('click', function () { switchTab(btn.getAttribute('data-tab')); });
       })(tabs[i]);
     }
-
-    var toneBtns = document.querySelectorAll('#toneSeg button');
-    for (var j = 0; j < toneBtns.length; j++) {
-      (function (btn) {
-        btn.addEventListener('click', function () {
-          state.polite = btn.getAttribute('data-v') === '1';
-          renderTone();
-        });
-      })(toneBtns[j]);
+    var homes = document.querySelectorAll('[data-home]');
+    for (var h = 0; h < homes.length; h++) {
+      (function (b) { b.addEventListener('click', function () { switchTab('home'); }); })(homes[h]);
     }
 
-    $('txt').addEventListener('input', function () { updateCount(); updateSteps(); });
-    $('btnMake').addEventListener('click', function () {
-      state.fromThought = false;
-      doGenerate();
-    });
-    $('btnBackTalk').addEventListener('click', function () {
-      state.talkView = 'input';
-      backOr('view-talk');
-    });
-    $('btnAgain').addEventListener('click', function () {
-      $('txt').value = '';
-      state.text = '';
-      state.emotion = null;
-      state.fromThought = false;
-      updateCount(); updateSteps(); renderEmo();
-      state.talkView = 'input';
-      switchTab('talk');
-    });
-    $('btnSaveAll').addEventListener('click', saveAll);
-
-    $('btnThought').addEventListener('click', doThought);
-    $('btnToTalk').addEventListener('click', toTalk);
-    $('btnSaveThought').addEventListener('click', saveThought);
-    $('btnBackThought').addEventListener('click', function () { backOr('view-thought'); });
-    $('btnEditThought').addEventListener('click', function () { backOr('view-thought'); });
-
-    window.addEventListener('popstate', function () {
-      if ($('view-result').classList.contains('on')) {
-        state.talkView = 'input';
-        if (state.fromThought && state.thoughtResult) {
-          switchTab('thought');
-          showView('view-thought-result');
-        } else {
-          switchTab('talk');
-        }
-      } else if ($('view-thought-result').classList.contains('on')) {
-        switchTab('thought');
-      }
+    $('goQuick').addEventListener('click', function () { switchTab('quick'); });
+    $('goTrain').addEventListener('click', function () {
+      switchTab('train');
+      if (T.step === 1) showStep(1);
     });
 
-    ['tFact', 'tMatter', 'tWant'].forEach(function (id) {
-      $(id).addEventListener('input', function () {
-        state.thought.fact = $('tFact').value;
-        state.thought.matter = $('tMatter').value;
-        state.thought.want = $('tWant').value;
+    /* --- 바로 말하기 --- */
+    $('qStyle').addEventListener('change', function () { Q.style = this.value; });
+    $('qText').addEventListener('input', quickBodyText);
+    $('qMake').addEventListener('click', makeQuick);
+    $('qBack').addEventListener('click', function () {
+      $('qResult').classList.add('hide');
+      $('qForm').classList.remove('hide');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    $('qAgain').addEventListener('click', function () {
+      Q.emotion = null; Q.text = '';
+      $('qText').value = '';
+      $('qCount').textContent = '0';
+      Q.result = null;
+      renderQuickForm();
+      $('qResult').classList.add('hide');
+      $('qForm').classList.remove('hide');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    $('qSaveAll').addEventListener('click', saveQuickAll);
+    $('qToTrain').addEventListener('click', toTrainFromQuick);
+
+    var qCap = makeCapture({
+      btn: 'qCapBtn', body: 'qCapBody', file: 'qCapFile', pick: 'qCapPick', prev: 'qCapPrev',
+      img: 'qCapImg', remove: 'qCapRemove', ocr: 'qCapOcr', status: 'qCapStatus',
+      text: 'qCapText', use: 'qCapUse'
+    }, function (txt) {
+      var cur = $('qText').value.trim();
+      $('qText').value = cur ? cur + '\n\n' + txt : txt;
+      quickBodyText();
+      scrollToEl($('qText'));
+      return true;
+    });
+
+    /* --- 연습 --- */
+    $('styleSel').addEventListener('change', function () {
+      T.style = this.value;
+      T.polite = !!POLITE[T.style];
+    });
+    $('sitText').addEventListener('input', syncSit);
+    $('factText').addEventListener('input', reviewSplit);
+    $('guessText').addEventListener('input', function () { T.guess = $('guessText').value; });
+    $('wantText').addEventListener('input', function () { T.want = $('wantText').value; });
+    $('needCustom').addEventListener('input', function () { T.needCustom = $('needCustom').value; });
+    $('mySentence').addEventListener('input', syncSentence);
+
+    $('btnToSplit').addEventListener('click', toSplit);
+    $('btnToFeel').addEventListener('click', toFeel);
+    $('btnToWrite').addEventListener('click', toWrite);
+    $('btnCheck').addEventListener('click', doCheck);
+    $('btnHint').addEventListener('click', toggleHints);
+    $('btnConfirm').addEventListener('click', confirmSentence);
+    $('btnSavePractice').addEventListener('click', savePractice);
+    $('btnEditSentence').addEventListener('click', function () {
+      goCard('cardWrite');
+      scrollToEl($('mySentence'));
+      $('mySentence').focus();
+    });
+    $('btnRestart').addEventListener('click', function () {
+      openModal('처음부터 다시 할까요?', '지금까지 쓴 내용은 저장되지 않고 사라져요.', '다시 시작', function () {
+        resetTrain(true);
+        toast('새 연습을 시작해요');
       });
+    });
+    $('btnOneMore').addEventListener('click', function () {
+      resetTrain(true);
+      toast('새 연습을 시작해요');
+    });
+    $('btnGoLog').addEventListener('click', function () { switchTab('log'); });
+
+    var cap = makeCapture({
+      btn: 'capBtn', body: 'capBody', file: 'capFile', pick: 'capPick', prev: 'capPrev',
+      img: 'capImg', remove: 'capRemove', ocr: 'capOcr', status: 'capStatus',
+      text: 'capText', use: 'capUse'
+    }, function (txt) {
+      var cur = $('sitText').value.trim();
+      $('sitText').value = cur ? cur + '\n\n' + txt : txt;
+      syncSit();
+      scrollToEl($('sitText'));
+      return true;
     });
 
     $('btnClearAll').addEventListener('click', function () {
       if (!loadRecords().length) { toast('지울 기록이 없어요'); return; }
-      openModal('기록을 모두 지울까요?', '이 기기에 저장된 문장과 생각 정리가 전부 사라져요. 되돌릴 수 없어요.', '지우기', function () {
+      openModal('기록을 모두 지울까요?', '이 기기에 저장된 연습·회고 기록이 전부 사라져요. 되돌릴 수 없어요.', '지우기', function () {
         persist([]);
         renderLog();
+        renderHome();
         toast('기록을 모두 지웠어요');
       });
     });
@@ -1797,372 +2912,44 @@ if (typeof module !== 'undefined' && module.exports) module.exports = MM;
     });
     $('modal').addEventListener('click', function (e) { if (e.target === $('modal')) closeModal(); });
 
+    $('rCancel').addEventListener('click', closeRetro);
+    $('rSave').addEventListener('click', saveRetro);
+    $('retroModal').addEventListener('click', function (e) { if (e.target === $('retroModal')) closeRetro(); });
+
     $('btnAbout').addEventListener('click', function () {
-      openModal('마음말 사용법',
-        '① 생각 정리 — 사실·마음·원하는 것을 나눠 적어 생각을 좁혀요.\n② 말 다듬기 — 상대·상황·감정을 고르면 같은 마음을 3가지 톤으로 만들어요.\n③ 내 기록 — 저장한 문장은 이 기기에만 남아요.',
+      openModal('마음말은 이렇게 써요',
+        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요. 모든 기록은 이 기기에만 남아요.',
         '알겠어요', null, true);
     });
 
-    updateCount();
-    updateSteps();
+    resetTrain(true);
+    renderHome();
+  }
+
+  function toTrainFromQuick() {
+    if (!Q.result) return;
+    resetTrain(false);
+    T.relation = Q.relation;
+    T.situation = Q.situation;
+    T.style = Q.style;
+    T.emotion = Q.emotion;
+    T.sit = $('qText').value;
+    $('sitText').value = T.sit;
+    renderTrainMeta();
+    switchTab('train');
+    showStep(1);
+    toast('같은 내용으로 연습을 시작해요');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
-  window.MMApp = { state: state, switchTab: switchTab };
+  window.MMApp = {
+    state: state, switchTab: switchTab, openRetro: openRetro,
+    _load: loadRecords, _renderLog: renderLog
+  };
 })();
 
 </script>
-
-<style id="maeummal-v2-style">
-.entry-choice{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0 14px}
-.entry-choice button{background:#fffefa;border:1px solid #eadfed;border-radius:17px;padding:13px 12px;text-align:left;min-height:94px;box-shadow:0 5px 14px #59466b0a}
-.entry-choice b{display:block;font-size:13px;color:#5f4779;margin:0 0 5px}
-.entry-choice span{display:block;font-size:10.5px;line-height:1.55;color:#97899f}
-.entry-choice .entry-icon{font-size:19px;margin-bottom:6px}
-.feedback-box,.pattern-panel{background:#fff;border:1px solid #eee5ed;border-radius:18px;padding:14px;margin:13px 0}
-.feedback-box h3,.pattern-panel h3{font-size:13px;margin:0 0 5px;color:#5c4b6c}
-.feedback-box p,.pattern-panel p{font-size:10.5px;color:#988ba0;margin:0 0 10px;line-height:1.6}
-.feedback-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.feedback-actions button{background:#faf6fb;border:1px solid #eadfed;border-radius:12px;padding:9px 5px;font-size:10.5px;font-weight:800;color:#725d83;min-height:43px}
-.feedback-note{font-size:10px;color:#6e8a72;margin-top:9px}
-.log-filter{display:flex;align-items:center;gap:8px;margin:12px 0 6px}
-.log-filter label{font-size:11px;color:#887895;font-weight:800}
-.log-filter select{flex:1;border:1px solid #e9dfeb;background:#fffefa;border-radius:12px;padding:10px;font-size:12px}
-.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pattern-item{background:#faf7fb;border-radius:12px;padding:10px}
-.pattern-item b{display:block;font-size:10px;color:#a18eaa;margin-bottom:4px}
-.pattern-item strong{font-size:12px;color:#574767;line-height:1.5;display:block}
-@media(max-width:360px){.entry-choice{grid-template-columns:1fr}}
-</style>
-<script id="maeummal-v2-enhancements">
-(function(){
-'use strict';var KEY='maeummal.v1';
-function el(t,c,s){var n=document.createElement(t);if(c)n.className=c;if(s)n.textContent=s;return n}
-function records(){try{var x=JSON.parse(localStorage.getItem(KEY)||'{}');return Array.isArray(x.records)?x.records:[]}catch(e){return[]}}
-function init(){
- var hero=document.querySelector('#view-talk .hero');
- if(hero&&!document.getElementById('entryChoice')){
-  var c=el('div','entry-choice');c.id='entryChoice';
-  var a=el('button');a.type='button';a.innerHTML='<span class="entry-icon">💬</span><b>상대에게 할 말 다듬기</b><span>내 마음을 그대로 담아 전해요.</span>';a.onclick=function(){document.getElementById('card1').scrollIntoView({behavior:'smooth'})};
-  var b=el('button');b.type='button';b.innerHTML='<span class="entry-icon">💗</span><b>내 마음부터 정리하기</b><span>사실과 감정, 원하는 것을 살펴봐요.</span>';b.onclick=function(){window.MMApp&&window.MMApp.switchTab('thought')};
-  c.append(a,b);hero.insertAdjacentElement('afterend',c);
- }
- var tagline=document.querySelector('.brand .bt p');if(tagline)tagline.textContent='내 마음을 잃지 않고, 전하는 방법';
- var desc=document.querySelector('#view-talk .hero p');if(desc)desc.textContent='감정을 지우거나 억누르지 않고, 나에게 맞는 표현을 함께 찾아요.';
- var result=document.getElementById('resCards');
- if(result&&!document.getElementById('mmFeedback')){
-  var fb=el('section','feedback-box');fb.id='mmFeedback';fb.append(el('h3','','이 표현에 내 마음이 담겼나요?'),el('p','','가장 가까운 느낌을 골라 주세요. 의견은 이 기기에만 저장돼요.'));
-  var acts=el('div','feedback-actions'),note=el('div','feedback-note','');
-  [['잘 담겼어','good'],['감정이 약해졌어','weak'],['더 단호했으면 해','firm']].forEach(function(x){var q=el('button','',x[0]);q.type='button';q.onclick=function(){try{var k='maeummal.feedback.v1',v=JSON.parse(localStorage.getItem(k)||'{}');v[x[1]]=(v[x[1]]||0)+1;localStorage.setItem(k,JSON.stringify(v))}catch(e){}note.textContent='의견을 이 기기에 기록했어요.'};acts.append(q)});
-  fb.append(acts,note);result.insertAdjacentElement('afterend',fb);
- }
- var list=document.getElementById('recList');
- if(list&&!document.getElementById('mmLogFilter')){
-  var wrap=el('div','log-filter');wrap.id='mmLogFilter';wrap.append(el('label','','관계별로 보기'));
-  var sel=el('select');sel.setAttribute('aria-label','관계별 기록 필터');
-  [['all','모든 관계'],['친구','친구'],['연인','연인'],['가족','가족'],['직장·동료','직장·동료'],['지인','지인'],['thought','생각 정리']].forEach(function(x){var o=el('option','',x[1]);o.value=x[0];sel.append(o)});wrap.append(sel);list.before(wrap);
-  var panel=el('section','pattern-panel');panel.id='mmPatterns';panel.append(el('h3','','내 기록에서 발견한 마음'),el('p','','저장한 기록의 반복 경향을 요약해요. 심리 진단이 아닌 기록 요약이에요.'));
-  var grid=el('div','pattern-grid');panel.append(grid);var stats=document.getElementById('stats');if(stats)stats.after(panel);
-  function update(){
-   var rs=records(),cards=list.querySelectorAll('.rec'),v=sel.value;
-   cards.forEach(function(card,i){var r=rs[i];if(r)card.style.display=(v==='all'||(v==='thought'?r.type==='thought':r.relation===v))?'':'none'});
-   var usable=rs.filter(function(r){return r.emotion||r.situation||r.relation||r.matter||r.want});
-   var emotionGroups={},contexts={};
-   usable.forEach(function(r){
-    if(!r.emotion)return;
-    if(!emotionGroups[r.emotion])emotionGroups[r.emotion]={count:0,context:{}};
-    var g=emotionGroups[r.emotion];g.count++;
-    var c=r.situation||r.relation||(r.type==='thought'?'생각 정리':'상황 미분류');
-    g.context[c]=true;
-   });
-   Object.keys(emotionGroups).forEach(function(k){
-    if(!contexts.count||emotionGroups[k].count>contexts.count)contexts={emotion:k,count:emotionGroups[k].count,places:Object.keys(emotionGroups[k].context)};
-   });
-   grid.innerHTML='';
-   var intro=el('p','','기록에서 반복된 감정과 상황을 찾아요. 기록이 적을 때는 결론을 내리지 않아요.');
-   intro.style.cssText='grid-column:1/-1;margin:0 0 2px;font-size:10.5px;color:#988ba0;line-height:1.6';
-   grid.append(intro);
-   if(usable.length<3){
-    var waiting=el('div','pattern-item');waiting.style.gridColumn='1/-1';
-    waiting.append(el('b','','아직은 패턴을 판단하기 어려워요'),el('strong','','서로 다른 날의 기록을 3개 이상 모으면 반복되는 감정을 살펴볼게요.'));
-    grid.append(waiting);
-   }else{
-    var count=el('div','pattern-item');count.append(el('b','','살펴본 기록'),el('strong','',usable.length+'개'));grid.append(count);
-    if(contexts.emotion&&contexts.count>=2&&contexts.places.length>=2){
-     var insight=el('div','pattern-item');insight.style.gridColumn='1/-1';
-     insight.append(el('b','','반복해서 나타난 감정'),el('strong','',contexts.places.join(' · ')+' 상황에서 ‘'+contexts.emotion+'’ 감정이 '+contexts.count+'회 기록됐어요.'));
-     grid.append(insight);
-    }else{
-     var insight=el('div','pattern-item');insight.style.gridColumn='1/-1';
-     insight.append(el('b','','아직 뚜렷한 반복은 없어요'),el('strong','','감정이 반복되거나 서로 다른 상황에서 나타나는지 조금 더 기록해 보세요.'));
-     grid.append(insight);
-    }
-    if(contexts.emotion&&contexts.count>=2&&contexts.places.length>=2){
-     var feedbackWrap=el('div','pattern-item');feedbackWrap.style.gridColumn='1/-1';
-     feedbackWrap.append(el('b','','이 관찰이 나와 맞나요?'),el('strong','','기록을 바탕으로 한 제안이에요. 맞지 않으면 편하게 아니라고 해주세요.'));
-     var feedbackActions=el('div','feedback-actions');
-     [['맞아요','yes'],['아니에요','no']].forEach(function(choice){
-      var fb=el('button','',choice[0]);fb.type='button';
-      fb.onclick=function(){
-       try{localStorage.setItem('maeummal.pattern-feedback.v1',JSON.stringify({value:choice[1],text:contexts.places.join(' · ')+' 상황에서 '+contexts.emotion+' 감정이 반복됨',at:new Date().toISOString()}))}catch(e){}
-       feedbackWrap.querySelectorAll('button').forEach(function(b){b.disabled=true;b.style.opacity='.55'});
-       fb.style.opacity='1';fb.textContent=choice[0]+' · 반영했어요';
-      };
-      feedbackActions.append(fb);
-     });
-     feedbackWrap.append(feedbackActions);grid.append(feedbackWrap);
-    }
-    var ownWrap=el('div','pattern-item');ownWrap.style.gridColumn='1/-1';
-    ownWrap.append(el('b','','내가 발견한 패턴'));
-    var ownInput=document.createElement('textarea');ownInput.className='field';ownInput.rows=2;ownInput.placeholder='예) 나는 내 사정을 묻지 않고 결정할 때 서운함을 느낀다.';
-    ownInput.style.minHeight='65px';
-    var savedOwn=null;try{savedOwn=localStorage.getItem('maeummal.own-pattern.v1')}catch(e){}
-    if(savedOwn)ownInput.value=savedOwn;
-    var ownSave=el('button','attach-trigger','내 패턴 저장하기');ownSave.type='button';ownSave.style.marginTop='8px';
-    var ownStatus=el('p','attach-caption','내가 직접 적은 패턴은 이 기기에만 저장돼요.');
-    ownSave.onclick=function(){
-     var value=ownInput.value.trim();if(!value){ownStatus.textContent='먼저 발견한 패턴을 적어 주세요.';return}
-     try{localStorage.setItem('maeummal.own-pattern.v1',value);ownStatus.textContent='내가 발견한 패턴을 이 기기에 저장했어요.'}catch(e){ownStatus.textContent='저장하지 못했어요. 기기 저장 공간을 확인해 주세요.'}
-    };
-    ownWrap.append(ownInput,ownSave,ownStatus);grid.append(ownWrap);
-    var relCounts={};usable.forEach(function(r){if(r.relation)relCounts[r.relation]=(relCounts[r.relation]||0)+1});
-    var topRel=Object.keys(relCounts).sort(function(a,b){return relCounts[b]-relCounts[a]})[0];
-    if(topRel){var relItem=el('div','pattern-item');relItem.append(el('b','','기록이 가장 많은 관계'),el('strong','',topRel+' · '+relCounts[topRel]+'회'));grid.append(relItem)}
-   }
-  }
-  sel.onchange=update;new MutationObserver(update).observe(list,{childList:true,subtree:true});update();
- }
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();window.addEventListener('load',init);
-})();
-</script>
-
-
-<script id="maeummal-relation-tone-fix">
-(function(){
- function syncRelationTone(){
-  var box=document.getElementById('relChips');
-  if(!box||box.dataset.toneSync==='1')return;
-  box.dataset.toneSync='1';
-  box.addEventListener('click',function(){
-   window.setTimeout(function(){
-    var app=window.MMApp;
-    if(!app||!app.state)return;
-    var r=app.state.relation;
-    app.state.polite=(r==='work'||r==='social');
-    var buttons=document.querySelectorAll('#toneSeg button');
-    buttons.forEach(function(b){
-     var selected=(b.getAttribute('data-v')==='1')===app.state.polite;
-     b.classList.toggle('on',selected);
-     b.setAttribute('aria-pressed',selected?'true':'false');
-    });
-   },0);
-  });
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',syncRelationTone);
- else syncRelationTone();
- window.addEventListener('load',syncRelationTone);
-})();
-</script>
-
-
-<style id="maeummal-relationship-attachment-style">
-.rel-style-wrap{margin-top:13px}
-.rel-style-wrap label,.attach-label{display:block;font-size:11px;font-weight:850;color:#8a79a0;margin:0 2px 8px}
-.rel-style-wrap select{width:100%;border:1px solid #e9dfeb;background:#fffdfa;border-radius:13px;padding:12px 13px;font-size:13px;outline:none}
-.rel-style-note{font-size:10.5px;color:#a090a8;line-height:1.55;margin:7px 2px 0}
-.attach-card{margin-top:14px;padding:13px;border:1px dashed #ddcfe5;border-radius:16px;background:#fdfafd}
-.attach-trigger{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:44px;border-radius:12px;background:#f3edf7;color:#705a85;font-size:12px;font-weight:850}
-.attach-preview{display:none;margin-top:10px;position:relative}
-.attach-preview.on{display:block}
-.attach-preview img{display:block;width:100%;max-height:260px;object-fit:contain;border-radius:12px;background:#f4f0f5;border:1px solid #eee5ed}
-.attach-remove{margin-top:7px;font-size:11px;font-weight:800;color:#a47780;padding:7px 3px}
-.attach-caption{font-size:10px;color:#9d90a5;line-height:1.55;margin:7px 1px 0}
-</style>
-<script id="maeummal-relationship-attachment">
-(function(){
-'use strict';
-var profiles={
- friend:{value:'casual',options:[['casual','편한 반말'],['warm','다정한 반말'],['polite','조금 예의를 갖춘 존댓말']]},
- lover:{value:'warm',options:[['warm','다정한 반말'],['casual','담백한 반말'],['polite','부드러운 존댓말']]},
- family:{value:'casual',options:[['casual','편한 반말'],['polite','조심스러운 존댓말'],['firm','단호한 반말']]},
- work:{value:'polite',options:[['polite','정중한 존댓말'],['brief','간결한 존댓말'],['warm','부드러운 존댓말']]},
- social:{value:'polite',options:[['polite','부드러운 존댓말'],['casual','편한 반말'],['formal','격식 있는 존댓말']]}
-};
-var selectedStyle='casual', imageData='';
-function $(id){return document.getElementById(id)}
-function isPolite(v){return ['polite','brief','formal'].indexOf(v)>=0}
-function renderStyles(){
- var rel=window.MMApp&&window.MMApp.state?window.MMApp.state.relation:'friend';
- var profile=profiles[rel]||profiles.friend,sel=$('mmRelStyle');
- if(!sel)return;
- var exists=profile.options.some(function(x){return x[0]===selectedStyle});
- if(!exists)selectedStyle=profile.value;
- sel.innerHTML='';
- profile.options.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];sel.appendChild(o)});
- sel.value=selectedStyle;
- if(window.MMApp&&window.MMApp.state)window.MMApp.state.polite=isPolite(selectedStyle);
- syncTone();
-}
-function syncTone(){
- var st=window.MMApp&&window.MMApp.state;if(!st)return;
- document.querySelectorAll('#toneSeg button').forEach(function(b){
-  var on=(b.getAttribute('data-v')==='1')===st.polite;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');
- });
-}
-function install(){
- var rel=$('relChips'),tone=$('toneSeg'),card=$('card1');
- if(card&&!$('mmRelStyleWrap')){
-  var wrap=document.createElement('div');wrap.className='rel-style-wrap';wrap.id='mmRelStyleWrap';
-  var label=document.createElement('label');label.htmlFor='mmRelStyle';label.textContent='이 관계에 어울리는 말투';
-  var sel=document.createElement('select');sel.id='mmRelStyle';sel.setAttribute('aria-label','관계별 말투 선택');
-  var note=document.createElement('p');note.className='rel-style-note';note.textContent='상대와 평소 대화하는 분위기에 맞춰 골라 주세요. 언제든 직접 바꿀 수 있어요.';
-  wrap.append(label,sel,note);
-  var toneLabel=tone&&tone.previousElementSibling;
-  if(toneLabel)toneLabel.insertAdjacentElement('afterend',wrap);else card.appendChild(wrap);
-  sel.addEventListener('change',function(){selectedStyle=sel.value;if(window.MMApp&&window.MMApp.state)window.MMApp.state.polite=isPolite(selectedStyle);syncTone()});
-  if(rel)rel.addEventListener('click',function(){setTimeout(renderStyles,0)});
-  if(tone)tone.addEventListener('click',function(){setTimeout(function(){var st=window.MMApp&&window.MMApp.state;if(!st)return;selectedStyle=st.polite?'polite':'casual';if(profiles[st.relation]){var allowed=profiles[st.relation].options.some(function(x){return x[0]===selectedStyle});if(!allowed)selectedStyle=profiles[st.relation].value}renderStyles()},0)});
-  renderStyles();
- }
- var input=$('txt'),card3=$('card3');
- if(card3&&!$('mmAttachCard')){
-  var box=document.createElement('div');box.className='attach-card';box.id='mmAttachCard';
-  var label=document.createElement('label');label.className='attach-label';label.textContent='대화 상황 캡처 첨부';
-  var pick=document.createElement('button');pick.type='button';pick.className='attach-trigger';pick.textContent='📎 캡처 이미지 선택';
-  var file=document.createElement('input');file.type='file';file.accept='image/*';file.id='mmAttachFile';file.hidden=true;
-  var preview=document.createElement('div');preview.className='attach-preview';preview.id='mmAttachPreview';
-  var img=document.createElement('img');img.alt='첨부한 대화 상황 미리보기';
-  var remove=document.createElement('button');remove.type='button';remove.className='attach-remove';remove.textContent='첨부 이미지 삭제';
-  var caption=document.createElement('p');caption.className='attach-caption';caption.textContent='캡처 이미지는 브라우저 안에서만 처리해요. OCR에 필요한 프로그램과 언어 데이터는 내려받지만, 이미지 자체는 외부 서버로 전송하지 않아요.';
-  var ocrButton=document.createElement('button');ocrButton.type='button';ocrButton.className='attach-trigger';ocrButton.style.marginTop='9px';ocrButton.textContent='🔎 캡처 속 글자 읽기';
-  var ocrStatus=document.createElement('p');ocrStatus.className='attach-caption';ocrStatus.setAttribute('aria-live','polite');
-  var ocrText=document.createElement('textarea');ocrText.className='field';ocrText.rows=5;ocrText.placeholder='읽어 온 대화가 여기에 표시돼요. 잘못 읽힌 글자는 직접 수정해 주세요.';ocrText.style.display='none';ocrText.style.marginTop='8px';
-  var useText=document.createElement('button');useText.type='button';useText.className='attach-trigger';useText.textContent='읽은 대화를 마음말 입력창에 넣기';useText.style.display='none';useText.style.marginTop='8px';
-  var ocrBusy=false;
-  ocrButton.addEventListener('click',async function(){
-   if(!imageData||ocrBusy)return;
-   if(!window.Tesseract){
-    ocrStatus.textContent='기기에서 글자를 읽는 도구를 불러오는 중이에요.';
-    try{await new Promise(function(resolve,reject){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
-    catch(e){ocrStatus.textContent='글자 읽기 도구를 불러오지 못했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.';return}
-   }
-   ocrBusy=true;ocrButton.disabled=true;ocrButton.textContent='글자를 읽고 있어요…';
-   var worker;
-   try{
-    worker=await Tesseract.createWorker('kor+eng',1,{logger:function(m){if(m.status==='recognizing text')ocrStatus.textContent='캡처를 읽고 있어요… '+Math.round((m.progress||0)*100)+'%'}});
-    var result=await worker.recognize(imageData);
-    ocrText.value=(result.data&&result.data.text||'').trim();
-    ocrText.style.display='block';useText.style.display='block';
-    ocrStatus.textContent=ocrText.value?'읽기가 끝났어요. 대화 내용을 확인하고 필요한 부분을 고쳐 주세요.':'글자를 찾지 못했어요. 이미지가 선명한지 확인해 주세요.';
-   }catch(e){ocrStatus.textContent='글자를 읽는 중 문제가 생겼어요. 더 선명한 캡처로 다시 시도해 주세요.'}
-   finally{if(worker)try{await worker.terminate()}catch(e){} ocrBusy=false;ocrButton.disabled=false;ocrButton.textContent='🔎 다시 글자 읽기'}
-  });
-  useText.addEventListener('click',function(){
-   var current=input.value.trim(),extracted=ocrText.value.trim();
-   if(!extracted){ocrStatus.textContent='먼저 캡처 속 글자를 읽어 주세요.';return}
-   input.value=current?current+'\\n\\n[대화 캡처에서 읽은 내용]\\n'+extracted:extracted;
-   input.dispatchEvent(new Event('input',{bubbles:true}));
-   input.scrollIntoView({behavior:'smooth',block:'center'});
-   ocrStatus.textContent='입력창에 넣었어요. 내용을 확인한 뒤 마음말 만들기를 눌러 주세요.';
-  });
-  pick.addEventListener('click',function(){file.click()});
-  file.addEventListener('change',function(){
-   var f=file.files&&file.files[0];if(!f)return;
-   if(!/^image\//.test(f.type)){alert('이미지 파일을 선택해 주세요.');file.value='';return}
-   if(f.size>12*1024*1024){alert('12MB 이하의 이미지를 선택해 주세요.');file.value='';return}
-   var reader=new FileReader();reader.onload=function(){
-    var im=new Image();im.onload=function(){
-     var scale=Math.min(1,1400/Math.max(im.width,im.height)),canvas=document.createElement('canvas');
-     canvas.width=Math.max(1,Math.round(im.width*scale));canvas.height=Math.max(1,Math.round(im.height*scale));
-     var ctx=canvas.getContext('2d');ctx.drawImage(im,0,0,canvas.width,canvas.height);
-     imageData=canvas.toDataURL('image/jpeg',0.78);img.src=imageData;preview.classList.add('on');
-    };im.src=reader.result;
-   };reader.readAsDataURL(f);
-  });
-  remove.addEventListener('click',function(){imageData='';file.value='';img.removeAttribute('src');preview.classList.remove('on')});
-  preview.append(img,remove);box.append(label,pick,file,preview,caption,ocrButton,ocrStatus,ocrText,useText);input.insertAdjacentElement('afterend',box);
- }
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
-window.addEventListener('load',install);
-window.MaeumMalAttachment={getPreview:function(){return imageData}};
-})();
-</script>
-
-
-<script id="maeummal-attachment-result-preview">
-(function(){
- function showReference(){
-  var view=document.getElementById('view-result'),meta=document.getElementById('resMeta');
-  if(!view||!meta)return;
-  var data=window.MaeumMalAttachment&&window.MaeumMalAttachment.getPreview();
-  var existing=document.getElementById('mmResultReference');
-  if(!data){if(existing)existing.remove();return}
-  if(!existing){existing=document.createElement('section');existing.id='mmResultReference';existing.style.cssText='margin:10px 0 14px;padding:12px;border:1px solid #eee5ed;border-radius:16px;background:#fffefa';
-   var title=document.createElement('div');title.textContent='📎 첨부한 상황 캡처';title.style.cssText='font-size:11px;font-weight:800;color:#80688f;margin-bottom:8px';
-   var img=document.createElement('img');img.id='mmResultReferenceImage';img.alt='첨부한 상황 캡처';img.style.cssText='display:block;width:100%;max-height:230px;object-fit:contain;border-radius:10px;background:#f6f2f7';
-   var note=document.createElement('p');note.textContent='참고용 이미지예요. 이미지 속 문자는 자동 분석되지 않아요.';note.style.cssText='font-size:10px;color:#9a8da2;margin:7px 0 0';
-   existing.append(title,img,note);meta.insertAdjacentElement('afterend',existing);
-  }
-  var image=document.getElementById('mmResultReferenceImage');if(image)image.src=data;
- }
- function start(){
-  var result=document.getElementById('view-result');if(!result)return;
-  new MutationObserver(showReference).observe(result,{attributes:true,attributeFilter:['class']});
-  var back=document.getElementById('btnBackTalk');if(back)back.addEventListener('click',function(){setTimeout(showReference,0)});
-  showReference();
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
-})();
-</script>
-
-
-<script id="maeummal-neutral-tone-adjustment">
-(function(){
-'use strict';
-var profiles={
- friend:{value:'casual',options:[['casual','편한 반말'],['warm','차분한 반말'],['polite','조금 예의를 갖춘 존댓말']]},
- lover:{value:'warm',options:[['warm','차분하고 다정한 반말'],['casual','담백한 반말'],['polite','부드러운 존댓말']]},
- family:{value:'casual',options:[['casual','편한 반말'],['polite','조심스러운 존댓말'],['firm','단호한 반말']]},
- work:{value:'polite',options:[['polite','정중한 존댓말'],['brief','간결한 존댓말'],['warm','차분한 존댓말']]},
- social:{value:'polite',options:[['polite','부드러운 존댓말'],['casual','편한 반말'],['formal','격식 있는 존댓말']]}
-};
-function updateOptions(){
- var sel=document.getElementById('mmRelStyle');if(!sel)return;
- var state=window.MMApp&&window.MMApp.state;if(!state)return;
- var p=profiles[state.relation]||profiles.friend,current=sel.value;
- sel.innerHTML='';
- p.options.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];sel.appendChild(o)});
- var found=p.options.some(function(x){return x[0]===current});
- sel.value=found?current:p.value;
-}
-function calmGeneratedText(){
- var root=document.getElementById('resCards');if(!root)return;
- root.querySelectorAll('.tone .say').forEach(function(node){
-  node.textContent=node.textContent
-   .replace(/대신 다음엔 제가 먼저 연락드릴게요\./g,'이번에는 어렵다는 점을 이해해 주셨으면 해요.')
-   .replace(/대신 다음엔 내가 먼저 연락할게\./g,'이번에는 어렵다는 점을 이해해 줬으면 해.')
-   .replace(/대신 다음엔 제가 조금 더 보탤게요\./g,'이번에는 각자 부담할 수 있는 범위에서 정했으면 해요.')
-   .replace(/대신 다음엔 내가 조금 더 보탤게\./g,'이번에는 각자 부담할 수 있는 범위에서 정했으면 해.')
-   .replace(/그것만으로도 고마워요\./g,'가능한지 편하게 말씀해 주세요.')
-   .replace(/그것만으로도 고마워\./g,'가능한지 편하게 말해줘.')
-   .replace(/관계를 끊자는 게 아니라, 서로 편하게 지내고 싶어서요\./g,'내가 불편했던 부분을 알아주셨으면 해서요.')
-   .replace(/관계를 끊자는 게 아니라, 서로 편하게 지내고 싶어서\./g,'내가 불편했던 부분을 알아줬으면 해서.');
- });
-}
-function init(){
- var rel=document.getElementById('relChips');
- if(rel&&!rel.dataset.neutralTone){rel.dataset.neutralTone='1';rel.addEventListener('click',function(){setTimeout(updateOptions,0)})}
- var result=document.getElementById('resCards');
- if(result&&!result.dataset.calmTone){result.dataset.calmTone='1';new MutationObserver(calmGeneratedText).observe(result,{childList:true,subtree:true});calmGeneratedText()}
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-window.addEventListener('load',init);
-})();
-</script>
-
 </body>
 </html>
