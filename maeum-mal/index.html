@@ -1791,6 +1791,17 @@ var MM = (function () {
     if (state.tab !== 'home') { showTab('home'); return; }
   }
 
+  /* 안드로이드 웹뷰 래퍼가 부를 수 있는 뒤로가기 한 단계 처리. 처리했으면 true. */
+  function handleBack() {
+    var m = modalState();
+    if (m === 'import') { closeImport(); navBackSoft(); return true; }
+    if (m === 'retro') { closeRetro(); navBackSoft(); return true; }
+    if (m === 'modal') { closeModal(); navBackSoft(); return true; }
+    if (quickResultOpen()) { showQuickForm(); navBackSoft(); return true; }
+    if (state.tab !== 'home') { showTab('home'); navRewind(); return true; }
+    return false;
+  }
+
 
   /* ---------------- 공통 ---------------- */
   var toastTimer = null;
@@ -3353,7 +3364,10 @@ var MM = (function () {
     });
     $('mMore').addEventListener('click', function () {
       var href = this.getAttribute('data-href');
-      if (href) window.open(href, '_blank', 'noopener');
+      if (!href) return;
+      var w = null;
+      try { w = window.open(href, '_blank', 'noopener'); } catch (e) { w = null; }
+      if (!w) { try { location.href = href; } catch (e) {} }
     });
 
     $('rCancel').addEventListener('click', function () {
@@ -3439,7 +3453,7 @@ var MM = (function () {
   else init();
 
   window.MMApp = {
-    state: state, switchTab: switchTab, openRetro: openRetro,
+    state: state, switchTab: switchTab, openRetro: openRetro, handleBack: handleBack,
     _load: loadRecords, _renderLog: renderLog
   };
 })();
