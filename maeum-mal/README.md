@@ -55,11 +55,13 @@
 - `?` 안내 모달과 `내 기록` 탭에서 ① 저장하는 것 ② 저장 위치(기기 localStorage) ③ 외부 전송 없음(OCR도 기기 안) ④ 지우는 법을 안내해요.
 - 전문: <https://jinha4826-ship-it.github.io/sijakkong/maeum-mal/privacy.html>
 
-### 안드로이드·모바일 대응 (v3)
-- `history.pushState`/`popstate` 기반 뒤로가기: 모달·초안 결과·탭에서 뒤로가기 버튼을 눌러도 앱이 바로 종료되지 않고 한 단계씩 되돌아가요.
-- 320px~
- 작은 화면 레이아웃, 입력창 포커스 시 키보드가 가리지 않도록 `visualViewport` 기반 하단 여백과 `scrollIntoView` 처리.
-- `manifest.json` + 아이콘(192/512/maskable) + 서비스 워커(네트워크 우선, 오프라인 시 마지막 화면).
+### 네이티브 앱 셸 (v5)
+- `html, body`는 고정하고 `.app`을 `100dvh`로 두었어요. 상단 앱바(제목 · 위기 안전 안내 · 사용법)와 하단 4탭(홈 / 즉시 도움 / 표현 훈련 / 기록·백업)은 고정이고, 본문 뷰만 안에서 부드럽게 스크롤돼요(스크롤바 숨김, `overscroll-behavior: contain`).
+- 확인·안내는 모두 **드래그로 닫는 바텀시트**로 통일했어요(기록 삭제 확인 · 대화 이후 · JSON 가져오기 · 위기 안전 안내 · 사용법). 짧은 알림은 토스트로 떠요.
+- Safe Area(`env(safe-area-inset-top/bottom)`)를 반영하고, 버튼·칩·탭·카드에 눌림 피드백(`:active` scale), `user-select: none`(입력창은 제외), `touch-action: manipulation`을 적용했어요.
+- 입력창은 16px로 두어 iOS가 포커스 때 화면을 확대하지 않아요. 키보드가 올라오면 `visualViewport` 높이만큼 셸을 줄이고 탭바를 숨겨 입력창을 가리지 않아요.
+- `history.pushState`/`popstate` 기반 뒤로가기: 시트·초안 결과·탭에서 뒤로가기를 눌러도 앱이 바로 종료되지 않고 한 단계씩 되돌아가요(`window.MMApp.handleBack()`은 안드로이드 WebView 래퍼용).
+- 320px~ 작은 화면 레이아웃, `manifest.json` + 아이콘(192/512/maskable) + 서비스 워커(네트워크 우선, 오프라인 시 마지막 화면).
 
 ## 문장 엔진
 
