@@ -447,7 +447,8 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 .retro-box{margin-top:10px;background:#f4f8fa;border:1px solid #e2ebf1;border-radius:13px;padding:11px;font-size:11.5px;line-height:1.65;color:#5f7281}
 .retro-box b{display:block;font-size:10.5px;color:#7d909e;font-weight:850;margin-bottom:4px}
 .retro-box .memo{margin-top:5px;color:#4f6371;font-size:12px;line-height:1.6}
-.empty{text-align:center;padding:34px 16px;color:#b1a4b8;font-size:13px;line-height:1.8}
+.empty{color:#b1a4b8;font-size:13px;line-height:1.8}
+.reclist .empty{text-align:center;padding:34px 16px}
 .empty i{font-style:normal;font-size:32px;display:block;margin-bottom:8px;opacity:.75}
 
 /* ───────── 백업 ───────── */
@@ -528,6 +529,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 .grab{width:38px;height:5px;border-radius:999px;background:#e3d7e7;margin:4px auto 13px}
 .sheet h3{margin:0 0 7px;font-size:17px;font-weight:800;letter-spacing:-.5px;color:#372e40}
 .sheet p{margin:0 0 16px;font-size:13.5px;line-height:1.7;color:#81738c;white-space:pre-line}
+.sheet>.row2{position:sticky;bottom:0;z-index:1;margin-top:14px;padding-top:14px;padding-bottom:2px;background:linear-gradient(180deg,rgba(255,253,251,0),var(--paper) 26%)}
 .sheet .row2{margin-top:12px}
 .sheet .row2>*{min-width:0}
 .sheet button{border-radius:14px;padding:0 12px;font-size:15px;font-weight:800;min-height:50px;transition:transform .12s,filter .12s}
@@ -911,7 +913,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       <span>즉시 도움</span>
     </button>
     <button class="tab" data-tab="train" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7.2"/><path d="M12 14.2c0-3.4-2.8-6.2-6.2-6.2 0 3.4 2.8 6.2 6.2 6.2z"/><path d="M12 13.1c0-4 3.2-7.2 7.2-7.2 0 4-3.2 7.2-7.2 7.2z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 3.7C11 3.7 5.5 8.3 5.5 15.2c0 2.1.6 3.9.6 3.9s1.9.6 4 .6c7.1 0 10.3-5.9 10.3-16z"/><path d="M3.8 21c1.6-6.2 5.5-10.1 11.7-12.6"/></svg>
       <span>표현 훈련</span>
     </button>
     <button class="tab" data-tab="log" role="tab" aria-selected="false">
@@ -2278,7 +2280,7 @@ var MM = (function () {
       return;
     }
     var p = document.createElement('p');
-    p.style.cssText = 'margin:0 0 8px;font-size:10.5px;line-height:1.6;color:#877a94';
+    p.style.cssText = 'margin:0 0 8px;font-size:11.5px;line-height:1.6;color:#877a94';
     p.innerHTML = '<b>지금까지</b> 연습 ' + trainN + '번 · 스스로 완성 ' + selfN + '번 · 바로 말하기 ' + quickN + '번';
     box.appendChild(p);
     var row = document.createElement('div');
@@ -3003,7 +3005,7 @@ var MM = (function () {
       memo.className = 'memo';
       memo.textContent = '“' + withNext[0].retro.next + '”';
       var when = document.createElement('div');
-      when.style.cssText = 'margin-top:5px;font-size:9.5px;color:#93a4b0';
+      when.style.cssText = 'margin-top:5px;font-size:10.5px;color:#93a4b0';
       when.textContent = fmtDate(withNext[0].retro.at || withNext[0].at) + ' 기록에서';
       box.appendChild(b2); box.appendChild(memo); box.appendChild(when);
       latest.appendChild(box);
@@ -3014,7 +3016,7 @@ var MM = (function () {
     flow.innerHTML = '';
     if (!practices.length) {
       var e0 = document.createElement('p');
-      e0.style.cssText = 'margin:0;font-size:11px;color:#b1a4b8;line-height:1.7';
+      e0.style.cssText = 'margin:0;font-size:12px;color:#b1a4b8;line-height:1.7';
       e0.textContent = '훈련을 마치면 최근 흐름이 여기 쌓여요.';
       flow.appendChild(e0);
     } else {
@@ -3098,7 +3100,7 @@ var MM = (function () {
         var d = item('반복해서 나타난 감정',
           best.places.join(' · ') + ' 상황에서 ‘' + best.emo + '’ 감정이 ' + best.n + '번 기록됐어요.', true);
         var q = document.createElement('div');
-        q.style.cssText = 'font-size:10px;color:#a18eaa;margin-top:6px';
+        q.style.cssText = 'font-size:11px;color:#a18eaa;margin-top:6px';
         q.textContent = '이 관찰이 나와 맞나요?';
         d.appendChild(q);
         var fb = document.createElement('div');
@@ -3131,7 +3133,7 @@ var MM = (function () {
     ta.rows = 2;
     ta.placeholder = '예) 나는 내 사정을 묻지 않고 정할 때 서운함을 느낀다.';
     ta.style.minHeight = '58px';
-    ta.style.fontSize = '11.5px';
+    ta.style.fontSize = '16px';
     var saved = savedOwnPattern;
     if (!saved) { try { saved = localStorage.getItem(PATTERN_KEY) || ''; } catch (e) { saved = ''; } }
     if (saved) ta.value = saved;
@@ -3140,7 +3142,7 @@ var MM = (function () {
     save.className = 'pattern-save';
     save.textContent = '내 패턴 저장하기';
     var stt = document.createElement('p');
-    stt.style.cssText = 'margin:6px 0 0;font-size:9.5px;color:#a89cb0;line-height:1.5';
+    stt.style.cssText = 'margin:6px 0 0;font-size:10.5px;color:#a89cb0;line-height:1.5';
     stt.textContent = '내가 직접 적은 패턴은 이 기기에만 저장돼요.';
     save.addEventListener('click', function () {
       var v = ta.value.trim();
