@@ -272,6 +272,24 @@ textarea.field:focus,input.field:focus,.sel:focus{border-color:#c3aada;box-shado
 .tone.plain .badge{border-color:#e0d0ee;color:#6b5486}
 .tone.firm{background:#fdf6ef;border-color:#f0dccb}
 .tone.firm .badge{border-color:#eed9c5;color:#96694a}
+
+/* ✨ AI */
+.ai-box{margin:12px 0 4px;padding:14px;border-radius:20px;border:1px solid #e3d7f0;background:linear-gradient(180deg,#faf6ff,#f5effc);box-shadow:var(--shadow-s)}
+.ai-box .ai-lead{margin:0 0 9px;font-size:12.5px;font-weight:850;letter-spacing:-.2px;color:#6b5486}
+.ai-box .ai-note{margin:8px 2px 0;font-size:11px;line-height:1.62;color:#96869f;word-break:keep-all}
+.ai-btn{width:100%;border:0;border-radius:14px;min-height:46px;padding:0 12px;font-size:14px;font-weight:850;letter-spacing:-.2px;color:#fff;background:linear-gradient(135deg,#8a6cc0,#ab84d9);box-shadow:0 6px 16px rgba(138,108,192,.26);transition:transform .12s,opacity .15s}
+.ai-btn:active{transform:scale(.98)}
+.ai-btn[disabled]{opacity:.62;box-shadow:none}
+.ai-out{margin-top:11px;padding:13px;border-radius:16px;background:#fff;border:1px solid #e8dcf3}
+.ai-out .ai-tag{display:inline-block;font-size:10px;font-weight:850;letter-spacing:.3px;padding:4px 8px;border-radius:8px;background:#f3ecfb;color:#7a5fa6}
+.ai-out .ai-say{margin:9px 0 0;font-size:15.5px;line-height:1.8;letter-spacing:-.2px;color:#3c3147;white-space:pre-wrap;word-break:keep-all}
+.ai-out .ai-sub{margin-top:9px;padding-top:9px;border-top:1px dashed #efe6f0;font-size:11.5px;line-height:1.62;color:#9b8ea6;word-break:keep-all}
+.ai-out .acts{display:flex;gap:7px;margin-top:10px}
+.ai-out .acts button{flex:1;border-radius:12px;padding:0 9px;font-size:13px;font-weight:800;min-height:44px;background:#fff;border:1px solid #e3d7f0;color:#6d5789;transition:transform .12s}
+.ai-out .acts button:active{transform:scale(.96)}
+.ai-out .acts button.done{background:#e6f1e8;border-color:#dbe8dc;color:#4d7357}
+.ai-status{margin:9px 2px 0;font-size:11.5px;line-height:1.62;color:#8a7a99;word-break:keep-all}
+.ai-status.warn{color:#a4744f}
 .metabar{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 10px}
 .metabar span{font-size:11px;font-weight:800;color:#7a668b;background:#fff;border:1px solid #ece1ef;border-radius:999px;padding:5px 10px}
 .reshead{display:flex;align-items:center;gap:10px;margin:10px 0 8px}
@@ -657,7 +675,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
           </div>
         </div>
         <button class="primary" id="qMake">초안 만들기 →</button>
-        <p class="tiny">🔒 입력한 내용은 기기 안에서만 처리돼요. 저장은 직접 누를 때만.</p>
+        <p class="tiny">🔒 입력한 내용은 기기 안에서 처리돼요. 저장은 직접 누를 때만. AI는 버튼을 누를 때만 불러요.</p>
       </div>
 
       <div id="qResult" class="hide">
@@ -669,6 +687,23 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
           </div>
         </div>
         <div class="metabar" id="qMeta"></div>
+
+        <div class="ai-box" id="qAiBox">
+          <p class="ai-lead">✨ AI로 내 상황에 맞게 다듬기</p>
+          <button type="button" class="ai-btn" id="qAiBtn">✨ AI 다듬기</button>
+          <p class="ai-note">이 버튼을 누를 때만 위에 적은 내용이 암호화되어 AI(Google Gemini)로 전송돼요. 마음말 중계 서버에는 저장되지 않아요. 이름·연락처 같은 개인정보는 넣지 마세요.</p>
+          <div class="ai-out hide" id="qAiOut">
+            <span class="ai-tag">AI 다듬기 · 내 맥락 반영</span>
+            <div class="ai-say" id="qAiSay"></div>
+            <div class="acts">
+              <button type="button" id="qAiCopy">복사</button>
+              <button type="button" id="qAiSave">저장</button>
+            </div>
+            <div class="ai-sub">앱에서 만든 세 초안은 그대로 있어요. 마음에 드는 문장을 골라 쓰세요.</div>
+          </div>
+          <p class="ai-status hide" id="qAiStatus" aria-live="polite"></p>
+        </div>
+
         <div id="qCards"></div>
         <div class="row2">
           <button class="primary small" id="qSaveAll">세 문장 모두 저장</button>
@@ -812,6 +847,23 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
         <div class="done-quote" id="doneQuote"></div>
         <div class="done-meta" id="doneMeta"></div>
         <div class="review-tip" id="doneTip"></div>
+
+        <div class="ai-box" id="tAiBox">
+          <p class="ai-lead">✨ AI 코치에게 한 줄 피드백 받기</p>
+          <button type="button" class="ai-btn" id="tAiBtn">✨ AI 코치 한 줄 피드백</button>
+          <p class="ai-note">내가 쓴 문장과 고른 감정·욕구만 보내요. 점수는 매기지 않고, 더 자연스러운 대안 하나를 제안해요. 이름·연락처 같은 개인정보는 넣지 마세요.</p>
+          <div class="ai-out hide" id="tAiOut">
+            <span class="ai-tag">AI 코치</span>
+            <div class="ai-say" id="tAiFeedback"></div>
+            <div class="hide" id="tAiAltWrap">
+              <div class="ai-sub" style="border:0;padding-top:10px">이렇게 말해볼 수도 있어요</div>
+              <div class="ai-say" id="tAiAlt" style="font-size:15px"></div>
+              <div class="acts"><button type="button" id="tAiCopy">대안 복사</button></div>
+            </div>
+          </div>
+          <p class="ai-status hide" id="tAiStatus" aria-live="polite"></p>
+        </div>
+
         <button class="primary" id="btnOneMore">한 번 더 연습하기</button>
         <button class="primary ghost small" id="btnGoLog" style="margin-top:8px">내 기록 보기</button>
       </section>
@@ -837,7 +889,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
         <ul>
           <li><b>저장하는 것</b> — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 남긴 회고</li>
           <li><b>저장 위치</b> — 이 기기 브라우저의 저장 공간(localStorage)에만. 계정도, 서버도 없어요.</li>
-          <li><b>외부 전송</b> — 없어요. 대화 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구와 언어 데이터를 내려받아요. 캡처 이미지는 어디로도 보내지 않아요.</li>
+          <li><b>외부 전송</b> — 기본은 없어요. 다만 <b>✨ AI 다듬기</b>·<b>✨ AI 코치</b> 버튼을 내가 누를 때만, 그 화면에 적힌 내용이 암호화되어 AI 제공자(Google Gemini)로 전달되고 결과만 돌아와요. 중계 서버는 내용을 저장하지 않으며, 무료 등급이라 보낸 내용이 Google 서비스 개선에 쓰일 수 있어요. 버튼을 누르지 않으면 아무것도 전송되지 않고, 대화 캡처 글자 읽기(OCR)는 기기 안에서 처리해요.</li>
           <li><b>지우는 법</b> — 기록 카드의 <b>삭제</b>, 아래의 <b>기록 모두 지우기</b>, 또는 앱을 삭제하면 바로 사라져요.</li>
         </ul>
         <a class="policy-link" href="./privacy.html" target="_blank" rel="noopener">개인정보처리방침 전문 보기 →</a>
@@ -895,7 +947,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
 
       <a class="series-card" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">
         <span class="ico" aria-hidden="true">🌱</span>
-        <span class="txt"><b>콩이 마음 시리즈</b><small>생각주차장 · 마음의 빙산 · 마음말 · 시작콩</small></span>
+        <span class="txt"><b>마음 루틴</b><small>생각주차장 · 마음의 빙산 · 마음말 · 시작콩</small></span>
         <span class="go">전체 보기 ↗</span>
       </a>
 
@@ -942,7 +994,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
         <a class="tel" href="tel:119"><b>119</b><span>응급</span></a>
         <a class="tel" href="tel:112"><b>112</b><span>경찰</span></a>
       </div>
-      <a class="series-mini" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">🌱 콩이 마음 시리즈 전체 보기 ↗</a>
+      <a class="series-mini" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">🌱 마음 루틴 전체 보기 ↗</a>
     </div>
     <div class="row2">
       <button type="button" class="no" id="mNo" data-dismiss>취소</button>
@@ -993,7 +1045,7 @@ mark.b.req{background:#fce4cb;color:#8d5a2c}
       <a class="tel" href="tel:112"><b>112</b><span>경찰 · 급박한 상황</span></a>
     </div>
     <p class="safety-fine" style="margin:14px 0 0;font-size:11.5px;color:#a08a7f;line-height:1.6">마음말은 마음을 꺼내 말하는 연습을 돕는 도구예요. 전문 의료·상담을 대신하지 않아요.</p>
-    <a class="series-mini" style="display:block;margin-top:12px;font-size:12px;font-weight:850;color:#7f6699;text-decoration:none;text-align:center;background:#f1eaf8;border-radius:12px;padding:11px" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">🌱 콩이 마음 시리즈 전체 보기 ↗</a>
+    <a class="series-mini" style="display:block;margin-top:12px;font-size:12px;font-weight:850;color:#7f6699;text-decoration:none;text-align:center;background:#f1eaf8;border-radius:12px;padding:11px" href="https://jinha4826-ship-it.github.io/sijakkong/kongi/">🌱 마음 루틴 전체 보기 ↗</a>
     <button type="button" class="sheet-close" id="sClose" data-dismiss>닫기</button>
   </div>
 </div>
@@ -2294,6 +2346,71 @@ var MM = (function () {
     box.appendChild(row);
   }
 
+  /* ---------------- ✨ AI (Gemini 프록시) ---------------- */
+  var AI_WORKER = 'https://maeum-bingsan-ai.cba4826.workers.dev/';
+  var AI_DAY_KEY = 'maeummal.ai.daily.v1';
+  var AI_DAY_LIMIT = 30;
+
+  function aiDaily() {
+    var today = new Date().toISOString().slice(0, 10);
+    var obj = null;
+    try { obj = JSON.parse(lsGet(AI_DAY_KEY) || 'null'); } catch (e) { obj = null; }
+    if (!obj || obj.d !== today || typeof obj.n !== 'number') return { d: today, n: 0 };
+    return obj;
+  }
+  function aiBump() {
+    var c = aiDaily();
+    c.n += 1;
+    lsSet(AI_DAY_KEY, JSON.stringify(c));
+  }
+
+  /* 버튼을 눌렀을 때만 호출한다. 결과: {ok:true, data} | {ok:false, reason} */
+  function aiAsk(payload) {
+    if (aiDaily().n >= AI_DAY_LIMIT) return Promise.resolve({ ok: false, reason: 'limit' });
+    aiBump();
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = null;
+    var opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    };
+    if (ctrl) { opts.signal = ctrl.signal; timer = setTimeout(function () { ctrl.abort(); }, 15000); }
+    return fetch(AI_WORKER, opts).then(function (r) {
+      if (!r.ok) throw new Error('http_' + r.status);
+      return r.json();
+    }).then(function (j) {
+      if (timer) clearTimeout(timer);
+      if (!j || j.fallback || j.error) return { ok: false, reason: 'fallback' };
+      return { ok: true, data: j };
+    })['catch'](function (e) {
+      if (timer) clearTimeout(timer);
+      return { ok: false, reason: (e && e.name === 'AbortError') ? 'timeout' : 'network' };
+    });
+  }
+
+  var AI_DRAFT_FAIL = {
+    limit: '오늘은 AI 다듬기를 충분히 썼어요. 내일 다시 쓸 수 있어요. 지금은 앱 안에서 만든 초안을 그대로 써 주세요.',
+    timeout: 'AI 응답이 조금 늦어요. 앱 안에서 만든 초안을 그대로 써 주세요.',
+    network: '지금은 연결이 어려워 AI를 부르지 못했어요. 앱 안에서 만든 초안을 그대로 써 주세요.',
+    fallback: 'AI가 지금은 문장을 다듬지 못했어요. 앱 안에서 만든 초안을 그대로 써 주세요.'
+  };
+  var AI_COACH_FAIL = {
+    limit: '오늘은 AI 코치를 충분히 불렀어요. 내일 다시 만나요. 쓴 문장은 그대로 내 기록에 남아 있어요.',
+    timeout: 'AI 코치가 조금 늦어요. 잠시 뒤 다시 불러도 돼요. 쓴 문장은 그대로 내 기록에 남아 있어요.',
+    network: '지금은 연결이 어려워 AI 코치를 부르지 못했어요. 쓴 문장은 그대로 내 기록에 남아 있어요.',
+    fallback: 'AI 코치가 지금은 답하지 못했어요. 쓴 문장은 그대로 내 기록에 남아 있어요.'
+  };
+
+  function aiStatus(id, msg, warn) {
+    var el = $(id);
+    if (!el) return;
+    if (!msg) { el.classList.add('hide'); el.textContent = ''; return; }
+    el.classList.remove('hide');
+    el.classList.toggle('warn', !!warn);
+    el.textContent = msg;
+  }
+
   /* ---------------- 바로 말하기 ---------------- */
   var Q = state.quick;
 
@@ -2407,6 +2524,7 @@ var MM = (function () {
       box.appendChild(badge); box.appendChild(h); box.appendChild(say); box.appendChild(why); box.appendChild(acts);
       wrap.appendChild(box);
     });
+    resetQuickAi();
   }
 
   function quickRecord(card) {
@@ -2449,6 +2567,77 @@ var MM = (function () {
     });
     if (!added) { toast('이미 저장한 문장이에요'); return; }
     if (persist(list)) toast(added + '문장을 저장했어요');
+  }
+
+  /* ---------------- ✨ AI 다듬기 (바로 말하기) ---------------- */
+  var QA = { busy: false };
+
+  function quickAiPayload() {
+    var emo = emoById(Q.emotion);
+    var rel = MM.REL[Q.relation];
+    var sit = MM.SIT[Q.situation];
+    return {
+      mode: 'mm_draft',
+      lang: 'ko',
+      relation: rel ? rel.lab : '',
+      tone: styleLabel($('qStyle')),
+      situation: sit ? sit.lab : '',
+      raw: Q.text || '',
+      sentence: Q.text || '',
+      feelings: emo ? emo.lab : ''
+    };
+  }
+
+  function resetQuickAi() {
+    QA.busy = false;
+    $('qAiBtn').disabled = false;
+    $('qAiBtn').textContent = '✨ AI 다듬기';
+    $('qAiOut').classList.add('hide');
+    $('qAiSay').textContent = '';
+    aiStatus('qAiStatus', '');
+  }
+
+  function showQuickAi(text) {
+    $('qAiSay').textContent = text;
+    var b = $('qAiSave');
+    b.classList.remove('done');
+    b.textContent = '저장';
+    $('qAiOut').classList.remove('hide');
+  }
+
+  function askQuickAi() {
+    if (QA.busy) return;
+    quickBodyText();
+    if (!Q.text.trim()) {
+      aiStatus('qAiStatus', '속마음을 한 줄이라도 적으면 AI가 내 상황에 더 맞게 다듬어요.', true);
+      return;
+    }
+    QA.busy = true;
+    $('qAiBtn').disabled = true;
+    $('qAiBtn').textContent = '✨ 다듬는 중…';
+    aiStatus('qAiStatus', 'AI가 내 상황에 맞게 다듬고 있어요…');
+    aiAsk(quickAiPayload()).then(function (res) {
+      QA.busy = false;
+      $('qAiBtn').disabled = false;
+      $('qAiBtn').textContent = '✨ AI로 다시 다듬기';
+      var sentence = (res.ok && res.data) ? String(res.data.sentence || '').trim() : '';
+      if (sentence) {
+        aiStatus('qAiStatus', '');
+        showQuickAi(sentence);
+      } else {
+        aiStatus('qAiStatus', AI_DRAFT_FAIL[res.reason] || AI_DRAFT_FAIL.network, true);
+      }
+    });
+  }
+
+  function quickAiCard() {
+    return {
+      key: 'ai',
+      badge: 'AI 다듬기',
+      title: '내 상황에 맞춘 문장',
+      text: $('qAiSay').textContent,
+      why: 'AI가 고른 관계·말투·감정을 반영해 다듬었어요.'
+    };
   }
 
   /* ---------------- 연습 ---------------- */
@@ -2863,6 +3052,74 @@ var MM = (function () {
     l2.style.marginTop = '5px';
     l2.textContent = '전달한 뒤에 내 기록에서 ‘대화 이후’를 남겨보면, 무엇이 잘 통했는지 쌓여요.';
     tip.appendChild(l1); tip.appendChild(l2);
+
+    lastDone = rec;
+    paintTrainAi(rec);
+  }
+
+  /* ---------------- ✨ AI 코치 (표현 훈련) ---------------- */
+  var TA = { busy: false };
+  var lastDone = null;
+
+  function trainAiPayload(rec) {
+    return {
+      mode: 'mm_coach',
+      lang: 'ko',
+      relation: rec.relation || '',
+      tone: rec.tone || '',
+      situation: rec.situation || '',
+      fact: rec.fact || '',
+      guess: rec.guess || '',
+      feelings: rec.emotion || '',
+      want: rec.want || (rec.needs || []).join(', '),
+      sentence: rec.sentence || ''
+    };
+  }
+
+  function paintTrainAi(rec) {
+    var ai = rec && rec.ai;
+    var has = !!(ai && ai.feedback);
+    $('tAiFeedback').textContent = has ? ai.feedback : '';
+    var alt = has ? String(ai.alternative || '') : '';
+    $('tAiAlt').textContent = alt;
+    $('tAiAltWrap').classList.toggle('hide', !alt);
+    $('tAiOut').classList.toggle('hide', !has);
+    $('tAiBtn').disabled = false;
+    $('tAiBtn').textContent = has ? '✨ AI 코치에게 다시 묻기' : '✨ AI 코치 한 줄 피드백';
+    aiStatus('tAiStatus', '');
+  }
+
+  function attachAiToRecord(id, ai) {
+    var list = loadRecords();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) { list[i].ai = ai; persist(list); break; }
+    }
+    if (lastDone && lastDone.id === id) lastDone.ai = ai;
+  }
+
+  function askTrainAi() {
+    if (TA.busy || !lastDone) return;
+    TA.busy = true;
+    $('tAiBtn').disabled = true;
+    $('tAiBtn').textContent = '✨ 코치가 읽고 있어요…';
+    aiStatus('tAiStatus', '내 문장을 AI 코치가 읽고 있어요…');
+    aiAsk(trainAiPayload(lastDone)).then(function (res) {
+      TA.busy = false;
+      $('tAiBtn').disabled = false;
+      $('tAiBtn').textContent = '✨ AI 코치에게 다시 묻기';
+      var feedback = (res.ok && res.data) ? String(res.data.feedback || '').trim() : '';
+      if (!feedback) {
+        aiStatus('tAiStatus', AI_COACH_FAIL[res.reason] || AI_COACH_FAIL.network, true);
+        return;
+      }
+      var ai = {
+        feedback: feedback,
+        alternative: String(res.data.alternative || '').trim(),
+        at: new Date().toISOString()
+      };
+      attachAiToRecord(lastDone.id, ai);
+      paintTrainAi(lastDone);
+    });
   }
 
   function resetTrain(keepMeta) {
@@ -3633,6 +3890,20 @@ var MM = (function () {
     });
     $('qSaveAll').addEventListener('click', saveQuickAll);
     $('qToTrain').addEventListener('click', toTrainFromQuick);
+    $('qAiBtn').addEventListener('click', askQuickAi);
+    $('qAiCopy').addEventListener('click', function () {
+      var t = $('qAiSay').textContent;
+      if (t) copyText(t, $('qAiCopy'));
+    });
+    $('qAiSave').addEventListener('click', function () {
+      if (!$('qAiSay').textContent.trim()) return;
+      saveQuick(quickAiCard(), $('qAiSave'));
+    });
+    $('tAiBtn').addEventListener('click', askTrainAi);
+    $('tAiCopy').addEventListener('click', function () {
+      var t = $('tAiAlt').textContent;
+      if (t) copyText(t, $('tAiCopy'));
+    });
     $('draftClearQ').addEventListener('click', function () {
       Q.emotion = null; Q.text = ''; Q.result = null;
       Q.relation = 'friend'; Q.situation = 'refuse'; Q.style = '';
@@ -3790,7 +4061,7 @@ var MM = (function () {
 
     $('btnAbout').addEventListener('click', function () {
       openModal('마음말은 이렇게 써요',
-        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요.\n\n🔐 개인정보\n① 저장하는 것 — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 회고\n② 저장 위치 — 이 기기 브라우저 저장 공간(localStorage)에만. 계정도 서버도 없어요.\n③ 외부 전송 — 없어요. 캡처 글자 읽기(OCR)도 기기 안에서 처리하고, 처음 한 번만 인식 도구를 내려받아요. 이미지는 보내지 않아요.\n④ 지우는 법 — 기록 카드의 삭제 / 기록 모두 지우기 / 앱 삭제\n\n🆘 마음말은 전문 의료·상담을 대신하지 않아요. 많이 힘든 날엔 아래 번호로 바로 전화해도 괜찮아요.',
+        '💬 지금 바로 말해야 해요\n상황과 감정을 고르면 바로 보낼 수 있는 초안 3개를 만들어요. 고쳐 쓰고 복사하면 끝.\n내 상황에 더 맞는 문장이 필요하면 [✨ AI 다듬기]를 눌러 보세요. 앱 안에서 만든 초안은 그대로 남아 있어요.\n\n🌱 내 마음을 연습하고 싶어요\n① 있었던 일을 적어요.\n② 사실과 해석을 나눠요 — 해석은 따로 두고, 본 것만 남겨요.\n③ 감정과 그 아래 욕구를 찾아요.\n④ 뼈대(사실 · 감정 · 욕구 · 바라는 것)를 보고 내 말로 한 문장을 써요.\n⑤ 채점 대신 스스로 점검 질문으로 확인하고, ‘내 마음과 맞아요’를 누르면 저장돼요. 예시는 막힐 때만 열 수 있어요.\n연습을 마치면 [✨ AI 코치]가 한 줄 피드백과 대안 하나를 제안해요. 점수는 매기지 않아요.\n\n전달한 뒤에는 기록 카드에서 ‘대화 이후’를 남겨보세요.\n\n🔐 개인정보\n① 저장하는 것 — 내가 쓴 문장, 고른 감정·욕구, 대화 이후 회고\n② 저장 위치 — 이 기기 브라우저 저장 공간(localStorage)에만. 계정도 서버도 없어요.\n③ 외부 전송 — ✨ AI 버튼을 내가 누를 때만, 그 화면의 내용이 암호화(HTTPS)되어 AI 제공자(Google Gemini)로 전달돼요. 중계 서버는 저장하지 않아요. 캡처 글자 읽기(OCR)는 기기 안에서 처리해요.\n④ 지우는 법 — 기록 카드의 삭제 / 기록 모두 지우기 / 앱 삭제\n\n🆘 마음말은 전문 의료·상담을 대신하지 않아요. 많이 힘든 날엔 아래 번호로 바로 전화해도 괜찮아요.',
         '알겠어요', null, true, { label: '🔐 개인정보처리방침 보기', href: './privacy.html' });
       $('mSafety').classList.remove('hide');
     });
