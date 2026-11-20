@@ -2572,7 +2572,7 @@ var MM = (function () {
         if (rec.retro.next) {
           var memo = document.createElement('div');
           memo.className = 'memo';
-          memo.textContent = '다음엔: ' + rec.retro.next;
+          memo.textContent = rec.retro.next;
           rb.appendChild(memo);
         }
         card.appendChild(rb);
