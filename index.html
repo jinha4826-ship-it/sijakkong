@@ -261,7 +261,7 @@ header{height:76px;display:flex;align-items:center;justify-content:space-between
 body.ev-open{overflow:hidden}
 .ev-modal{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center}
 .ev-backdrop{position:absolute;inset:0;background:rgba(62,43,76,.44)}
-.ev-sheet{position:relative;width:100%;max-width:480px;max-height:90vh;background:#fffdfe;border-radius:26px 26px 0 0;box-shadow:0 -14px 44px rgba(90,60,110,.28);display:flex;flex-direction:column;animation:evUp .26s ease;overflow:hidden}
+.ev-sheet{position:relative;width:100%;max-width:480px;max-height:90vh;max-height:90dvh;background:#fffdfe;border-radius:26px 26px 0 0;box-shadow:0 -14px 44px rgba(90,60,110,.28);display:flex;flex-direction:column;animation:evUp .26s ease;overflow:hidden}
 @keyframes evUp{from{transform:translateY(26px);opacity:.55}to{transform:none;opacity:1}}
 .ev-head{padding:14px 18px 11px;border-bottom:1px solid #f2e8f4;flex-shrink:0;position:relative}
 .ev-head-line{display:flex;align-items:flex-start;gap:9px}
@@ -321,8 +321,60 @@ body.ev-open{overflow:hidden}
 .pat-empty span{display:block;font-size:10.5px;color:#a79aae;font-weight:750;line-height:1.6;margin-top:6px;word-break:keep-all}
 .pat-note{font-size:9px;color:#b1a3bb;margin-top:9px;line-height:1.55;word-break:keep-all}
 @media(max-width:400px){.pat-v{font-size:12.5px}.ev-body{font-size:11px}.ev-card h3{font-size:12.5px}}
+/* ── 백업·복원 (v18) ── */
+.bk-row{display:flex;gap:8px;margin-top:12px}
+.bk-btn{flex:1;min-height:46px;border-radius:15px;background:#f7f1fd;border:1.5px solid #e9dbf6;color:#6b4a8c;font-size:12.5px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:-.3px;padding:10px 8px}
+.bk-btn.imp{background:#f3fbf5;border-color:#dcefe1;color:#41694f}
+.bk-btn:active{transform:scale(.985)}
+.bk-ico{font-size:15px;line-height:1}
+.bk-msg{font-size:10.5px;line-height:1.55;font-weight:800;color:#7a4ea3;margin-top:9px;word-break:keep-all}
+.bk-msg:empty{display:none}
+.bk-msg.ok{color:#3f7a55}
+.bk-msg.err{color:#b4455c}
+.bk-body{display:flex;flex-direction:column;gap:10px}
+.bk-file{display:flex;align-items:center;gap:10px;border:1px solid #eee0f6;background:#fdfaff;border-radius:16px;padding:11px 12px}
+.bk-file-ico{width:34px;height:34px;border-radius:11px;background:#efe3fa;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+.bk-file-main{min-width:0;flex:1}
+.bk-file-main strong{display:block;font-size:12px;font-weight:900;color:#553f6b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bk-file-main small{display:block;font-size:10px;color:#a294ab;font-weight:750;margin-top:3px}
+.bk-stats{display:flex;gap:6px;flex-wrap:wrap}
+.bk-stat{font-size:10px;font-weight:850;color:#6b5480;background:#f6eefb;border:1px solid #ece0f8;border-radius:11px;padding:5px 9px}
+.bk-opts{display:flex;flex-direction:column;gap:7px}
+.bk-opt{display:flex;align-items:flex-start;gap:9px;text-align:left;background:#fffdfe;border:1.5px solid #eee3f4;border-radius:16px;padding:11px 12px;min-height:56px}
+.bk-opt.on{border-color:#b58bd7;background:#fbf5ff}
+.bk-radio{width:17px;height:17px;border-radius:50%;border:2px solid #d3c0e2;flex-shrink:0;margin-top:1px;position:relative}
+.bk-opt.on .bk-radio{border-color:#a77bc9}
+.bk-opt.on .bk-radio:after{content:'';position:absolute;inset:3px;border-radius:50%;background:#a77bc9}
+.bk-opt-txt{min-width:0}
+.bk-opt-txt strong{display:block;font-size:12.5px;font-weight:900;color:#553f6b}
+.bk-opt-txt small{display:block;font-size:10.5px;line-height:1.55;color:#9a8ba4;font-weight:750;margin-top:3px;word-break:keep-all}
+.bk-warn{font-size:10.5px;line-height:1.6;font-weight:800;color:#a8404f;background:#fff3f4;border:1px solid #f6d9dd;border-radius:13px;padding:9px 11px;word-break:keep-all}
+.bk-foot{display:flex;gap:8px}
+.bk-cancel,.bk-apply{flex:1;border-radius:20px;padding:13px;font-size:13px;font-weight:900;min-height:46px}
+.bk-cancel{background:#f4edf8;color:#7b6888}
+.bk-apply{background:linear-gradient(100deg,#b58bd7,#d2a7dc);color:#fff;box-shadow:0 6px 14px #c7a3dc55}
+.bk-apply:disabled{opacity:.45;box-shadow:none}
+.bk-apply:active,.bk-cancel:active{transform:scale(.985)}
 .footer{text-align:center;color:#b0a4b4;font-size:10px;padding:22px 0 8px}
 @media(min-width:520px){.app{padding-top:18px}.hero{padding-top:25px}}
+/* ── 모바일 390px·터치 보정 (v18) ── */
+html{-webkit-text-size-adjust:100%}
+button{touch-action:manipulation}
+.app{min-height:100vh;min-height:100dvh}
+@media(max-width:480px){
+  .field{font-size:16px}
+  .category-field{font-size:16px;padding:12px 13px}
+  .rename-input{font-size:16px;width:132px}
+  .chip{min-height:38px;padding:9px 13px}
+  .emo-chip{min-height:36px}
+  .back{width:40px;height:40px}
+  .soft{min-height:38px}
+  .task-card button.icon-btn{width:34px;height:34px}
+  .task-card button.go-btn{white-space:nowrap;padding:8px 11px}
+  .coach-refresh{min-height:34px}
+  .ev-close{width:34px;height:34px}
+  .bean-pill,.hero-dress-btn{min-height:34px}
+}
 </style>
 </head>
 <body>
@@ -407,7 +459,7 @@ body.ev-open{overflow:hidden}
 
   <section class="panel ev-teaser">
     <button type="button" class="ev-teaser-btn" id="openEvidenceBtn" aria-haspopup="dialog">
-      <span class="ev-teaser-ico" aria-hidden="true">🧠</span>
+      <span class="ev-teaser-ico" aria-hidden="true">💡</span>
       <span class="ev-teaser-txt">
         <strong>왜 '딱 5분, 첫 행동 하나'가 통할까?</strong>
         <small>임상·심리학 근거 4가지 · 내 기록은 어디에 저장될까</small>
@@ -614,9 +666,18 @@ body.ev-open{overflow:hidden}
   </div>
   <div class="panel">
     <div class="section-title">
-      <span>최근 기록</span>
-      <button type="button" class="soft" id="exportBtn">기록 백업</button>
+      <span>💾 기록 백업 · 복원</span>
+      <span class="pat-range">JSON</span>
     </div>
+    <div class="hint">기록은 이 브라우저에만 저장돼. 기기를 바꾸거나 브라우저 기록을 지우기 전에 파일로 백업해 둬.</div>
+    <div class="bk-row">
+      <button type="button" class="bk-btn" id="exportBtn"><span class="bk-ico">💾</span>내보내기</button>
+      <button type="button" class="bk-btn imp" id="importBtn"><span class="bk-ico">📥</span>가져오기</button>
+    </div>
+    <div class="bk-msg" id="backupMsg" role="status" aria-live="polite"></div>
+  </div>
+  <div class="panel">
+    <div class="section-title">최근 기록</div>
     <div id="historyList"></div>
   </div>
   <div class="tabs">
@@ -626,7 +687,7 @@ body.ev-open{overflow:hidden}
   </div>
 </section>
 
-<div class="footer">시작콩 v17 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
+<div class="footer">시작콩 v18 · 멈춰도 괜찮아, 다시 시작하면 돼 🌱</div>
 </main>
 
 <div class="ev-modal hidden" id="evModal" role="dialog" aria-modal="true" aria-labelledby="evTitle" aria-hidden="true">
@@ -634,7 +695,7 @@ body.ev-open{overflow:hidden}
   <div class="ev-sheet">
     <div class="ev-head">
       <div class="ev-head-line">
-        <h2 id="evTitle">🧠 왜 '딱 5분, 첫 행동 하나'가 통할까?</h2>
+        <h2 id="evTitle">💡 왜 '딱 5분, 첫 행동 하나'가 통할까?</h2>
         <button type="button" class="ev-close" id="evClose" aria-label="닫기">✕</button>
       </div>
       <div class="ev-sub">심리학·임상 연구에서 확인된 4가지 원리와, 기록이 저장되는 방식</div>
@@ -669,8 +730,8 @@ body.ev-open{overflow:hidden}
           <ul class="ev-list">
             <li><b>저장</b> — 일기·완료 기록·감정·꾸미기 아이템·콩은 모두 <b>이 브라우저의 localStorage</b>에만 있고, 앱 서버로 올라가지 않아요.</li>
             <li><b>전송</b> — AI 기능을 쓸 때는 과제명·감정·분류·연속일·시간대처럼 <b>한 줄을 만드는 데 필요한 값만</b>. 계정 정보도 광고 식별자도 보내지 않아요.</li>
-            <li><b>보관</b> — 요청은 Cloudflare Worker를 거쳐 Gemini API로 전달되고, 시작콩은 <b>별도 서버 DB를 두지 않아</b> 전송한 값이 앱 쪽에 쌓이지 않습니다. AI가 연결되지 않으면 아무것도 보내지 않아요.</li>
-            <li><b>내보내기</b> — 브라우저 기록을 지우면 데이터도 함께 사라지고, 기록 탭의 <b>'기록 백업'</b>으로 언제든 JSON으로 꺼낼 수 있어요.</li>
+            <li><b>보관</b> — 요청은 Cloudflare Worker를 거쳐 Gemini API로 전달되고, 시작콩은 <b>별도 서버 DB를 두지 않아</b> 전송한 값이 앱 쪽에 쌓이지 않습니다. AI 응답이 느리거나 실패하면 기기 기록만으로 바로 다음 문장을 만들어요.</li>
+            <li><b>백업·복원</b> — 브라우저 기록을 지우면 데이터도 함께 사라지고, 기록 탭의 <b>'기록 백업'</b>에서 JSON으로 꺼내 둘 수 있어요. 새 기기에서는 같은 파일을 <b>가져오기</b>로 되살릴 수 있고, 서버를 거치지 않아요.</li>
           </ul>
         </div>
         <div class="ev-src"><b>저장 위치</b> 브라우저 localStorage(<code>startkong_v3</code>) · 서버 전송은 AI 요청의 과제·감정·분류·연속일·시간대 값으로 한정</div>
@@ -681,6 +742,42 @@ body.ev-open{overflow:hidden}
     <div class="ev-foot"><button type="button" class="ev-done" id="evDone">확인했어요</button></div>
   </div>
 </div>
+
+<div class="ev-modal hidden" id="bkModal" role="dialog" aria-modal="true" aria-labelledby="bkTitle" aria-hidden="true">
+  <div class="ev-backdrop" id="bkBackdrop"></div>
+  <div class="ev-sheet">
+    <div class="ev-head">
+      <div class="ev-head-line">
+        <h2 id="bkTitle">📥 백업 파일 확인</h2>
+        <button type="button" class="ev-close" id="bkClose" aria-label="닫기">✕</button>
+      </div>
+      <div class="ev-sub">파일을 확인했어. 불러오는 방법을 골라줘.</div>
+    </div>
+    <div class="ev-scroll bk-body">
+      <div class="bk-file">
+        <span class="bk-file-ico" aria-hidden="true">📄</span>
+        <div class="bk-file-main"><strong id="bkFileName">backup.json</strong><small id="bkFileMeta"></small></div>
+      </div>
+      <div class="bk-stats" id="bkStats"></div>
+      <div class="bk-opts" role="radiogroup" aria-label="불러오는 방법">
+        <button type="button" class="bk-opt on" id="bkMerge" role="radio" aria-checked="true">
+          <span class="bk-radio" aria-hidden="true"></span>
+          <span class="bk-opt-txt"><strong>기존 기록에 합치기</strong><small>같은 기록은 한 번만 남기고, 지금 기록은 그대로 둬.</small></span>
+        </button>
+        <button type="button" class="bk-opt" id="bkReplace" role="radio" aria-checked="false">
+          <span class="bk-radio" aria-hidden="true"></span>
+          <span class="bk-opt-txt"><strong>백업으로 덮어쓰기</strong><small>지금 기기의 기록을 백업 내용으로 바꿔.</small></span>
+        </button>
+      </div>
+      <div class="bk-warn hidden" id="bkWarn">⚠️ 덮어쓰면 지금 기기의 기록 <b id="bkNowCount">0</b>건이 사라져. 되돌릴 수 없어.</div>
+    </div>
+    <div class="ev-foot bk-foot">
+      <button type="button" class="bk-cancel" id="bkCancel">취소</button>
+      <button type="button" class="bk-apply" id="bkApply">불러오기</button>
+    </div>
+  </div>
+</div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
 
 <script>
 const KEY='startkong_v3';
@@ -1380,6 +1477,7 @@ function renderClosetGroup(type,gridId){
 
 function render(){
   applyMascotOutfit();
+  renderCategories();
   document.getElementById('beanCountTop').textContent=data.beans;
   document.getElementById('beanCountHero').textContent=data.beans;
   document.getElementById('beanCountCloset').textContent=data.beans;
@@ -1649,8 +1747,8 @@ function resetTimerButtons(){
 
 /* ── 완료 직후: AI '다음 5분' 1줄 코칭 ── */
 const COACH_ENDPOINT='https://maeum-bingsan-ai.cba4826.workers.dev';
-const COACH_TIMEOUT=7000;
-let coachSeq=0,coachAction='',coachLine='',coachSource='';
+const COACH_TIMEOUT=10000;
+let coachSeq=0,coachAction='',coachLine='',coachSource='',coachRecordAt=0;
 
 function coachContext(t){
   const hour=new Date().getHours();
@@ -1713,38 +1811,50 @@ function localCoaching(ctx){
   return {line:line.slice(0,70),why:why.slice(0,150),action:obj.slice(0,60),source:'local'};
 }
 
-function paintCoaching(c){
+/* 다음 1줄을 그린다. pending=true면 AI 응답 전에 기기 기록으로 먼저 보여주는 상태 */
+function paintCoaching(c,pending){
   const card=document.getElementById('coachCard');
   if(!card)return;
-  card.classList.remove('coach-skel');
   card.classList.remove('hidden');
+  card.classList.toggle('coach-skel',!!pending);
   const badge=document.getElementById('coachBadge');
   const isAI=c.source==='ai';
-  badge.textContent=isAI?'✨ AI 다음 스텝':'🌱 맥락 맞춤 다음 스텝';
-  badge.classList.toggle('local',!isAI);
+  if(pending){
+    badge.textContent='🌱 기기 기록으로 바로';
+    badge.classList.add('local');
+  }else{
+    badge.textContent=isAI?'✨ AI 다음 스텝':'🌱 맥락 맞춤 다음 스텝';
+    badge.classList.toggle('local',!isAI);
+  }
   document.getElementById('coachLine').textContent=c.line;
   document.getElementById('coachWhy').textContent=c.why||'';
-  document.getElementById('coachNote').textContent=isAI
+  document.getElementById('coachNote').textContent=pending
+    ?'AI가 더 맞춤한 문장을 만드는 중이야. 잠깐 뒤에 바뀔 수 있어.'
+    :isAI
     ?'완료 기록·감정·연속일을 Gemini가 방금 읽고 만든 제안이야.'
-    :'기기에 쌓인 내 기록(감정·과제·연속일)으로 만든 제안이야. AI가 연결되면 표현이 더 새로워져.';
+    :'기기에 쌓인 내 기록(감정·과제·연속일)으로 만든 제안이야. ↻ 다시 제안을 누르면 AI로 다시 시도해.';
   coachLine=c.line;coachAction=c.action||c.line;coachSource=c.source;
-  const last=data.history[data.history.length-1];
-  if(last&&!last.coach){
-    last.coach=c.line;last.coachSource=c.source;
-    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
-  }
+  if(!pending)persistCoach(c);
 }
 
-async function fetchCoaching(t){
-  const ctx=coachContext(t);
-  const seq=++coachSeq;
+/* 완료한 기록에 확정된 코칭 문장을 남긴다(이번 세션에서 쌓은 기록만 건드림) */
+function persistCoach(c){
+  if(!coachRecordAt)return;
+  const rec=data.history.find(h=>h.at===coachRecordAt);
+  if(!rec)return;
+  if(rec.coach===c.line&&rec.coachSource===c.source)return;
+  rec.coach=c.line;rec.coachSource=c.source;
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+}
+
+async function fetchCoaching(ctx,seq){
   const ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
   const to=setTimeout(()=>{if(ctrl)ctrl.abort();},COACH_TIMEOUT);
   try{
     const res=await fetch(COACH_ENDPOINT,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(Object.assign({mode:'coach',lang:'ko',round:coachSeq},ctx)),
+      body:JSON.stringify(Object.assign({mode:'coach',lang:'ko',round:seq},ctx)),
       signal:ctrl?ctrl.signal:undefined
     });
     if(!res.ok)throw new Error('HTTP '+res.status);
@@ -1767,16 +1877,13 @@ async function fetchCoaching(t){
 function showCoaching(){
   const card=document.getElementById('coachCard');
   if(!card)return;
-  card.classList.remove('hidden');
-  card.classList.add('coach-skel');
-  const badge=document.getElementById('coachBadge');
-  badge.textContent='✨ AI 다음 스텝';badge.classList.remove('local');
-  document.getElementById('coachLine').textContent='지금 흐름에 맞는 다음 한 걸음을 고르는 중';
-  document.getElementById('coachWhy').textContent='';
-  document.getElementById('coachNote').textContent='';
-  coachAction='';coachLine='';coachSource='';
   const t=data.tasks.find(x=>x.id===currentId);
-  fetchCoaching(t||{title:'',lastStep:'',emotion:'',category:'기타'});
+  const ctx=coachContext(t||{title:'',lastStep:'',emotion:'',category:'기타'});
+  const seq=++coachSeq;
+  /* AI를 기다리는 빈 화면을 없애기 위해, 기기 기록 기반 1줄을 먼저 그리고 AI로 교체 */
+  paintCoaching(localCoaching(ctx),true);
+  if(navigator.onLine===false){paintCoaching(localCoaching(ctx));return;}
+  fetchCoaching(ctx,seq);
 }
 
 function enterDoneState(){
@@ -1796,7 +1903,7 @@ document.getElementById('toTimerBtn').onclick=()=>{
   const t=data.tasks.find(x=>x.id===currentId);if(!t)return;
   t.lastStep=step;t.updated=Date.now();save();
   document.getElementById('currentStep').textContent=step;
-  seconds=300;paused=false;timerRecorded=false;
+  seconds=300;paused=false;timerRecorded=false;coachRecordAt=0;
   resetTimerButtons();
   updateTimer();
   show('timerScreen');
@@ -1837,10 +1944,12 @@ document.getElementById('pauseBtn').onclick=()=>{
 function recordRestart(fromTimer=false){
   const t=data.tasks.find(x=>x.id===currentId);if(!t)return;
   if(!timerRecorded){
-    data.history.push({title:t.title,step:t.lastStep,at:Date.now(),source:fromTimer?'timer':'manual',emotion:t.emotion||'',category:t.category||''});
+    const at=Date.now();
+    data.history.push({title:t.title,step:t.lastStep,at:at,source:fromTimer?'timer':'manual',emotion:t.emotion||'',category:t.category||''});
     data.beans+=1;
-    t.updated=Date.now();
+    t.updated=at;
     timerRecorded=true;
+    coachRecordAt=at;
     save();
   }
 }
@@ -1860,7 +1969,7 @@ document.getElementById('plusFiveBtn').onclick=()=>{
     document.getElementById('currentStep').textContent=t.lastStep;
     try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
   }
-  seconds=300;paused=false;timerRecorded=false;
+  seconds=300;paused=false;timerRecorded=false;coachRecordAt=0;
   resetTimerButtons();
   setMascotMood('focus');
   updateTimer();
@@ -1874,14 +1983,235 @@ document.getElementById('saveAndExitBtn').onclick=()=>{
   show('homeScreen');setMascotMood('celebrate');
 };
 
-document.getElementById('exportBtn').onclick=()=>{
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='startkong-backup-'+dayKey(Date.now())+'.json';
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-};
+/* ── JSON 백업 내보내기·가져오기 (v18) ── */
+const BK_MAX_FILE=2*1024*1024,BK_MAX_HISTORY=5000,BK_MAX_TASKS=500;
+let pendingImport=null,importMode='merge',bkLastFocus=null,bkMsgTimer=null;
+
+function backupSay(msg,type){
+  const el=document.getElementById('backupMsg');
+  if(!el)return;
+  el.textContent=msg||'';
+  el.className='bk-msg'+(type?' '+type:'');
+  if(bkMsgTimer)clearTimeout(bkMsgTimer);
+  if(msg)bkMsgTimer=setTimeout(()=>{const m=document.getElementById('backupMsg');if(m){m.textContent='';m.className='bk-msg';}},30000);
+}
+
+function exportBackup(){
+  try{
+    const now=new Date();
+    const stamp=dayKey(now.getTime())+'-'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0');
+    const payload=Object.assign({app:'startkong',version:18,exportedAt:now.toISOString()},data);
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='startkong-backup-'+stamp+'.json';
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{if(a.parentNode)a.parentNode.removeChild(a);URL.revokeObjectURL(url);},1500);
+    backupSay('💾 기록 '+data.history.length+'건을 JSON 파일로 내보냈어. 다운로드 폴더를 확인해줘.','ok');
+  }catch(e){
+    backupSay('내보내기에 실패했어. 브라우저 다운로드 설정을 확인해줘.','err');
+  }
+}
+
+function bkClean(v,max){return String(v==null?'':v).replace(/\s+/g,' ').trim().slice(0,max);}
+function bkNum(v){const n=Number(v);return isFinite(n)?n:0;}
+
+function sanitizeHistory(raw){
+  const out=[];
+  (Array.isArray(raw)?raw:[]).forEach(h=>{
+    if(!h||typeof h!=='object')return;
+    const at=bkNum(h.at),title=bkClean(h.title,100);
+    if(!at||!title||at<0||at>Date.now()+86400000)return;
+    out.push({
+      title:title,step:bkClean(h.step,120),at:at,
+      source:h.source==='timer'?'timer':'manual',
+      emotion:bkClean(h.emotion,40),category:bkClean(h.category,12),
+      coach:bkClean(h.coach,120),
+      coachSource:h.coachSource==='ai'?'ai':'local'
+    });
+  });
+  out.sort((a,b)=>a.at-b.at);
+  if(out.length>BK_MAX_HISTORY)out.splice(0,out.length-BK_MAX_HISTORY);
+  return out;
+}
+
+/* 파일이 시작콩 백업인지 확인하고, 안전한 필드만 골라 새 데이터로 만든다 */
+function validateBackup(raw){
+  if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error('JSON 형식이 백업 파일과 달라.');
+  if(!Array.isArray(raw.history)&&!Array.isArray(raw.tasks))throw new Error('시작콩 백업 파일이 아니야.');
+  const cats=['공부','업무','집안일','운동','자기관리','기타'];
+  (Array.isArray(raw.categories)?raw.categories:[]).forEach(c=>{
+    const v=bkClean(c,12);
+    if(v&&cats.indexOf(v)<0&&cats.length<12&&['__proto__','constructor','prototype'].indexOf(v)<0)cats.push(v);
+  });
+  const tasks=[];
+  (Array.isArray(raw.tasks)?raw.tasks:[]).slice(0,BK_MAX_TASKS).forEach(t=>{
+    if(!t||typeof t!=='object')return;
+    const title=bkClean(t.title,100);
+    if(!title)return;
+    const cat=bkClean(t.category,12);
+    tasks.push({
+      id:bkClean(t.id,40)||uid(),
+      title:title,
+      category:cats.indexOf(cat)>=0?cat:'기타',
+      created:bkNum(t.created)||Date.now(),
+      updated:bkNum(t.updated)||Date.now(),
+      done:!!t.done,
+      lastStep:bkClean(t.lastStep,120),
+      emotion:bkClean(t.emotion,40)
+    });
+  });
+  const history=sanitizeHistory(raw.history);
+  if(!tasks.length&&!history.length)throw new Error('불러올 기록이 비어 있어.');
+  const unlocked=['hat:none','glasses:none','color:cream','acc:none'];
+  (Array.isArray(raw.unlocked)?raw.unlocked:[]).forEach(k=>{
+    if(typeof k!=='string')return;
+    const p=k.split(':');
+    if(p.length===2&&Array.isArray(CLOSET[p[0]])&&findClosetItem(p[0],p[1])&&unlocked.indexOf(k)<0)unlocked.push(k);
+  });
+  const equipped={hat:'none',glasses:'none',color:'cream',acc:'none'};
+  const eq=(raw.equipped&&typeof raw.equipped==='object')?raw.equipped:{};
+  ['hat','glasses','color','acc'].forEach(k=>{
+    const v=typeof eq[k]==='string'?eq[k]:'';
+    if(v&&findClosetItem(k,v)){
+      equipped[k]=v;
+      const key=k+':'+v;
+      if(unlocked.indexOf(key)<0)unlocked.push(key);
+    }
+  });
+  const beans=(typeof raw.beans==='number'&&isFinite(raw.beans))?Math.max(0,Math.floor(raw.beans)):history.length;
+  return normalizeData({
+    tasks:tasks,history:history,categories:cats,beans:beans,
+    unlocked:unlocked,equipped:equipped,
+    beanName:bkClean(raw.beanName,10),outfits:raw.outfits
+  });
+}
+
+function setImportMode(mode){
+  importMode=mode==='replace'?'replace':'merge';
+  const m=document.getElementById('bkMerge'),r=document.getElementById('bkReplace');
+  if(m){m.classList.toggle('on',importMode==='merge');m.setAttribute('aria-checked',importMode==='merge'?'true':'false');}
+  if(r){r.classList.toggle('on',importMode==='replace');r.setAttribute('aria-checked',importMode==='replace'?'true':'false');}
+  const w=document.getElementById('bkWarn');
+  if(w)w.classList.toggle('hidden',importMode!=='replace');
+}
+
+function openImportSheet(file,imp){
+  pendingImport={name:file&&file.name?file.name:'backup.json',data:imp};
+  const nameEl=document.getElementById('bkFileName');
+  if(nameEl)nameEl.textContent=pendingImport.name;
+  const sizeKb=Math.max(1,Math.round(((file&&file.size)||0)/1024));
+  const when=(file&&file.lastModified)?fmtDate(file.lastModified)+' 저장 · ':'';
+  const metaEl=document.getElementById('bkFileMeta');
+  if(metaEl)metaEl.textContent=when+sizeKb+'KB';
+  const box=document.getElementById('bkStats');
+  if(box){
+    box.innerHTML='';
+    [['✦ ',imp.history.length+'번의 시작'],['◻ ',imp.tasks.length+'개의 할 일'],['🫘 ',imp.beans+'콩']].forEach(pair=>{
+      const s=document.createElement('span');
+      s.className='bk-stat';
+      s.textContent=pair[0]+pair[1];
+      box.appendChild(s);
+    });
+  }
+  const nowEl=document.getElementById('bkNowCount');
+  if(nowEl)nowEl.textContent=data.history.length;
+  setImportMode('merge');
+  bkLastFocus=document.activeElement;
+  const m=document.getElementById('bkModal');
+  if(!m)return;
+  m.classList.remove('hidden');
+  m.setAttribute('aria-hidden','false');
+  document.body.classList.add('ev-open');
+  const c=document.getElementById('bkClose');if(c&&c.focus)c.focus({preventScroll:true});
+}
+
+function closeImportSheet(){
+  const m=document.getElementById('bkModal');
+  if(!m||m.classList.contains('hidden'))return;
+  m.classList.add('hidden');
+  m.setAttribute('aria-hidden','true');
+  document.body.classList.remove('ev-open');
+  pendingImport=null;
+  const f=bkLastFocus;bkLastFocus=null;
+  if(f&&f.focus)try{f.focus({preventScroll:true});}catch(e){}
+}
+
+function mergeBackup(cur,imp){
+  const tasks=cur.tasks.map(t=>Object.assign({},t));
+  const ids={};tasks.forEach(t=>{ids['#'+t.id]=1;});
+  imp.tasks.forEach(t=>{if(!ids['#'+t.id]){tasks.push(Object.assign({},t));ids['#'+t.id]=1;}});
+  const seen={},history=[];
+  cur.history.concat(imp.history).sort((a,b)=>a.at-b.at).forEach(h=>{
+    const k=h.at+'|'+h.title+'|'+(h.step||'');
+    if(!seen[k]){seen[k]=1;history.push(h);}
+  });
+  const cats=cur.categories.slice();
+  imp.categories.forEach(c=>{if(cats.indexOf(c)<0&&cats.length<12)cats.push(c);});
+  const unlocked=cur.unlocked.slice();
+  imp.unlocked.forEach(k=>{if(unlocked.indexOf(k)<0)unlocked.push(k);});
+  return normalizeData(Object.assign({},cur,{
+    tasks:tasks,history:history.slice(-BK_MAX_HISTORY),categories:cats,unlocked:unlocked,
+    beans:Math.max(cur.beans,imp.beans)
+  }));
+}
+
+function applyImport(){
+  if(!pendingImport)return;
+  const before=data.history.length;
+  const imp=pendingImport.data;
+  const mode=importMode;
+  data=(mode==='replace')?imp:mergeBackup(data,imp);
+  if(data.categories.indexOf(category)<0)category=data.categories[0]||'공부';
+  if(currentId&&!data.tasks.some(t=>t.id===currentId)){currentId=null;clearSession();stopTimer();}
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+  closeImportSheet();
+  render();
+  if(mode==='replace')backupSay('✅ 백업으로 바꿨어. 이제 '+data.history.length+'번의 시작이야.','ok');
+  else backupSay('✅ '+(data.history.length-before)+'건을 더했어. 이제 '+data.history.length+'번의 시작이야.','ok');
+}
+
+function readImportFile(file){
+  if(!file)return;
+  if(file.size>BK_MAX_FILE){backupSay('파일이 너무 커(2MB 초과). 시작콩 백업 파일인지 확인해줘.','err');return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    let raw;
+    try{raw=JSON.parse(String(reader.result||'').replace(/^\uFEFF/,''));}
+    catch(e){backupSay('JSON으로 읽지 못했어. 파일이 손상됐는지 확인해줘.','err');return;}
+    let imp;
+    try{imp=validateBackup(raw);}
+    catch(e){backupSay('이 파일은 불러올 수 없어 — '+(e&&e.message?e.message:'형식이 달라.'),'err');return;}
+    openImportSheet(file,imp);
+  };
+  reader.onerror=()=>backupSay('파일을 읽지 못했어. 다시 골라줘.','err');
+  reader.readAsText(file,'utf-8');
+}
+
+document.getElementById('exportBtn').onclick=exportBackup;
+(function bindImport(){
+  const btn=document.getElementById('importBtn'),file=document.getElementById('importFile');
+  if(btn&&file){
+    btn.onclick=()=>{backupSay('');file.value='';file.click();};
+    file.onchange=()=>readImportFile(file.files&&file.files[0]);
+  }
+  const m=document.getElementById('bkMerge'),r=document.getElementById('bkReplace');
+  if(m)m.onclick=()=>setImportMode('merge');
+  if(r)r.onclick=()=>setImportMode('replace');
+  ['bkClose','bkCancel','bkBackdrop'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.onclick=closeImportSheet;
+  });
+  const ap=document.getElementById('bkApply');if(ap)ap.onclick=applyImport;
+  document.addEventListener('keydown',e=>{
+    if(e.key!=='Escape')return;
+    const mm=document.getElementById('bkModal');
+    if(mm&&!mm.classList.contains('hidden'))closeImportSheet();
+  });
+})();
 
 document.getElementById('headerBeanBtn').onclick=()=>show('closetScreen');
 document.getElementById('openClosetHeroBtn').onclick=()=>show('closetScreen');
