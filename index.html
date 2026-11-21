@@ -2025,13 +2025,14 @@ function sanitizeHistory(raw){
     if(!h||typeof h!=='object')return;
     const at=bkNum(h.at),title=bkClean(h.title,100);
     if(!at||!title||at<0||at>Date.now()+86400000)return;
-    out.push({
+    const rec={
       title:title,step:bkClean(h.step,120),at:at,
       source:h.source==='timer'?'timer':'manual',
-      emotion:bkClean(h.emotion,40),category:bkClean(h.category,12),
-      coach:bkClean(h.coach,120),
-      coachSource:h.coachSource==='ai'?'ai':'local'
-    });
+      emotion:bkClean(h.emotion,40),category:bkClean(h.category,12)
+    };
+    const coach=bkClean(h.coach,120);
+    if(coach){rec.coach=coach;rec.coachSource=h.coachSource==='ai'?'ai':'local';}
+    out.push(rec);
   });
   out.sort((a,b)=>a.at-b.at);
   if(out.length>BK_MAX_HISTORY)out.splice(0,out.length-BK_MAX_HISTORY);
